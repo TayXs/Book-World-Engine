@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Truthcast</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>&#9989;</text></svg>" />
+</head>
+<body>
+<header class="top">
+  <h1>Truthcast</h1>
+  <p class="tagline">Paste a video or podcast. Get back only the parts that survive a fact-check — in plain words, read aloud if you like.</p>
+</header>
+
+<main>
+  <form id="job-form" class="card">
+    <label for="url">Link</label>
+    <input id="url" name="url" type="url" required
+           placeholder="https://www.youtube.com/watch?v=… or a podcast RSS feed" />
+
+    <label for="interests">What do you care about? <span class="hint">optional, comma separated — used to rank what you hear first</span></label>
+    <input id="interests" name="interests" type="text" placeholder="health, money, climate" />
+
+    <div class="row">
+      <label class="checkbox"><input id="speak" type="checkbox" /> Record an audio file</label>
+      <button type="submit" id="submit">Check it</button>
+    </div>
+    <p class="bar-note" id="bar-note"></p>
+  </form>
+
+  <section id="progress" class="card hidden" aria-live="polite">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <p class="progress-message" id="progress-message">Starting…</p>
+  </section>
+
+  <section id="error" class="card error hidden" role="alert"></section>
+
+  <section id="result" class="hidden">
+    <div class="card intro-card">
+      <h2 id="source-title"></h2>
+      <p class="byline" id="source-byline"></p>
+      <p class="intro" id="intro"></p>
+
+      <div class="player" id="player">
+        <button type="button" id="play" class="play">▶ Listen</button>
+        <button type="button" id="stop" class="ghost hidden">Stop</button>
+        <label class="speed">Speed
+          <select id="rate">
+            <option value="0.8">0.8×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option>
+          </select>
+        </label>
+        <select id="voice" class="voice" aria-label="Voice"></select>
+        <a id="download" class="ghost hidden" download>Download MP3</a>
+      </div>
+      <audio id="audio" class="hidden" controls></audio>
+    </div>
+
+    <h3 class="section-heading" id="facts-heading">What checked out</h3>
+    <div id="facts"></div>
+
+    <h3 class="section-heading hidden" id="corrections-heading">What didn’t hold up</h3>
+    <div id="corrections"></div>
+
+    <div class="card tally" id="tally"></div>
+  </section>
+
+  <section id="history-wrap" class="hidden">
+    <h3 class="section-heading">Earlier checks</h3>
+    <ul id="history" class="history"></ul>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
