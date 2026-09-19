@@ -17,7 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 # Needed only for sources with no usable captions (most podcasts).
 asr = ["faster-whisper>=1.0.3", "yt-dlp>=2024.8.6"]
-dev = ["pytest>=8.2", "pytest-asyncio>=0.23", "ruff>=0.5"]
+dev = ["pytest>=8.2", "pytest-asyncio>=0.23", "ruff>=0.5", "playwright>=1.44"]
 
 [project.scripts]
 truthcast = "truthcast.cli:main"

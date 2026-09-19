@@ -17,10 +17,9 @@
   };
 
   let stream = null;
+  const speech = { script: "", chunks: [], index: 0, voices: [], playing: false };
 
   /* ---------------------------------------------------------------- setup */
-
-  init();
 
   async function init() {
     loadVoices();
@@ -216,8 +215,6 @@
     el.voice.classList.toggle("hidden", !canSpeak || el.voice.options.length === 0);
   }
 
-  const speech = { script: "", chunks: [], index: 0, playing: false };
-
   function loadVoices() {
     if (!("speechSynthesis" in window)) return;
     const fill = () => {
@@ -349,4 +346,7 @@
     );
   }
   const escapeAttr = escapeHtml;
+
+  // Last statement in the module: every binding above is initialised by now.
+  init();
 })();

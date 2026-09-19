@@ -147,13 +147,20 @@ comes back `unverified` and gets dropped like any other weak claim.
 
 ```bash
 pip install -e '.[dev]'
-pytest          # 85 tests, no network, no API key needed
+pytest          # no network, no API key needed
 ruff check truthcast tests
 ```
 
 The suite stubs Claude out and concentrates on the places where a mistake would mean
 telling you something false: the bar (`test_gate.py`), citation integrity
 (`test_research.py`), and a full pipeline run (`test_pipeline.py`).
+
+`test_web_ui.py` drives the real page in Chromium — it starts the server, clicks
+through a finished digest, and fails if the page throws on load. It exists because a
+dead-zone `ReferenceError` once disabled every event listener on the page while all
+the Python tests stayed green. It skips itself when Playwright or a browser is
+missing, so `pytest` still works without them; `playwright install chromium` enables
+it.
 
 ## Honest limits
 
