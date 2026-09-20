@@ -37,6 +37,16 @@ async function handle(message, sender) {
       return getSettings();
     case "wwi:save-settings":
       return saveSettings(message.patch || {});
+    case "wwi:connect-youtube": {
+      const { connect } = await import("./lib/auth.js");
+      await connect();
+      return saveSettings({ youtubeConnected: true });
+    }
+    case "wwi:disconnect-youtube": {
+      const { disconnect } = await import("./lib/auth.js");
+      const result = await disconnect();
+      return { ...(await saveSettings({ youtubeConnected: false })), ...result };
+    }
     case "wwi:open-options":
       await chrome.runtime.openOptionsPage();
       return { ok: true };
@@ -68,8 +78,10 @@ async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
   }
 
   const warnings = [];
+  let failure = null;
   const player = await readPlayer(tabId, videoId).catch((error) => {
-    warnings.push(`Could not read the player: ${error.message}`);
+    failure = `Could not read this page's caption list (${error.message}).`;
+    warnings.push(failure);
     return null;
   });
 
@@ -87,34 +99,65 @@ async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
   };
 
   const cues = await readTranscript(tabId, player).catch((error) => {
-    warnings.push(`Transcript fetch failed: ${error.message}`);
+    failure = failure || `The caption track could not be fetched (${error.message}).`;
+    warnings.push(failure);
     return [];
   });
 
   if (cues.length === 0) {
     // Nothing to extract claims from. Channel signals are still worth showing.
     const channel = await gatherChannelSignals(videoId, pageSignals, settings, warnings);
-    return writeCache(videoId, {
+    const result = {
       ...base,
       status: "no-transcript",
+      transient: Boolean(failure),
       score: null,
       band: "unverified",
       unverified: true,
-      reason: "No captions are available for this video, so there is nothing to check.",
+      reason: failure || "No captions are available for this video, so there is nothing to check.",
       claims: [],
       channel: confidenceScore({ factCheck: null, channel }).channel,
       channelSignals: channel,
       warnings,
-    });
+    };
+    // A video that genuinely has no captions will have none tomorrow either. A
+    // page we simply could not read is worth retrying, so it is not cached.
+    return failure ? result : writeCache(videoId, result);
   }
 
-  const claims = extractClaims(cues, { max: settings.maxClaims });
+  // The AI tier replaces claim extraction and nothing else: whatever it returns
+  // goes through the same lookup and the same scoring rule below. It is loaded
+  // only when the toggle is on, so the free path never even imports it.
+  let claims = [];
+  let ai = null;
+  let tier = "free";
+  if (settings.aiEnabled && settings.aiApiKey) {
+    try {
+      const { runAiTier } = await import("./lib/ai.js");
+      ai = await runAiTier({ cues, title, channelTitle, settings });
+      claims = ai.claims;
+      tier = "ai";
+      if (ai.transcriptTrimmed) {
+        warnings.push("Transcript was long - only the first 48,000 characters went to the model.");
+      }
+      const unlocated = claims.filter((claim) => !claim.located).length;
+      if (unlocated > 0) {
+        warnings.push(`${unlocated} AI claim(s) could not be found in the transcript; their timestamps are missing.`);
+      }
+    } catch (error) {
+      warnings.push(`AI tier failed (${error.message}) - fell back to the free heuristics.`);
+    }
+  } else if (settings.aiEnabled) {
+    warnings.push("AI tier is on but no API key is set.");
+  }
+  if (claims.length === 0) claims = extractClaims(cues, { max: settings.maxClaims });
 
-  let results = [];
+  // checkClaims makes no request without a key: it marks every claim skipped,
+  // which is what lets the panel say "not looked up" rather than "not found".
+  const results = claims.length > 0 ? await checkClaims(claims, { apiKey: settings.factCheckApiKey }) : [];
   if (!settings.factCheckApiKey) {
     warnings.push("No Fact Check API key set - add one in options to look claims up.");
-  } else if (claims.length > 0) {
-    results = await checkClaims(claims, { apiKey: settings.factCheckApiKey });
+  } else {
     const failed = results.find((r) => r.error);
     if (failed) warnings.push(`Fact Check API: ${failed.error}`);
   }
@@ -125,6 +168,10 @@ async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
 
   return writeCache(videoId, {
     ...base,
+    tier,
+    ai: ai
+      ? { summary: ai.summary, caveats: ai.caveats, provider: ai.provider, model: ai.model }
+      : null,
     status: "ok",
     score: scored.score,
     band: band(scored.score),
@@ -235,7 +282,13 @@ async function gatherChannelSignals(videoId, pageSignals, settings, warnings) {
   // What the watch page says is the floor: it needs no key and no quota.
   const fromPage = normalizePageSignals(pageSignals, Date.now(), parseCountText);
   const credentials = { apiKey: settings.youtubeApiKey };
-  if (!credentials.apiKey) return mergeSignals(fromPage, { available: false });
+  if (!credentials.apiKey && settings.youtubeConnected) {
+    // A connected account is used for one thing: public channel statistics on
+    // the free quota, as an alternative to pasting a key.
+    const { getToken } = await import("./lib/auth.js");
+    credentials.token = await getToken({ interactive: false });
+  }
+  if (!credentials.apiKey && !credentials.token) return mergeSignals(fromPage, { available: false });
 
   try {
     const api = await fetchChannelSignals(videoId, credentials);
@@ -245,6 +298,8 @@ async function gatherChannelSignals(videoId, pageSignals, settings, warnings) {
     return mergeSignals(fromPage, { available: false });
   }
 }
+
+chrome.action.onClicked.addListener(() => chrome.runtime.openOptionsPage());
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install") chrome.runtime.openOptionsPage();

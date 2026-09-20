@@ -72,9 +72,7 @@ export function confidenceScore({ factCheck, channel, now = Date.now() } = {}) {
     return {
       score: null,
       unverified: true,
-      reason: summary.checked
-        ? "No published fact-check covers any of the claims in this video."
-        : "No checkable claims found in the transcript.",
+      reason: unverifiedReason(summary),
       channel: channelPart,
       factCheck: null,
     };
@@ -100,6 +98,19 @@ export function confidenceScore({ factCheck, channel, now = Date.now() } = {}) {
       detail: `${summary.matched} of ${summary.checked} claims matched a published fact-check`,
     },
   };
+}
+
+/**
+ * Why there is no score. "Nobody has checked this" and "we never looked" are
+ * different statements, and the panel should not make the first one when the
+ * second is true.
+ */
+function unverifiedReason(summary) {
+  if (!summary.checked) return "No checkable claims found in the transcript.";
+  if (summary.skipped >= summary.checked) {
+    return "No Fact Check API key is set, so none of these claims were looked up.";
+  }
+  return "No published fact-check covers any of the claims in this video.";
 }
 
 /** red below 45, yellow to 69, green from 70. */

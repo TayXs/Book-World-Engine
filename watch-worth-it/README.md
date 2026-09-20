@@ -83,6 +83,57 @@ same-origin and carries the session.
 No captions means no analysis: the panel says "no transcript available" and
 stops. Nothing is downloaded, nothing is transcribed.
 
+## Optional: Connect YouTube
+
+A settings toggle, and nothing more. It signs in with Google and asks for one
+read-only scope, `youtube.readonly`, so channel statistics can run on your own
+free quota instead of an API key.
+
+It never touches transcripts or claim research — those requests are
+unauthenticated by design, and `chrome.identity` is reached from exactly one
+lazily-imported file (`lib/auth.js`). Skip it and nothing else changes.
+
+To make the button work in your own build you need an OAuth client ID, because
+Chrome ties the grant to a specific extension ID:
+
+1. Load the extension unpacked and copy its ID from `chrome://extensions`.
+2. In the Google Cloud console, create an **OAuth client ID** of type *Chrome
+   extension* with that ID, and enable the **YouTube Data API v3**.
+3. Paste the client ID over `REPLACE_WITH_YOUR_OAUTH_CLIENT_ID…` in
+   `manifest.json` and reload the extension.
+
+Unpacked extensions get a fresh ID when the folder moves, which invalidates the
+client. Add the packed extension's `key` to `manifest.json` if you want it to
+survive.
+
+## Optional: the AI upgrade tier
+
+Switch on **Use AI for deeper analysis** and paste your own key — a free
+[Gemini key](https://aistudio.google.com/apikey) from the same Google account,
+or an Anthropic or OpenAI one.
+
+It replaces **one step**: claim extraction. Instead of the regexes, a single
+call per video extracts the claims, rewrites each to stand on its own, and says
+whether it is still current — using the provider's built-in web search where
+there is one (`google_search`, `web_search_20260209`, `web_search`). Everything
+after that is untouched: the same fact-check lookup, the same score.
+
+| Provider | Default model | Key |
+|---|---|---|
+| Google Gemini | `gemini-2.5-flash` | free tier at aistudio.google.com |
+| Anthropic | `claude-opus-5` | console.anthropic.com |
+| OpenAI | `gpt-5` | platform.openai.com |
+
+Two things it does not do quietly: a transcript over 48,000 characters is
+trimmed and the panel says so, and a claim whose quote cannot be found back in
+the transcript is flagged rather than given a plausible timestamp. Anthropic and
+OpenAI are *optional* host permissions — the extension ships unable to reach
+them and asks when you save.
+
+The default tier never loads any of this. `lib/ai.js` is imported dynamically,
+only when the toggle is on and a key is set, and a failure there falls back to
+the free heuristics with a warning rather than an empty panel.
+
 ## Files
 
 ```
@@ -97,6 +148,8 @@ lib/channel.js      YouTube Data API signals, with a watch-page fallback
 lib/score.js        the 0-100 rule
 lib/ytpage.js       reading the watch page
 lib/store.js        settings + the per-video cache (7 days, 200 videos)
+lib/auth.js         chrome.identity, lazily imported, used nowhere else
+lib/ai.js           the optional tier: prompt, three providers, response parsing
 ```
 
 ## Tests
@@ -105,9 +158,17 @@ lib/store.js        settings + the per-video cache (7 days, 200 videos)
 node --test tests/*.test.mjs      # or: npm test
 ```
 
-No dependencies and no network: the pure modules — parsing, heuristics, match
-quality, scoring — are tested directly, because those are the places where a
-mistake means telling you something false about a video.
+71 tests, no dependencies and no network. The pure modules — parsing,
+heuristics, match quality, scoring — are tested directly, because those are the
+places where a mistake means telling you something false about a video.
+
+`pipeline.test.mjs` is the one that matters most: it drives the real service
+worker through its own message listener with `chrome.*` and `fetch` stubbed, so
+a broken wire between two individually-correct modules fails the build. It
+covers the whole path — watch page to score — plus the cases that are easy to
+get quietly wrong: a cache hit, a forced re-check, a stale player response, a
+video with no captions, a missing API key, an unreadable page (which must not be
+cached), and the AI tier both working and failing back to the free heuristics.
 
 ## Honest limits
 
@@ -123,3 +184,8 @@ mistake means telling you something false about a video.
   phrased differently can be missed.
 - **Channel size is weak evidence** and is weighted accordingly. A big channel is
   not a correct one.
+- **The AI tier is one call, not a verification pipeline.** It finds better
+  claims than the regexes do and reasons about staleness; it does not check them.
+  The fact-check lookup still does that, and still usually comes back empty.
+- **Keys live in `chrome.storage.local`**, unencrypted, like any extension
+  setting. Anything with access to your Chrome profile can read them.

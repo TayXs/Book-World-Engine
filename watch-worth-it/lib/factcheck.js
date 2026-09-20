@@ -118,8 +118,10 @@ export function summarizeMatches(results) {
   let weighted = 0;
   let matched = 0;
   let reviews = 0;
+  let skipped = 0;
 
   for (const result of results || []) {
+    if (result.skipped) skipped += 1;
     const rated = (result.matches || []).filter((m) => m.reviews.some((r) => r.polarity !== null));
     if (rated.length === 0) continue;
     matched += 1;
@@ -135,6 +137,7 @@ export function summarizeMatches(results) {
     checked: (results || []).length,
     matched,
     reviews,
+    skipped,
     meanPolarity: weight > 0 ? weighted / weight : 0,
   };
 }

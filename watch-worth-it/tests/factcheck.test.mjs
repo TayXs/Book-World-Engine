@@ -103,6 +103,16 @@ test("checkClaims keeps results aligned with the claims that produced them", asy
   );
 });
 
+test("skipped lookups are counted, so the panel can say which kind of nothing it found", () => {
+  const summary = summarizeMatches([
+    { matches: [], skipped: "no-key" },
+    { matches: [], skipped: "no-key" },
+  ]);
+  assert.equal(summary.checked, 2);
+  assert.equal(summary.skipped, 2);
+  assert.equal(summary.matched, 0);
+});
+
 test("the summary weights matched claims and ignores unrated ones", () => {
   const summary = summarizeMatches([
     { matches: [{ quality: 1, reviews: [{ polarity: 1 }, { polarity: 0.7 }] }] },

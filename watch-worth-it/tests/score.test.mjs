@@ -26,9 +26,15 @@ test("no fact-check match means no score, and a stated reason", () => {
   assert.ok(result.channel.parts.length > 0, "channel signals are still reported");
 });
 
-test("no claims at all is reported differently from no matches", () => {
-  const result = confidenceScore({ factCheck: { checked: 0, matched: 0, meanPolarity: 0 }, channel: CHANNEL, now: NOW });
-  assert.match(result.reason, /No checkable claims/);
+test("the three ways to have no score are three different sentences", () => {
+  const nothingFound = confidenceScore({ factCheck: { checked: 0, matched: 0, skipped: 0, meanPolarity: 0 }, channel: CHANNEL, now: NOW });
+  assert.match(nothingFound.reason, /No checkable claims/);
+
+  const neverLookedUp = confidenceScore({ factCheck: { checked: 6, matched: 0, skipped: 6, meanPolarity: 0 }, channel: CHANNEL, now: NOW });
+  assert.match(neverLookedUp.reason, /no Fact Check API key|No Fact Check API key/);
+
+  const lookedUpAndEmpty = confidenceScore({ factCheck: { checked: 6, matched: 0, skipped: 0, meanPolarity: 0 }, channel: CHANNEL, now: NOW });
+  assert.match(lookedUpAndEmpty.reason, /No published fact-check/);
 });
 
 test("supported claims score green, refuted claims score red", () => {

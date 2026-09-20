@@ -219,3 +219,34 @@ export function extractClaims(cues, { max = 10, minScore = 3 } = {}) {
 }
 
 export { STOPWORDS };
+
+/**
+ * Find where a quoted claim was actually said.
+ *
+ * The AI tier returns claim text but cannot be trusted with timestamps, so the
+ * quote is located back in the transcript instead: exact match first, then
+ * progressively shorter word shingles, since a model tends to tidy punctuation
+ * and filler out of what it quotes.
+ */
+export function locateInTranscript(claimText, joined) {
+  const haystack = (joined?.text || "").toLowerCase();
+  const offsets = joined?.offsets || [];
+  const needle = String(claimText || "").toLowerCase().replace(/\s+/g, " ").trim();
+  if (!haystack || !needle) return { index: -1, start: 0 };
+
+  const at = (index) => ({ index, start: timestampAt(offsets, index) });
+
+  const exact = haystack.indexOf(needle);
+  if (exact >= 0) return at(exact);
+
+  const words = needle.replace(/[^a-z0-9% ]+/g, " ").split(/\s+/).filter(Boolean);
+  for (const size of [8, 5, 3]) {
+    if (words.length < size) continue;
+    for (let i = 0; i + size <= words.length; i++) {
+      const shingle = words.slice(i, i + size).join(" ");
+      const found = haystack.indexOf(shingle);
+      if (found >= 0) return at(found);
+    }
+  }
+  return { index: -1, start: 0 };
+}

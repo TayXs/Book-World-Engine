@@ -39,6 +39,9 @@ button {
 button:hover { filter: brightness(1.08); }
 button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--line); }
 button:disabled { opacity: .55; cursor: default; }
+.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+code { background: rgba(128,128,128,.18); border-radius: 4px; padding: 1px 5px; font-size: 12px; }
+.status.good { color: #2ba640; }
 footer { display: flex; align-items: center; gap: 14px; }
 .status { color: var(--muted); font-size: 13px; }
 .status.error { color: var(--danger); }

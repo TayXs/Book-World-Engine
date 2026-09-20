@@ -57,6 +57,61 @@
       </section>
 
       <section>
+        <h2>Connect YouTube <span class="optional">optional</span></h2>
+        <p class="hint">
+          Signs in with Google and asks for one read-only scope,
+          <code>youtube.readonly</code>, so channel statistics can use your own free quota
+          instead of an API key. It is never used for transcripts or for looking claims up —
+          those are unauthenticated by design — and skipping this changes nothing else.
+        </p>
+        <div class="row">
+          <button id="connectYouTube" class="secondary" type="button">Connect YouTube</button>
+          <button id="disconnectYouTube" class="secondary" type="button" hidden>Disconnect</button>
+          <span id="connectState" class="status">Not connected</span>
+        </div>
+        <p class="hint">
+          Disconnecting forgets the token here. To revoke the grant itself, visit
+          <a href="https://myaccount.google.com/permissions" target="_blank" rel="noreferrer noopener">Google
+          account permissions</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>AI upgrade <span class="optional">optional</span></h2>
+        <label class="check">
+          <input id="aiEnabled" type="checkbox" />
+          <span>Use AI for deeper analysis</span>
+        </label>
+        <p class="hint">
+          Replaces the regex claim-extraction with one model call per video that also reasons
+          about whether each claim is still current, using the provider's own web search. The
+          fact-check lookup and the score are unchanged. Your key is stored locally and sent
+          only to the provider you pick.
+        </p>
+
+        <label class="field">
+          <span class="label">Provider</span>
+          <select id="aiProvider">
+            <option value="gemini">Google Gemini</option>
+            <option value="anthropic">Anthropic Claude</option>
+            <option value="openai">OpenAI</option>
+          </select>
+          <span class="hint" id="providerNote"></span>
+        </label>
+
+        <label class="field">
+          <span class="label">API key</span>
+          <input id="aiApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="…" />
+          <span class="hint">Get one at <a id="keyLink" href="#" target="_blank" rel="noreferrer noopener">the provider's console</a>.</span>
+        </label>
+
+        <label class="field">
+          <span class="label">Model <span class="optional">blank uses the default</span></span>
+          <input id="aiModel" type="text" autocomplete="off" spellcheck="false" />
+        </label>
+      </section>
+
+      <section>
         <h2>Cache</h2>
         <p class="hint">Results are kept per video in local storage for seven days.</p>
         <button id="clearCache" class="secondary" type="button">Clear cached results</button>

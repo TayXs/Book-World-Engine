@@ -56,6 +56,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
 .chip { background: var(--chip); border-radius: 4px; padding: 2px 6px; font-size: 11px; color: var(--muted); }
+.currency { margin: 0 0 6px; }
 .match { margin-top: 6px; padding-left: 10px; border-left: 2px solid var(--line); }
 .match-claim { margin: 0 0 4px; color: var(--muted); font-size: 12px; }
 .rating { font-weight: 700; margin-right: 6px; }
@@ -215,7 +216,9 @@ function renderBadge() {
 
   const { result } = state;
   if (result.status === "no-transcript") {
-    return badgeHtml("unverified", "–", "No transcript available");
+    return result.transient
+      ? badgeHtml("unverified", "!", "Could not read the captions")
+      : badgeHtml("unverified", "–", "No transcript available");
   }
   if (result.unverified || result.score === null) {
     return badgeHtml("unverified", "?", "Unverified — no fact-check data");
@@ -245,7 +248,9 @@ function renderPanel() {
   const sections = [];
 
   if (result.status === "no-transcript") {
-    sections.push(`<p class="lead">No captions exist for this video, so there is nothing to extract claims from.</p>`);
+    sections.push(`<p class="lead">${escape(result.reason)}</p>${
+      result.transient ? `<p class="muted">Re-check below to try again.</p>` : ""
+    }`);
   } else if (result.unverified) {
     sections.push(`<p class="lead">${escape(result.reason || "No published fact-check covers the claims in this video.")}</p>
       <p class="muted">That is not a verdict — most claims in most videos have never been reviewed by a fact-checking
@@ -255,6 +260,7 @@ function renderPanel() {
       60% and channel signals at 40%.</p>`);
   }
 
+  if (result.tier === "ai" && result.ai?.summary) sections.push(renderAi(result.ai));
   if (result.claims?.length) sections.push(renderClaims(result.claims));
   if (result.channel?.parts?.length) sections.push(renderChannel(result.channel, result.channelSignals));
   if (result.warnings?.length) {
@@ -263,7 +269,7 @@ function renderPanel() {
 
   sections.push(`
     <div class="foot">
-      <a class="link" href="${escape(result.searchUrl)}" target="_blank" rel="noreferrer noopener">
+      <a class="link" href="${escape(safeUrl(result.searchUrl))}" target="_blank" rel="noreferrer noopener">
         Search Google for fact checks →</a>
       <span class="spacer"></span>
       <button class="text-button" type="button" data-action="recheck">Re-check</button>
@@ -280,6 +286,14 @@ function panelShell(inner) {
   return `<section class="panel">${inner}</section>`;
 }
 
+function renderAi(ai) {
+  const caveats = ai.caveats
+    ? `<p class="muted small">${escape(ai.caveats)}</p>`
+    : "";
+  return `<h3>AI summary <span class="count">${escape(ai.model || ai.provider)}</span></h3>
+    <p>${escape(ai.summary)}</p>${caveats}`;
+}
+
 function renderClaims(claims) {
   const rows = claims
     .map((claim) => {
@@ -287,7 +301,7 @@ function renderClaims(claims) {
         .map((match) => {
           const reviews = match.reviews
             .map(
-              (review) => `<li><a class="link" href="${escape(review.url)}" target="_blank" rel="noreferrer noopener">
+              (review) => `<li><a class="link" href="${escape(safeUrl(review.url))}" target="_blank" rel="noreferrer noopener">
                 <span class="rating ${polarityClass(review.polarity)}">${escape(review.rating || "reviewed")}</span>
                 ${escape(review.publisher)}</a></li>`
             )
@@ -306,6 +320,7 @@ function renderClaims(claims) {
             ${escape(clock(claim.start))}</button>
           <p class="claim-text">${escape(claim.text)}</p>
           <div class="chips">${chips}</div>
+          ${claim.currency ? `<p class="muted small currency">${escape(claim.currency)}</p>` : ""}
           ${matches || `<p class="muted small">No published fact-check matched this claim.</p>`}
         </li>`;
     })
@@ -362,6 +377,16 @@ function wire(root) {
 }
 
 /* ------------------------------------------------------------------ utilities */
+
+/** A url from an API is still untrusted input; only http(s) reaches an href. */
+function safeUrl(value) {
+  try {
+    const parsed = new URL(String(value), location.href);
+    return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : "";
+  } catch {
+    return "";
+  }
+}
 
 function escape(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) =>
