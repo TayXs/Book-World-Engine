@@ -47,6 +47,12 @@ async function handle(message, sender) {
       const result = await disconnect();
       return { ...(await saveSettings({ youtubeConnected: false })), ...result };
     }
+    case "wwi:test-key": {
+      const { testFactCheckKey, testYouTubeKey } = await import("./lib/keytest.js");
+      return message.which === "youtube"
+        ? testYouTubeKey(message.apiKey)
+        : testFactCheckKey(message.apiKey);
+    }
     case "wwi:open-options":
       await chrome.runtime.openOptionsPage();
       return { ok: true };

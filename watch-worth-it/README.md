@@ -21,13 +21,48 @@ thing worth setting up is a free Fact Check Tools API key.
 
 1. `chrome://extensions` → enable **Developer mode** → **Load unpacked** → pick
    this `watch-worth-it/` folder.
-2. The options page opens on install. Paste a
-   [Fact Check Tools API key](https://console.cloud.google.com/apis/library/factchecktools.googleapis.com)
-   — free, no billing account, no OAuth.
+2. Get an API key (below) and paste it into the options page, which opens on
+   install. Press **Test** — it checks the key against the live API and tells you
+   what is wrong if anything is.
 3. Open any YouTube watch page. The badge appears next to the title.
 
 Without a key everything still runs: you get the claims, the channel signals and
 a gray **Unverified** badge, because nothing was looked up.
+
+## Getting the API key
+
+Free: no billing account, no credit card, no OAuth. One key covers both APIs the
+extension can use.
+
+**The quick way** — from this folder:
+
+```bash
+./setup-api-key.sh
+```
+
+It signs you in with `gcloud` if you are not already, creates a project, enables
+the Fact Check Tools API and the YouTube Data API v3, creates one key restricted
+to exactly those two, checks it against the live API, and prints it. It shows
+you what it is about to create and waits for a yes first. Use
+`--project EXISTING-ID` to add the key to a project you already have, or `--yes`
+to skip the prompt. Needs the [gcloud CLI](https://cloud.google.com/sdk/docs/install).
+
+**By hand**, if you would rather click:
+
+1. [console.cloud.google.com](https://console.cloud.google.com/) → new project.
+2. Enable
+   [Fact Check Tools API](https://console.cloud.google.com/apis/library/factchecktools.googleapis.com)
+   — and, optionally,
+   [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com)
+   on the same project, so one key does both.
+3. **APIs & Services → Credentials → Create credentials → API key**.
+4. Restrict it: **API restrictions** → those two APIs. Leave **Application
+   restrictions** on **None** — the extension calls from a service worker, which
+   sends no `Referer`, so a referrer restriction rejects every request.
+5. Paste it into the options page and press **Test**.
+
+The step people miss is 2. A key created without the API enabled comes back 403,
+and the **Test** button says exactly that, with a link that enables it.
 
 ## The badge
 
@@ -150,6 +185,8 @@ lib/ytpage.js       reading the watch page
 lib/store.js        settings + the per-video cache (7 days, 200 videos)
 lib/auth.js         chrome.identity, lazily imported, used nowhere else
 lib/ai.js           the optional tier: prompt, three providers, response parsing
+lib/keytest.js      "is this key any good?", answered with a real reason
+setup-api-key.sh    creates the key in your own Google Cloud account
 ```
 
 ## Tests
@@ -158,7 +195,7 @@ lib/ai.js           the optional tier: prompt, three providers, response parsing
 node --test tests/*.test.mjs      # or: npm test
 ```
 
-71 tests, no dependencies and no network. The pure modules — parsing,
+78 tests, no dependencies and no network. The pure modules — parsing,
 heuristics, match quality, scoring — are tested directly, because those are the
 places where a mistake means telling you something false about a video.
 

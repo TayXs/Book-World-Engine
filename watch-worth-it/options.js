@@ -91,6 +91,40 @@ async function save() {
   setStatus("Saved.");
 }
 
+/** Test a key against the live API and say what is actually wrong with it. */
+async function testKey(which, inputId, resultId, button) {
+  const node = $(resultId);
+  const apiKey = $(inputId).value.trim();
+  node.className = "status";
+  node.textContent = "Testing…";
+  button.disabled = true;
+  try {
+    const result = await chrome.runtime.sendMessage({ type: "wwi:test-key", which, apiKey });
+    node.classList.add(result?.ok ? "good" : "error");
+    node.textContent = result?.detail || "No answer.";
+    if (result?.fix) {
+      const link = document.createElement("a");
+      link.href = result.fix;
+      link.target = "_blank";
+      link.rel = "noreferrer noopener";
+      link.textContent = " Enable it →";
+      node.appendChild(link);
+    }
+  } catch (error) {
+    node.classList.add("error");
+    node.textContent = String(error.message || error);
+  } finally {
+    button.disabled = false;
+  }
+}
+
+$("testFactCheckKey").addEventListener("click", (event) =>
+  testKey("factcheck", "factCheckApiKey", "factCheckKeyResult", event.currentTarget)
+);
+$("testYoutubeKey").addEventListener("click", (event) =>
+  testKey("youtube", "youtubeApiKey", "youtubeKeyResult", event.currentTarget)
+);
+
 $("save").addEventListener("click", () => save().catch((e) => setStatus(String(e.message || e), true)));
 $("aiProvider").addEventListener("change", showProvider);
 

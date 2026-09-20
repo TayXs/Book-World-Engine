@@ -24,12 +24,17 @@
           <span class="label">Google Fact Check Tools API key</span>
           <input id="factCheckApiKey" type="password" autocomplete="off" spellcheck="false"
                  placeholder="AIza…" />
+          <span class="row">
+            <button id="testFactCheckKey" class="secondary small" type="button">Test</button>
+            <span id="factCheckKeyResult" class="status"></span>
+          </span>
           <span class="hint">
             Free, no billing account. Create a key in the
             <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer noopener">Google
             Cloud console</a> and enable the
             <a href="https://console.cloud.google.com/apis/library/factchecktools.googleapis.com" target="_blank" rel="noreferrer noopener">Fact
             Check Tools API</a>. Without it, every video comes back “Unverified”.
+            <br />Or run <code>./setup-api-key.sh</code> from the extension folder and it does all of that for you.
           </span>
         </label>
 
@@ -37,6 +42,10 @@
           <span class="label">YouTube Data API key <span class="optional">optional</span></span>
           <input id="youtubeApiKey" type="password" autocomplete="off" spellcheck="false"
                  placeholder="AIza…" />
+          <span class="row">
+            <button id="testYoutubeKey" class="secondary small" type="button">Test</button>
+            <span id="youtubeKeyResult" class="status"></span>
+          </span>
           <span class="hint">
             Sharpens the channel signals — real subscriber counts, channel age, upload cadence.
             The same key works if you enable the YouTube Data API v3 on it. Left blank, those
