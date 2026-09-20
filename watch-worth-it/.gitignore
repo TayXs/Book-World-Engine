@@ -1,2 +1,6 @@
 node_modules/
-*.zip
+
+# The repo root ignores dist/, but this one zip is committed on purpose: it is
+# what you download on a phone, where there is no way to run build.sh.
+!dist/
+!dist/watch-worth-it.zip

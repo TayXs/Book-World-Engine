@@ -19,6 +19,8 @@ thing worth setting up is a free Fact Check Tools API key.
 
 ## Install
 
+### On a computer
+
 1. `chrome://extensions` → enable **Developer mode** → **Load unpacked** → pick
    this `watch-worth-it/` folder.
 2. Get an API key (below) and paste it into the options page, which opens on
@@ -34,7 +36,11 @@ a gray **Unverified** badge, because nothing was looked up.
 Free: no billing account, no credit card, no OAuth. One key covers both APIs the
 extension can use.
 
-**The quick way** — from this folder:
+**On a phone:** skip the script — it needs the gcloud CLI, which is not a
+realistic Android install. `console.cloud.google.com` works fine in mobile
+Chrome with **Desktop site** turned on (⋮ menu); follow the by-hand steps below.
+
+**The quick way** (on a computer) — from this folder:
 
 ```bash
 ./setup-api-key.sh
@@ -172,9 +178,9 @@ the free heuristics with a warning rather than an empty panel.
 ## Files
 
 ```
-manifest.json       MV3: storage + scripting, youtube.com + googleapis.com
+manifest.json       MV3: storage + scripting, www + m.youtube.com, googleapis
 background.js       the pipeline, end to end - the file to read first
-content.js          badge and panel (shadow DOM) + same-origin fetch proxy
+content.js          badge and panel (shadow DOM, desktop + mobile) + fetch proxy
 options.html/js     keys and toggles
 lib/transcript.js   caption parsing, track choice, cue -> text with timings
 lib/claims.js       the heuristics
@@ -187,6 +193,7 @@ lib/auth.js         chrome.identity, lazily imported, used nowhere else
 lib/ai.js           the optional tier: prompt, three providers, response parsing
 lib/keytest.js      "is this key any good?", answered with a real reason
 setup-api-key.sh    creates the key in your own Google Cloud account
+build.sh            packs dist/watch-worth-it.zip, the Android install file
 ```
 
 ## Tests
@@ -195,7 +202,7 @@ setup-api-key.sh    creates the key in your own Google Cloud account
 node --test tests/*.test.mjs      # or: npm test
 ```
 
-78 tests, no dependencies and no network. The pure modules — parsing,
+82 tests, no dependencies and no network. The pure modules — parsing,
 heuristics, match quality, scoring — are tested directly, because those are the
 places where a mistake means telling you something false about a video.
 
@@ -226,3 +233,7 @@ cached), and the AI tier both working and failing back to the free heuristics.
   The fact-check lookup still does that, and still usually comes back empty.
 - **Keys live in `chrome.storage.local`**, unencrypted, like any extension
   setting. Anything with access to your Chrome profile can read them.
+- **The mobile selectors are unverified.** They were written without a device to
+  test against, which is exactly why the floating fallback exists. The pipeline
+  itself is tested on both origins; where the badge *lands* on mobile is the
+  part that may need a fix.

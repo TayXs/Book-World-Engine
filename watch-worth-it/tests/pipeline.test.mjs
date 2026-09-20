@@ -61,7 +61,15 @@ const FACT_CHECK = {
  * background.js registers its listener once, on import, so the harness is set
  * up once too: tests change how the stubs behave rather than replacing them.
  */
-const config = { livePlayer: false, serveCaptions: true, tabFails: false, aiResponse: null, aiFails: false };
+const config = {
+  livePlayer: false,
+  serveCaptions: true,
+  tabFails: false,
+  tabCrossOrigin: false, // the content script refuses, as it does on m.youtube.com
+  tabMissing: false, // no content script in the tab at all
+  aiResponse: null,
+  aiFails: false,
+};
 const calls = { tabFetches: [], apiFetches: [], executeScript: 0 };
 
 function fakeStorage() {
@@ -114,6 +122,8 @@ globalThis.chrome = {
   tabs: {
     sendMessage: async (_tabId, message) => {
       calls.tabFetches.push(message.url);
+      if (config.tabMissing) throw new Error("Could not establish connection. Receiving end does not exist.");
+      if (config.tabCrossOrigin) return { ok: false, status: 0, crossOrigin: true, error: "cross-origin" };
       if (config.tabFails) return { ok: false, status: 500, error: "HTTP 500" };
       if (message.url.includes("/watch?v=")) {
         return {
@@ -132,8 +142,21 @@ globalThis.chrome = {
   },
 };
 
+const youtubeBody = (url) => {
+  if (url.includes("/watch?v=")) {
+    return `<script>var ytInitialPlayerResponse = ${JSON.stringify(PLAYER_RESPONSE)};</script>`;
+  }
+  if (url.includes("timedtext")) return config.serveCaptions ? JSON.stringify(CAPTIONS) : "";
+  return null;
+};
+
 globalThis.fetch = async (url) => {
   calls.apiFetches.push(String(url));
+  if (String(url).includes("youtube.com")) {
+    const body = youtubeBody(String(url));
+    if (body === null) return { ok: false, status: 404, text: async () => "" };
+    return { ok: true, status: 200, text: async () => body };
+  }
   if (String(url).includes("factchecktools.googleapis.com")) {
     return { ok: true, status: 200, json: async () => FACT_CHECK };
   }
@@ -159,7 +182,15 @@ const send = (message) =>
 /** Back to a clean slate between tests: empty storage, default behaviour. */
 async function reset(patch = {}) {
   storage = fakeStorage();
-  Object.assign(config, { livePlayer: false, serveCaptions: true, tabFails: false, aiFails: false, aiResponse: null });
+  Object.assign(config, {
+    livePlayer: false,
+    serveCaptions: true,
+    tabFails: false,
+    tabCrossOrigin: false,
+    tabMissing: false,
+    aiFails: false,
+    aiResponse: null,
+  });
   calls.tabFetches.length = 0;
   calls.apiFetches.length = 0;
   calls.executeScript = 0;
@@ -356,6 +387,50 @@ test("the AI tier is not even loaded unless it is switched on with a key", async
   assert.equal(result.tier, "free");
   assert.equal(calls.apiFetches.filter((u) => u.includes("generativelanguage")).length, 0);
   assert.ok(result.warnings.some((w) => /no API key/i.test(w)));
+});
+
+test("on mobile YouTube the page is fetched from m.youtube.com, not www", async () => {
+  await reset();
+  await send({ type: "wwi:analyze", videoId: VIDEO_ID, origin: "https://m.youtube.com", pageSignals: {} });
+
+  const pageFetch = calls.tabFetches.find((url) => url.includes("/watch?v="));
+  assert.ok(pageFetch.startsWith("https://m.youtube.com/"), `got ${pageFetch}`);
+  assert.ok(
+    !calls.tabFetches.some((url) => url.startsWith("https://www.youtube.com/watch")),
+    "no pointless cross-origin round trip to www"
+  );
+});
+
+test("a caption url the page cannot fetch is fetched by the worker instead", async () => {
+  await reset();
+  config.tabCrossOrigin = true; // every tab fetch refused, as m.youtube.com does for www urls
+
+  const result = await send({ type: "wwi:analyze", videoId: VIDEO_ID, origin: "https://m.youtube.com", pageSignals: {} });
+
+  assert.equal(result.status, "ok", "the analysis still completes");
+  assert.equal(result.claims.length, 2);
+  assert.ok(
+    calls.apiFetches.some((url) => url.includes("timedtext")),
+    "the worker fetched the captions directly, using its host permissions"
+  );
+});
+
+test("a tab with no content script still gets analysed", async () => {
+  await reset();
+  config.tabMissing = true;
+
+  const result = await send({ type: "wwi:analyze", videoId: VIDEO_ID, pageSignals: {} });
+  assert.equal(result.status, "ok");
+  assert.ok(calls.apiFetches.some((url) => url.includes("youtube.com")));
+});
+
+test("a genuine http error from the page is not retried into a false success", async () => {
+  await reset();
+  config.tabFails = true;
+
+  const result = await send({ type: "wwi:analyze", videoId: VIDEO_ID, pageSignals: {} });
+  assert.equal(result.status, "no-transcript");
+  assert.equal(result.transient, true);
 });
 
 test("unknown messages are refused rather than silently ignored", async () => {

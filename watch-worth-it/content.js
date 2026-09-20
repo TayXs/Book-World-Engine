@@ -24,6 +24,7 @@ const STYLE = `
   display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
   border: 1px solid var(--line); border-radius: 999px; background: var(--card);
   color: var(--fg); padding: 5px 12px 5px 6px; font-size: 13px; line-height: 1;
+  min-height: 40px; /* a thumb, not a mouse pointer */
 }
 .badge:hover { border-color: var(--muted); }
 .mark {
@@ -40,7 +41,17 @@ const STYLE = `
 .panel {
   margin-top: 10px; padding: 14px 16px; border: 1px solid var(--line);
   border-radius: 12px; background: var(--card); color: var(--fg);
-  font-size: 13px; line-height: 1.5; max-width: 760px;
+  font-size: 13px; line-height: 1.5;
+  max-width: min(760px, calc(100vw - 24px));
+}
+
+/* Pinned to the corner, when no anchor in the page could be found. */
+.root[data-placement="floating"] .badge { box-shadow: 0 4px 16px rgba(0, 0, 0, .35); }
+.root[data-placement="floating"] .panel {
+  position: fixed; left: 8px; right: 8px; bottom: 74px;
+  max-width: none; max-height: 68vh; overflow-y: auto;
+  margin: 0; box-shadow: 0 8px 28px rgba(0, 0, 0, .4);
+  overscroll-behavior: contain;
 }
 h3 { font-size: 13px; margin: 16px 0 8px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 h3 .count { color: var(--fg); font-weight: 700; }
@@ -66,6 +77,18 @@ ul { list-style: none; margin: 0; padding: 0; }
 .link { color: #3ea6ff; text-decoration: none; }
 .link:hover { text-decoration: underline; }
 .signals > li { display: grid; grid-template-columns: 110px 1fr 140px; gap: 8px; align-items: center; padding: 3px 0; }
+@media (max-width: 560px) {
+  .signals > li { grid-template-columns: 1fr auto; row-gap: 2px; padding: 6px 0; }
+  .signals .bar { grid-column: 1 / -1; order: 3; }
+  .part-detail { text-align: right; }
+  .panel { padding: 14px 14px 16px; font-size: 14px; }
+  .foot { flex-wrap: wrap; row-gap: 12px; }
+  .foot .link { flex-basis: 100%; }   /* the link takes its own line ... */
+  .foot .spacer { display: none; }     /* ... so the two buttons can share the next */
+  .foot .text-button { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; }
+  .text-button, .stamp-link { min-height: 36px; }
+  .claims > li { padding: 12px 0; }
+}
 .bar { background: var(--chip); border-radius: 999px; height: 6px; overflow: hidden; }
 .fill { display: block; height: 100%; background: #3ea6ff; }
 .part-detail { color: var(--muted); font-size: 12px; text-align: right; }
@@ -95,6 +118,21 @@ let shadow = null;
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type !== "wwi:fetch") return false;
+
+  // On m.youtube.com the caption urls point at www.youtube.com, and an MV3
+  // content script has no host privileges across origins - that fetch would be
+  // refused by CORS. Hand it straight back so the worker can do it instead.
+  let sameOrigin = false;
+  try {
+    sameOrigin = new URL(message.url, location.href).origin === location.origin;
+  } catch {
+    sameOrigin = false;
+  }
+  if (!sameOrigin) {
+    sendResponse({ ok: false, status: 0, crossOrigin: true, error: "cross-origin" });
+    return true;
+  }
+
   fetch(message.url, { credentials: "include" })
     .then(async (response) => ({
       ok: response.ok,
@@ -114,13 +152,26 @@ const text = (selector) => document.querySelector(selector)?.textContent?.trim()
 /** What the watch page already knows, for when no API key is configured. */
 function pageSignals() {
   return {
-    title: text("#above-the-fold #title h1") || text("h1.ytd-watch-metadata") || document.title.replace(/ - YouTube$/, ""),
-    channelTitle: text("#upload-info #channel-name a") || text("ytd-channel-name#channel-name a"),
-    subscriberText: text("#owner-sub-count"),
-    viewText: text("#info-container #view-count") || text("ytd-watch-info-text #view-count"),
+    title:
+      text("#above-the-fold #title h1") ||
+      text("h1.ytd-watch-metadata") ||
+      text(".slim-video-information-title") ||
+      text("ytm-slim-video-information-renderer h1") ||
+      document.title.replace(/ - YouTube$/, ""),
+    channelTitle:
+      text("#upload-info #channel-name a") ||
+      text("ytd-channel-name#channel-name a") ||
+      text(".slim-owner-channel-name") ||
+      text("ytm-slim-owner-renderer .yt-core-attributed-string"),
+    subscriberText: text("#owner-sub-count") || text(".slim-owner-subscriber-count"),
+    viewText:
+      text("#info-container #view-count") ||
+      text("ytd-watch-info-text #view-count") ||
+      text(".slim-video-information-views"),
     dateText:
       document.querySelector("#info-container yt-formatted-string")?.textContent?.trim() ||
-      text("ytd-watch-info-text"),
+      text("ytd-watch-info-text") ||
+      text(".slim-video-information-date"),
   };
 }
 
@@ -131,17 +182,51 @@ function videoIdFromLocation() {
 
 /* ------------------------------------------------------------------- mounting */
 
-function anchorNode() {
-  return (
-    document.querySelector("#above-the-fold #title") ||
-    document.querySelector("ytd-watch-metadata #title") ||
-    document.querySelector("h1.ytd-watch-metadata")?.parentElement ||
-    null
-  );
+/**
+ * Where to put the badge. Desktop and mobile YouTube are different apps with
+ * different markup, and both get rewritten without warning, so this is a list
+ * of candidates rather than one selector - and when every candidate misses, the
+ * badge pins itself to the viewport instead of silently not existing.
+ */
+const ANCHORS = [
+  // Desktop (www.youtube.com)
+  "#above-the-fold #title",
+  "ytd-watch-metadata #title",
+  "h1.ytd-watch-metadata",
+  // Mobile (m.youtube.com)
+  ".slim-video-information-title",
+  "ytm-slim-video-information-renderer",
+  "ytm-slim-video-metadata-section-renderer",
+  "ytm-video-with-context-renderer",
+  "ytm-item-section-renderer",
+];
+
+function isVisible(node) {
+  if (!node) return false;
+  if (node.offsetParent !== null) return true;
+  return node.getClientRects().length > 0;
+}
+
+/** The best in-page home for the badge, or null if the page has not got there yet. */
+function findInlineAnchor() {
+  for (const selector of ANCHORS) {
+    const node = document.querySelector(selector);
+    if (isVisible(node)) return node.id === "title" || selector.startsWith("h1") ? node.parentElement || node : node;
+  }
+  // Nothing known matched: any visible <h1> is almost certainly the video title.
+  const heading = Array.from(document.querySelectorAll("h1")).find(isVisible);
+  return heading?.parentElement || null;
+}
+
+function findAnchor() {
+  const inline = findInlineAnchor();
+  if (inline) return { node: inline, placement: "inline" };
+  // Pinned to the corner. Ugly, but it cannot be defeated by a DOM rewrite.
+  return { node: document.body, placement: "floating" };
 }
 
 function ensureHost() {
-  const anchor = anchorNode();
+  const { node: anchor, placement } = findAnchor();
   if (!anchor) return null;
 
   let host = document.getElementById(HOST_ID);
@@ -151,11 +236,21 @@ function ensureHost() {
     shadow = host.attachShadow({ mode: "open" });
     shadow.innerHTML = `<style>${STYLE}</style><div class="root"></div>`;
   }
+
+  if (placement === "floating") {
+    host.setAttribute(
+      "style",
+      "position:fixed;right:10px;bottom:76px;z-index:2147483000;margin:0;"
+    );
+  } else {
+    host.removeAttribute("style");
+  }
+
   if (host.parentElement !== anchor) anchor.appendChild(host);
   shadow = host.shadowRoot;
-  shadow.querySelector(".root").dataset.theme = document.documentElement.hasAttribute("dark")
-    ? "dark"
-    : "light";
+  const root = shadow.querySelector(".root");
+  root.dataset.theme = document.documentElement.hasAttribute("dark") ? "dark" : "light";
+  root.dataset.placement = placement;
   return host;
 }
 
@@ -171,6 +266,7 @@ async function run({ force = false } = {}) {
     const result = await chrome.runtime.sendMessage({
       type: "wwi:analyze",
       videoId,
+      origin: location.origin, // www or m - the fallback page fetch must match
       pageSignals: pageSignals(),
       force,
     });
@@ -440,11 +536,11 @@ async function onNavigate() {
 }
 
 function waitForAnchor(timeoutMs = 10000) {
-  if (anchorNode()) return Promise.resolve();
+  if (findInlineAnchor()) return Promise.resolve();
   return new Promise((resolve) => {
     const started = Date.now();
     const observer = new MutationObserver(() => {
-      if (anchorNode() || Date.now() - started > timeoutMs) {
+      if (findInlineAnchor() || Date.now() - started > timeoutMs) {
         observer.disconnect();
         resolve();
       }
@@ -465,7 +561,11 @@ setInterval(() => {
   if (location.href !== lastHref) {
     lastHref = location.href;
     onNavigate();
+    return;
   }
+  // Mobile YouTube rebuilds whole sections as you scroll; if our host was taken
+  // out with one of them, put it back.
+  if (state.phase !== "idle" && !document.getElementById(HOST_ID)?.isConnected) render();
 }, 1000);
 
 onNavigate();

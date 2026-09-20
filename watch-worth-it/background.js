@@ -74,7 +74,7 @@ function analyzeOnce(message, sender) {
   return promise;
 }
 
-async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
+async function analyze({ videoId, pageSignals = {}, force = false, origin }, tabId) {
   if (!videoId) throw new Error("no video id");
   const settings = await getSettings();
 
@@ -85,7 +85,7 @@ async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
 
   const warnings = [];
   let failure = null;
-  const player = await readPlayer(tabId, videoId).catch((error) => {
+  const player = await readPlayer(tabId, videoId, origin).catch((error) => {
     failure = `Could not read this page's caption list (${error.message}).`;
     warnings.push(failure);
     return null;
@@ -203,7 +203,7 @@ async function analyze({ videoId, pageSignals = {}, force = false }, tabId) {
  * SPA navigation, so the video id is verified before it is trusted, and the
  * served HTML is the fallback.
  */
-async function readPlayer(tabId, videoId) {
+async function readPlayer(tabId, videoId, origin) {
   if (tabId !== undefined && tabId !== null) {
     try {
       const [injected] = await chrome.scripting.executeScript({
@@ -218,7 +218,10 @@ async function readPlayer(tabId, videoId) {
     }
   }
 
-  const html = await fetchViaTab(tabId, `https://www.youtube.com/watch?v=${videoId}&hl=en`);
+  // Same host as the tab: fetching www from an m.youtube.com page is a
+  // cross-origin round trip we do not need to make.
+  const host = origin === "https://m.youtube.com" ? origin : "https://www.youtube.com";
+  const html = await fetchViaTab(tabId, `${host}/watch?v=${videoId}&hl=en`);
   const summary = summarizePlayerResponse(extractPlayerResponse(html));
   if (!summary) throw new Error("no player response in the page");
   return summary;
@@ -276,10 +279,33 @@ async function readTranscript(tabId, player) {
  * answering.
  */
 async function fetchViaTab(tabId, url) {
-  if (tabId === undefined || tabId === null) throw new Error("no tab to fetch from");
-  const response = await chrome.tabs.sendMessage(tabId, { type: "wwi:fetch", url });
-  if (!response?.ok) throw new Error(response?.error || `HTTP ${response?.status ?? "?"}`);
-  return response.body;
+  if (tabId !== undefined && tabId !== null) {
+    try {
+      const response = await chrome.tabs.sendMessage(tabId, { type: "wwi:fetch", url });
+      if (response?.ok) return response.body;
+      // A cross-origin url (mobile YouTube asking for a www.youtube.com caption
+      // track) is the worker's job, not the page's. So is a dead content script.
+      if (!response?.crossOrigin && response?.status) {
+        throw new Error(response.error || `HTTP ${response.status}`);
+      }
+    } catch (error) {
+      if (!/Receiving end does not exist|message port closed/i.test(String(error?.message))) {
+        if (!/cross-origin/i.test(String(error?.message))) throw error;
+      }
+    }
+  }
+  return fetchDirect(url);
+}
+
+/**
+ * The worker holds the host permissions, so it can fetch either YouTube origin.
+ * It is the fallback rather than the default because a request from the tab is
+ * same-origin and carries the session, which the caption endpoint prefers.
+ */
+async function fetchDirect(url) {
+  const response = await fetch(url, { credentials: "include" });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.text();
 }
 
 /* ------------------------------------------------------------------- channel */
