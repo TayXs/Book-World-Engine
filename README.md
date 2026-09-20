@@ -162,6 +162,14 @@ the Python tests stayed green. It skips itself when Playwright or a browser is
 missing, so `pytest` still works without them; `playwright install chromium` enables
 it.
 
+## Also in this repo
+
+`watch-worth-it/` is a separate, standalone Chrome extension with the opposite
+tradeoff: it runs entirely in the browser with no backend and no model call, so
+it answers in a second and costs nothing, but it can only report what published
+fact-checkers have *already* written about a video's claims - usually nothing.
+Truthcast does the research itself. See `watch-worth-it/README.md`.
+
 ## Honest limits
 
 - **It is a filter, not an oracle.** It reduces what reaches you to claims with real,
