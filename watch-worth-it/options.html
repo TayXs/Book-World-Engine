@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Watch Worth It — settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Watch Worth It</h1>
+        <p class="lead">
+          Everything on this page is optional. With no keys at all the extension still reads the
+          transcript, pulls out the claims worth checking, and reads the channel signals off the
+          watch page — it just cannot look anything up.
+        </p>
+      </header>
+
+      <section>
+        <h2>Free tier</h2>
+
+        <label class="field">
+          <span class="label">Google Fact Check Tools API key</span>
+          <input id="factCheckApiKey" type="password" autocomplete="off" spellcheck="false"
+                 placeholder="AIza…" />
+          <span class="hint">
+            Free, no billing account. Create a key in the
+            <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer noopener">Google
+            Cloud console</a> and enable the
+            <a href="https://console.cloud.google.com/apis/library/factchecktools.googleapis.com" target="_blank" rel="noreferrer noopener">Fact
+            Check Tools API</a>. Without it, every video comes back “Unverified”.
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="label">YouTube Data API key <span class="optional">optional</span></span>
+          <input id="youtubeApiKey" type="password" autocomplete="off" spellcheck="false"
+                 placeholder="AIza…" />
+          <span class="hint">
+            Sharpens the channel signals — real subscriber counts, channel age, upload cadence.
+            The same key works if you enable the YouTube Data API v3 on it. Left blank, those
+            numbers are scraped from the watch page instead.
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="label">Claims to check per video</span>
+          <input id="maxClaims" type="number" min="1" max="25" step="1" />
+          <span class="hint">Each claim costs one Fact Check API lookup. Ten is plenty for most videos.</span>
+        </label>
+
+        <label class="check">
+          <input id="autoRun" type="checkbox" />
+          <span>Check videos automatically when a watch page opens</span>
+        </label>
+      </section>
+
+      <section>
+        <h2>Cache</h2>
+        <p class="hint">Results are kept per video in local storage for seven days.</p>
+        <button id="clearCache" class="secondary" type="button">Clear cached results</button>
+      </section>
+
+      <footer>
+        <button id="save" type="button">Save</button>
+        <span id="status" class="status" role="status"></span>
+      </footer>
+    </main>
+    <script src="options.js" type="module"></script>
+  </body>
+</html>

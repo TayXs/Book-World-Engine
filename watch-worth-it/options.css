@@ -1,0 +1,44 @@
+:root {
+  --fg: #0f0f0f; --muted: #606060; --line: #e3e3e3; --bg: #ffffff; --card: #fafafa;
+  --accent: #065fd4; --danger: #d93025;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #f1f1f1; --muted: #aaaaaa; --line: #3f3f3f; --bg: #181818; --card: #212121;
+    --accent: #3ea6ff;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 32px 20px 64px; background: var(--bg); color: var(--fg);
+  font-family: "Roboto", "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.55;
+}
+main { max-width: 680px; margin: 0 auto; }
+h1 { font-size: 22px; margin: 0 0 8px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 14px; }
+.lead { color: var(--muted); margin: 0 0 28px; }
+section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.field { display: block; margin-bottom: 20px; }
+.field:last-of-type { margin-bottom: 0; }
+.label { display: block; font-weight: 500; margin-bottom: 6px; }
+.optional { color: var(--muted); font-weight: 400; font-size: 12px; }
+input[type="password"], input[type="text"], input[type="number"], select {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--fg); font: inherit;
+}
+input[type="number"] { width: 110px; }
+input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.hint { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
+.hint a { color: var(--accent); }
+.check { display: flex; align-items: center; gap: 9px; margin-top: 18px; }
+.check input { width: 16px; height: 16px; }
+button {
+  background: var(--accent); color: #fff; border: none; border-radius: 999px;
+  padding: 9px 22px; font: inherit; font-weight: 500; cursor: pointer;
+}
+button:hover { filter: brightness(1.08); }
+button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+button:disabled { opacity: .55; cursor: default; }
+footer { display: flex; align-items: center; gap: 14px; }
+.status { color: var(--muted); font-size: 13px; }
+.status.error { color: var(--danger); }
