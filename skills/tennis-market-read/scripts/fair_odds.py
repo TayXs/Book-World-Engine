@@ -7,6 +7,7 @@ Input: a JSON file with a list of rows, one per (match, bookmaker/source):
    "odds_a": 1.14, "odds_b": 5.6, "odds_format": "decimal" | "american",   # american: e.g. -500 / 333
    "source": "Tennis Tonic", "source_note": "initial odds", "age_hours": 15,  # optional: hours old at run time
    "sharp": false,                                                           # optional: Pinnacle / exchange price
+   "level": "tour",   # optional: tour | challenger | itf (else guessed from tour/event); a round starting "Q" = qualifying
    "start": "optional text"}
 Several rows for the same match (any order of players) are merged into one match.
 
@@ -18,7 +19,8 @@ How the fair chance is chosen (research, 2022-24 Pinnacle data):
     other forecast we built;
   * otherwise the freshest rows are averaged (rows more than FRESH_WINDOW hours older than the newest are
     dropped), because later prices beat earlier ones and a consensus of books is steadier than any one book.
-Expected return is shown at the first-listed source's price and at the best price found for the favourite."""
+Expected return is shown at the lead source's price and at the best price found for the favourite.
+LEVEL_HISTORY holds Pinnacle 2021-24 opening-price results per level (all-level re-analysis, 2026-09-28)."""
 import argparse, json, math
 
 SHARP_WORDS = ("pinnacle", "betfair", "exchange", "smarkets", "matchbook")
@@ -26,6 +28,25 @@ FRESH_WINDOW = 6          # hours
 STALE_HOURS = 12
 SPLIT_WARN = 0.05         # sources disagree on the favourite's chance by more than 5 points
 HEAVY, FAV = 0.75, 0.60
+# Pinnacle opening prices 2021-24, favourite = higher power-method chance, settled under Pinnacle's one-set rule.
+# cut = median margin; fav_won / fav_ret = all favourites; heavy_* = favourites priced above 75%.
+LEVEL_HISTORY = {
+    "tour main draw":  dict(cut=0.030, fav_won=0.681, fav_ret=-0.025, heavy_won=0.847, heavy_ret=-0.001, n=18802),
+    "tour qualifying": dict(cut=0.048, fav_won=0.687, fav_ret=-0.020, heavy_won=0.846, heavy_ret=-0.012, n=9821),
+    "challenger":      dict(cut=0.070, fav_won=0.667, fav_ret=-0.044, heavy_won=0.822, heavy_ret=-0.034, n=54727),
+    "itf":             dict(cut=0.075, fav_won=0.708, fav_ret=-0.044, heavy_won=0.842, heavy_ret=-0.032, n=54739),
+}
+
+
+def level_of(m):
+    lv = name(m.get("level", ""))
+    if not lv:
+        text = " ".join(name(m.get(k, "")) for k in ("tour", "event"))
+        lv = ("itf" if "itf" in text else
+              "challenger" if any(w in text for w in ("challenger", "ch ", "125")) or name(m.get("tour", "")) == "ch" else "tour")
+    if lv == "tour":
+        lv = "tour qualifying" if name(m.get("round", "")).startswith("q") else "tour main draw"
+    return lv if lv in LEVEL_HISTORY else "tour main draw"
 
 
 def to_decimal(x, fmt):
@@ -99,6 +120,7 @@ def merge(rows):
     best_row = max(rows, key=lambda r: oriented(r, name(fav))[1])
     best = oriented(best_row, name(fav))[1]
     m = {k: rows[0].get(k) for k in ("tour", "event", "round", "start")}
+    m["level"] = level_of(rows[0])
     m.update(player_a=a, player_b=b, odds_a_dec=oriented(lead, name(a))[1], odds_b_dec=oriented(lead, name(b))[1],
              margin=lead["margin"], fair_a=pa, fair_b=1 - pa,
              prop_a=lead["prop_a"] if name(lead["player_a"]) == name(a) else lead["prop_b"],
@@ -181,13 +203,25 @@ def main():
               f"({', '.join(safer['players'])}) -> {safer['chance_all_win']:.0%}, expected return {safer['expected_return']:+.1%}")
     else:
         print(f"HIGHEST-PROBABILITY SET: no set of 2+ favourites keeps the all-win chance >= {a.min_chance:.0%}")
-    print(f"HEAVY FAVOURITES (>75%, historically won 84-86%): {len(heavy)}"
+    print(f"HEAVY FAVOURITES (>75%; historical hit rate per level below): {len(heavy)}"
           + (f" - {', '.join(r['favourite'] + ' ' + format(r['fav_prob'], '.0%') for r in heavy)}" if heavy else ""))
+
+    levels = sorted({r["level"] for r in matches}, key=list(LEVEL_HISTORY).index)
+    if levels:
+        print("\nLEVEL CONTEXT (Pinnacle opening prices 2021-24; today's cut = average margin of the lead sources)")
+    for lv in levels:
+        h, here = LEVEL_HISTORY[lv], [r for r in matches if r["level"] == lv]
+        cut = sum(r["margin"] for r in here) / len(here)
+        print(f"- {lv} ({len(here)} today): cut today {cut:.1%} vs Pinnacle's usual {h['cut']:.1%}"
+              f" ({cut - h['cut']:+.1%} extra). Historically favourites won {h['fav_won']:.0%}, backing all of them returned "
+              f"{h['fav_ret']:+.1%} per bet; above 75% they won {h['heavy_won']:.0%} and returned {h['heavy_ret']:+.1%}"
+              " - at Pinnacle's price, before any extra cut.")
 
     if a.json:
         json.dump({"matches": matches, "excluded": excluded, "ranked": [r["favourite"] for r in ranked],
                    "ladder": ladder, "combo": combo, "highest_probability_set": safer,
-                   "heavy_favourites": [r["favourite"] for r in heavy]}, open(a.json, "w"), indent=2, default=str)
+                   "heavy_favourites": [r["favourite"] for r in heavy],
+                   "level_context": {lv: LEVEL_HISTORY[lv] for lv in levels}}, open(a.json, "w"), indent=2, default=str)
 
 
 if __name__ == "__main__":
