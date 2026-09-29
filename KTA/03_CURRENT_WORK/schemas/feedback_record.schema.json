@@ -13,7 +13,9 @@
     "observations",
     "harm_report",
     "evidence_grade",
-    "result_class"
+    "result_class",
+    "trust",
+    "mission_progress"
   ],
   "additionalProperties": false,
   "properties": {
@@ -210,8 +212,10 @@
         "disconfirms",
         "mixed",
         "null_result",
+        "inconclusive",
         "not_applicable"
-      ]
+      ],
+      "description": "null_result = measured, no detectable effect (informative). inconclusive = evidence too weak or missing to classify (E0/E1). Repair R1."
     },
     "checkin_minutes": {
       "type": [
@@ -219,6 +223,54 @@
         "null"
       ],
       "minimum": 0
+    },
+    "trust": {
+      "type": "object",
+      "required": [
+        "rating_0_10",
+        "fact_error_reported"
+      ],
+      "additionalProperties": false,
+      "description": "CQ-13 (repair R3).",
+      "properties": {
+        "rating_0_10": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 10
+        },
+        "fact_error_reported": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "mission_progress": {
+      "type": "object",
+      "required": [
+        "success_signals_observed",
+        "evidence_grade"
+      ],
+      "additionalProperties": false,
+      "description": "CQ-14 (repair R3): which of the packet's goal.success_signals the user has observed, and how strongly evidenced.",
+      "properties": {
+        "success_signals_observed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_grade": {
+          "$ref": "common.schema.json#/$defs/evidence_grade"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
     }
   }
 }

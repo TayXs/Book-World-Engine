@@ -302,6 +302,7 @@
               "disconfirms",
               "mixed",
               "null_result",
+              "inconclusive",
               "partial",
               "not_attempted",
               "harm"

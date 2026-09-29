@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://kta.invalid/schemas/mission_packet.schema.json",
   "title": "Mission Packet v0.1",
-  "description": "Structural contract for the Mission Generation Engine output. Cross-field invariants (INV-01..15) are enforced by tools/kta_check.py, not by this schema alone. See MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md.",
+  "description": "Structural contract for the Mission Generation Engine output. Cross-field invariants (INV-01..16) are enforced by tools/kta_check.py, not by this schema alone. See MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md.",
   "type": "object",
   "required": [
     "meta",
@@ -22,7 +22,8 @@
         "revision",
         "status",
         "created_at",
-        "generated_by"
+        "generated_by",
+        "privacy_check"
       ],
       "additionalProperties": false,
       "properties": {
@@ -91,6 +92,38 @@
         "simulated": {
           "type": "boolean",
           "description": "True for simulation fixtures; never true for real users."
+        },
+        "privacy_check": {
+          "type": "object",
+          "required": [
+            "performed",
+            "stage",
+            "items_redacted"
+          ],
+          "additionalProperties": false,
+          "description": "INV-16 attestation (repair R2): confidential-information redaction pass completed before any LLM drafting.",
+          "properties": {
+            "performed": {
+              "type": "boolean"
+            },
+            "stage": {
+              "const": "before_llm_drafting"
+            },
+            "items_redacted": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "method": {
+              "enum": [
+                "operator",
+                "lint",
+                "operator_and_lint"
+              ]
+            },
+            "note": {
+              "type": "string"
+            }
+          }
         }
       }
     },

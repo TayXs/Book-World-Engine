@@ -5,7 +5,7 @@
     "user_ref": "SIM-ACC",
     "mission_type": "stay_valuable_ai_work",
     "revision": 1,
-    "status": "superseded",
+    "status": "active",
     "created_at": "2026-10-02",
     "generated_by": {
       "method": "llm",

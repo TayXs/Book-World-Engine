@@ -1,0 +1,18 @@
+{
+  "id": "AD02",
+  "packet_id": "MP-SIM-DES-r2",
+  "feedback_id": "FB02",
+  "decided_at": "2026-10-20",
+  "decided_by": "operator",
+  "decision": "rediagnose",
+  "table_rules": [
+    "A5"
+  ],
+  "branch_id": "B5",
+  "ledger_updates": [],
+  "task_map_updates": [],
+  "next": {
+    "summary": "Second non-attempt in a row: run the rediagnose mini-protocol (3 questions, ≤10 min) and offer to stop. Don't push a third audit."
+  },
+  "user_informed": true
+}

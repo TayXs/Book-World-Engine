@@ -187,18 +187,37 @@ Stop asking as soon as any one of these is true:
 3. The user shows fatigue or irritation. Stop, and log the remaining unknowns in the ledger.
 4. D0 has set the scope to `out_of_scope`.
 
+## 6a. Confidential Information Boundary at intake (INV-16; DEC-007 CORE, DEC-009 P1)
+**Standard intake preface.** The operator reads or sends this before DQ-01:
+> "Please describe your work in general terms. Rough numbers help, such as hours a week, how often something happens, a rough share of your time, or rough counts. Please don't share names of your employer, clients or customers, documents, account details, or internal business figures. If something slips out, we'll leave it out of your notes."
+
+| KTA may ask for or use | KTA must not ask for |
+|---|---|
+| Approximate hours per week and frequency | Confidential or proprietary organizational figures, such as revenue, budgets, prices, margins or pipeline values |
+| Approximate time share ("about a third", "~30%") | Documents, files, screenshots or pasted work material |
+| Rough counts ("about 6 projects", "~20 calls a week") | Names of employers, clients, customers or colleagues |
+| Self-estimated proportions and ranges | Account identifiers, e-mail addresses, phone numbers |
+| Generic role, sector and seniority bands | Sensitive internal metrics, such as quota numbers or personal performance ratings |
+
+Prefer abstraction ("a key client", "consistently above quota"), redaction and ranges whenever exact values aren't needed.
+
+**Operator redaction pass.** This is required *before* any LLM drafting:
+1. Remove or abstract anything volunteered that appears confidential.
+2. Run `kta_check.py`. Its INV-16 lint catches identifiers and flags exact figures.
+3. Record `meta.privacy_check` with `items_redacted` set to the count only, never the content.
+
 ## 7. Answer-quality rules
 | Situation | Handling |
 |---|---|
 | The answer is a job title ("I do marketing") | Ask for outputs: "What did you hand over last Thursday?" |
 | "I don't know" on time or frequency | Don't push. Record `UQ` with kind `personal_empirical` and route `experiment` (a `time_audit` candidate). |
 | A self-rating of judgment ("it's all judgment") | Rely on the DQ-08(a) behavioral proxy. Record the inferred trait with source `operator_inferred` and confidence `low`. |
-| An answer that reveals identifying data (names, clients) | Do not store it. Keep the function only ("a key client" instead of the name). |
+| An answer that reveals identifying data (names, clients, internal figures) | Do not store it, and never pass it to an LLM. Keep the function or a range only: "a key client" instead of the name, "above quota" instead of the figure (§6a). |
 | The user asks "will AI replace me?" during intake | Acknowledge it and park it: "We'll look at that with evidence, not guesses." Log it as a `world_fact` or `understanding_gap`. **Never state exposure claims during intake**, because that colors the answers that follow. |
 
 ## 8. Forbidden during intake
 - Leading or fear-priming questions, such as "How likely is it that AI replaces you?"
-- Asking for the employer, client or colleague names, salary, or performance ratings.
+- Asking for employer, client, customer or colleague names, salary, performance ratings, documents, account identifiers, or confidential organizational figures (§6a). Coarse workflow quantities are fine.
 - Long rating grids. The user gives at most three quick probes per task; the rest is inferred and flagged.
 - Recommending anything before the packet exists (Diagnose Before Prescribing).
 
@@ -230,9 +249,10 @@ Stop asking as soon as any one of these is true:
 The checker verifies against the registry JSON that every question card feeds at least one of these fields, and that every always-required intake field has a card or a derivation rule.
 
 ## 10. V0 delivery mode
-The operator runs the intake as a text or voice conversation, or as an async form followed by one operator follow-up. Answers are summarized directly into packet fields. **Verbatim transcripts are not retained after the packet is drafted.** Only the packet fields are kept (Privacy by Minimization). This retention default is part of the pilot consent terms, which need owner approval.
+The operator runs the intake as a text or voice conversation, or as an async form followed by one operator follow-up. Answers are summarized directly into packet fields, **after the §6a redaction pass and before any LLM drafting**. **Verbatim transcripts are not retained after the packet is drafted.** Only the packet fields are kept (Privacy by Minimization). This retention default is part of the pilot consent terms, which need owner approval.
 
 ## Revision log
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Implements AR-07, AR-12 and AR-18. |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs (DEC-010): §6a Confidential Information Boundary: intake preface, allowed vs not-allowed table, operator redaction pass (R2). |

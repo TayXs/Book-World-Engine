@@ -37,7 +37,8 @@ The Blueprint defines V0 as one human-assisted, end-to-end mission for working a
 ## 4. Operator runbook (per participant)
 | Day | Step | Artifact | Spec |
 |---|---|---|---|
-| 0 | Consent (§7). Intake D0–D5 (≤15 min), then D6 follow-ups (≤5 min). | Intake notes, deleted after drafting | DIAGNOSTIC_ARCHITECTURE |
+| 0 | Consent (§7). Read the intake preface (Diagnostic §6a). Intake D0–D5 (≤15 min), then D6 follow-ups (≤5 min). | Intake notes, deleted after drafting | DIAGNOSTIC_ARCHITECTURE |
+| 0 | **Redaction pass before any LLM use (INV-16).** Remove or abstract anything that looks confidential: names, identifiers, documents, internal figures. Keep coarse quantities. Record `meta.privacy_check`. | Redacted notes | Diagnostic §6a, DEC-009 |
 | 0 | Capture the **LLM baseline**: paste the participant's own one-line goal into 2 general assistants and save both answers verbatim. Don't show them yet. | `baseline_llm_*.md` | §6 |
 | 1 | The engine drafts packet r1. Save it as `packet_r1.engine.json`. | Engine draft | Planner rules |
 | 1 | The operator reviews it with the MPR §5 checklist, logs every change, and runs `kta_check.py` until it shows 0 errors. | `packet_r1.json` | Contract, INV-01..15 |
@@ -60,9 +61,12 @@ Triggered by a harm report (A1), a new acute situation (A2), or any operator con
 8. **Tell the owner** within 1 business day of any `serious` incident.
 
 ## 6. Metrics and comparison
-**North Star.** Both definitions are computed until the owner decides MCP-4 (see Feedback logic §9).
-- *Current (DEC-005) literal reading:* attempted **and** (usefulness ≥ 6 **or** decision changed or confirmed).
-- *Proposed (MCP-4):* attempted **and** evidence grade E2 or higher **and** decision changed or confirmed.
+**North Star (DEC-005 as amended; not locked).** `tools/kta_metrics.py` computes every metric below (Feedback logic §9).
+- **Decision-Useful Action Rate (DUAR):** the PROVISIONAL primary candidate, with a per-user companion.
+- **MAR, literal DEC-005 v0.1 reading:** kept for comparison (EXP-V0-04).
+- **Supporting:** Real-World Decision Rate, attempt, completion, decline, evidence mix, usefulness, **trust**, **mission progress**, attention cost, high-impact targeting.
+
+**Safety gate (separate from every metric):** any `serious` harm report triggers the gate. The gate may fail, pause or end the cohort regardless of DUAR. DUAR is still recorded.
 
 **Diagnostics:**
 - attempt rate;
@@ -84,12 +88,14 @@ Triggered by a harm report (A1), a new acute situation (A2), or any operator con
 
 ## 7. Consent and data handling: DRAFT **[OWNER approval required before use]**
 This is a draft of commitments, not final wording.
-- **What we collect:** the packet fields only (task descriptions, time shares, goals, experiment results). **No employer, client or colleague names. No work material.**
+- **What we collect:** the packet fields only: generic task descriptions, goals, experiment results, and **approximate** workflow quantities such as hours a week, how often, rough share of time and rough counts.
+- **What we never ask for:** names of your employer, clients, customers or colleagues; documents or work files; account details; confidential or internal business figures or metrics (DEC-007, DEC-009).
+- **If you share something like that by accident,** it is removed before any AI tool processes your notes.
 - **What we don't keep:** intake notes and transcripts are deleted once the packet is drafted (Diagnostic §10).
 - **Where it's stored:** **[OWNER]** Proposed: a private location only the operator can access, using pseudonymous IDs. It is **not** the public git repository. Real participant data must never be committed to this repo.
 - **Retention:** **[OWNER]** Proposed: deleted 90 days after the pilot ends. Only anonymized, controlled-vocabulary fields are kept for learning across users (Feedback §8), and only with a separate opt-in.
 - **Rights:** a participant can stop at any time and have their data deleted on request.
-- **Safety:** KTA never asks anyone to put confidential work material into unapproved tools (MCP-2).
+- **Safety:** KTA never asks or encourages anyone to put confidential work information into an AI tool their employer or client hasn't approved, and that includes KTA itself (DEC-007, CORE).
 - **Limits:** KTA is not career, legal, financial or mental-health advice. The signpost wording for out-of-scope situations is **[OWNER]**, and should point to local employment support and appropriate support lines.
 
 ## 8. Readiness checklist (all must be ✅ before the first participant)
@@ -105,10 +111,11 @@ This is a draft of commitments, not final wording.
 | Signal | Continue toward Lane 06 software | Revise Lane 02 first | Rethink (material) |
 |---|---|---|---|
 | Attempt rate | ≥ 60% | 30–60% | < 30% |
-| MAR (proposed definition) | ≥ 40% of delivered | 20–40% | < 20% |
+| DUAR (PROVISIONAL primary candidate) | ≥ 40% of recommended | 20–40% | < 20% |
+| MAR (comparison) | reported | reported | reported |
 | LLM-Baseline Preference after the loop | Packet preferred by the majority | Split | Baseline preferred by the majority |
 | Operator change rate | Mostly minor edits | Frequent substantive fixes | The operator is effectively writing the packets |
-| Harm | 0 serious | — | Any serious incident → pause |
+| **Safety gate** (separate from all metrics) | 0 serious | — | Any serious incident triggers the gate: pause, fail or end the cohort regardless of other signals |
 
 These thresholds are **starting proposals** and are not evidence-based. With n = 6–8, they are guides for judgment, not statistical tests.
 
@@ -123,3 +130,4 @@ These thresholds are **starting proposals** and are not evidence-based. With n =
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Includes the FM-21 escalation playbook and the FM-15/16 pilot items. |
+| 0.1-rev2 | 2026-09-29 | Redaction step and consent wording (R2, DEC-009 P1); DUAR, MAR and supporting metrics with a separate safety gate (D4 as amended). Blind evaluation (EXP-V0-00) must come before this pilot. |

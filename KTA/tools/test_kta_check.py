@@ -198,5 +198,123 @@ class RegistryTest(unittest.TestCase):
         self.assertFalse(kc.schema_path_exists("task_map.tasks[].automation_risk", schemas))
 
 
+
+def run_feedback(fb, pk):
+    rep = kc.Report()
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        kc.check_feedback(fb, pk, rep, "test")
+    return rep, buf.getvalue()
+
+
+def run_lint(doc):
+    rep = kc.Report()
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        kc.confidential_lint(doc, rep, "test")
+    return rep, buf.getvalue()
+
+
+class RepairR1NullVsInconclusiveTest(unittest.TestCase):
+    """R1 / FM-23: measured no-effect (null_result) is distinct from too-little-data (inconclusive)."""
+
+    def setUp(self):
+        self.pk = load("SIM-ACC", "packet_r1.json")
+        self.fb = load("SIM-ACC", "feedback_FB01.json")
+        self.ad = load("SIM-ACC", "decision_AD01.json")
+
+    def test_inv12_requires_inconclusive_branch(self):
+        p = copy.deepcopy(self.pk)
+        p["first_experiment"]["branches"] = [b for b in p["first_experiment"]["branches"] if b["condition_type"] != "inconclusive"]
+        rep, out = run_packet(p)
+        self.assertIn("INV-12", out)
+
+    def test_classified_result_needs_e2(self):
+        fb = copy.deepcopy(self.fb)
+        fb["evidence_grade"] = "E1"
+        for o in fb["observations"]:
+            o["grade"] = "E1"
+        rep, out = run_feedback(fb, self.pk)
+        self.assertIn("R1", out)
+
+    def test_inconclusive_maps_to_a16b(self):
+        fb = copy.deepcopy(self.fb)
+        fb["result_class"] = "inconclusive"
+        self.assertEqual(kc.expected_rules(fb, False), ("A16b", "modify"))
+
+    def test_null_result_follows_branch(self):
+        fb = copy.deepcopy(self.fb)
+        fb["result_class"] = "null_result"
+        ad = copy.deepcopy(self.ad)
+        ad.update({"decision": "simplify", "table_rules": ["A16a"], "branch_id": "B4"})
+        rep = kc.Report()
+        with contextlib.redirect_stdout(io.StringIO()):
+            kc.check_decision(ad, fb, self.pk, rep, "test")
+        self.assertEqual(rep.errors, 0)
+        ad["decision"] = "continue"
+        ad["branch_id"] = None
+        rep = kc.Report()
+        with contextlib.redirect_stdout(io.StringIO()):
+            kc.check_decision(ad, fb, self.pk, rep, "test")
+        self.assertGreater(rep.errors, 0)
+
+
+class RepairR2ConfidentialBoundaryTest(unittest.TestCase):
+    """R2 / INV-16 / DEC-009 P1."""
+
+    def setUp(self):
+        self.pk = load("SIM-ACC", "packet_r1.json")
+
+    def test_email_is_error(self):
+        p = copy.deepcopy(self.pk)
+        p["task_map"]["tasks"][0]["description"] += " Send to j.doe@example.com."
+        rep, out = run_lint(p)
+        self.assertIn("INV-16 email", out)
+        self.assertGreater(rep.errors, 0)
+
+    def test_phone_is_error_but_dates_are_not(self):
+        rep, out = run_lint({"a": "call +44 20 7946 0958", "b": "2026-10-01T22:10Z"})
+        self.assertEqual(rep.errors, 1)
+
+    def test_coarse_quantities_allowed(self):
+        rep, out = run_lint({"a": "about 30% of time, roughly 6 projects, 22 vs 38 minutes, 4 days instead of 6"})
+        self.assertEqual((rep.errors, rep.warnings), (0, 0))
+
+    def test_money_and_org_names_warn(self):
+        rep, out = run_lint({"a": "Budget of $250,000 approved by Acme Widgets Ltd"})
+        self.assertEqual(rep.errors, 0)
+        self.assertGreaterEqual(rep.warnings, 2)
+
+    def test_privacy_check_attestation_required(self):
+        p = copy.deepcopy(self.pk)
+        p["meta"]["privacy_check"]["performed"] = False
+        rep, out = run_packet(p)
+        self.assertIn("INV-16", out)
+
+    def test_prohibits_policy_blocks_redacted_work_material(self):
+        p = copy.deepcopy(self.pk)
+        p["context"]["employer_ai_policy"] = {"status": "prohibits"}
+        p["first_experiment"]["materials"]["data_class"] = "redacted_nonconfidential"
+        rep, out = run_packet(p)
+        self.assertIn("prohibitive policy", out)
+
+
+class RepairR3TrustProgressTest(unittest.TestCase):
+    def setUp(self):
+        self.pk = load("SIM-ACC", "packet_r1.json")
+        self.fb = load("SIM-ACC", "feedback_FB01.json")
+
+    def test_unknown_success_signal_rejected(self):
+        fb = copy.deepcopy(self.fb)
+        fb["mission_progress"] = {"success_signals_observed": ["Promoted to CFO"], "evidence_grade": "E2"}
+        rep, out = run_feedback(fb, self.pk)
+        self.assertIn("R3", out)
+
+    def test_signal_needs_evidence(self):
+        fb = copy.deepcopy(self.fb)
+        fb["mission_progress"] = {"success_signals_observed": [self.pk["goal"]["success_signals"][0]], "evidence_grade": "E0"}
+        rep, out = run_feedback(fb, self.pk)
+        self.assertIn("R3", out)
+
 if __name__ == "__main__":
     unittest.main()

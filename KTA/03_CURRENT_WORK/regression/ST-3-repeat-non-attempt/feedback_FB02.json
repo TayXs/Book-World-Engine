@@ -1,11 +1,11 @@
 {
-  "id": "FB01",
-  "packet_id": "MP-SIM-DES-r1",
-  "experiment_id": "AX01",
-  "collected_at": "2026-10-11",
+  "id": "FB02",
+  "packet_id": "MP-SIM-DES-r2",
+  "experiment_id": "AX02",
+  "collected_at": "2026-10-20",
   "channel": "operator_message",
   "attempt_status": "not_attempted",
-  "actions_taken": "Opened the project folder once; a rush job for a repeat client took the week.",
+  "actions_taken": "Didn't get to either sitting.",
   "observations": [],
   "effort_minutes_actual": 5,
   "prediction_comparison": "no_prediction",
@@ -13,7 +13,7 @@
   "blockers": [
     "time"
   ],
-  "blocker_note": "Rush job; 6 projects felt like a big sit-down.",
+  "blocker_note": "Another busy week.",
   "harm_report": {
     "occurred": false,
     "severity": "none"
@@ -28,9 +28,9 @@
   "goal_confidence_0_10": 3,
   "evidence_grade": "E0",
   "result_class": "not_applicable",
-  "checkin_minutes": 4,
+  "checkin_minutes": 3,
   "trust": {
-    "rating_0_10": 6,
+    "rating_0_10": 5,
     "fact_error_reported": false
   },
   "mission_progress": {

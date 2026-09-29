@@ -11,7 +11,13 @@
       "method": "llm",
       "engine_version": "lane02-spec-v0.1-sim"
     },
-    "simulated": true
+    "simulated": true,
+    "privacy_check": {
+      "performed": true,
+      "stage": "before_llm_drafting",
+      "items_redacted": 0,
+      "method": "operator_and_lint"
+    }
   },
   "scope_check": {
     "result": "in_scope"
@@ -880,7 +886,7 @@
       },
       {
         "id": "B4",
-        "condition_type": "null_result",
+        "condition_type": "inconclusive",
         "condition": "Too few relevant postings",
         "next_move": "change_intervention",
         "next_description": "Swap to one conversation with an enterprise AE."
@@ -898,6 +904,13 @@
         "condition": "Anything felt risky (e.g., manager saw it as disloyalty)",
         "next_move": "escalate",
         "next_description": "Operator reviews how to frame the promotion conversation."
+      },
+      {
+        "id": "B7",
+        "condition_type": "null_result",
+        "condition": "Requirements recur, but none separates enterprise roles from what you already do",
+        "next_move": "continue",
+        "next_description": "Ask an enterprise AE what actually differs (conversation_probe)."
       }
     ],
     "safety": {

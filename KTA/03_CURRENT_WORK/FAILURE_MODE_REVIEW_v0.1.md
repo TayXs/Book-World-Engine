@@ -91,6 +91,7 @@ Each trace runs a hostile or messy input through the rules, on paper. There are 
 | FM-20 | "Rediagnose" was undefined | Med | Mini-protocol | Feedback logic |
 | FM-21 | Escalation was undefined | **High** (harm) | Operator playbook | Pilot prep |
 | FM-22 | A decline couldn't be recorded, and refusals would be counted as failures | Med | `declined` status, A18, INV-14 exemption | AX schema, feedback, checker |
+| FM-23 | A16 treated a measured null result the same as too-little-data (found in the acceptance review) | **High** (validity) | **Fixed by R1:** new `inconclusive` class; A16a follows the null branch, A16b fixes the measurement; INV-12 requires an `inconclusive` branch | Feedback, AX schema, contract, checker, fixtures |
 
 ## 4. What remains uncertain (evidence needed, not fixable on paper)
 1. Whether real users find pre-registered, bounded experiments **more** valuable than a longer generic answer (FM-12, FM-14). This is the central V0 question.
@@ -109,3 +110,4 @@ None of these needs a new material decision. They are candidate Experiment Regis
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First review: 22 findings, 5 stress traces; fixes applied as `0.1-rev1` across the Lane 02 drafts. |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs: FM-23 fixed (R1). Stress traces ST-1..5 are now automated regression fixtures in `regression/` with `tools/test_regression.py` (R5). |

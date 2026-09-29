@@ -43,5 +43,14 @@
   "goal_confidence_0_10": 6,
   "evidence_grade": "E2",
   "result_class": "mixed",
-  "checkin_minutes": 10
+  "checkin_minutes": 10,
+  "trust": {
+    "rating_0_10": 7,
+    "fact_error_reported": false
+  },
+  "mission_progress": {
+    "success_signals_observed": [],
+    "evidence_grade": "E0",
+    "note": "No success signal yet; the promotion path is now known."
+  }
 }

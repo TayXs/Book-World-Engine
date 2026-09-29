@@ -1,11 +1,11 @@
 {
   "meta": {
     "contract_version": "0.1",
-    "packet_id": "MP-SIM-ACC-r1",
-    "user_ref": "SIM-ACC",
+    "packet_id": "MP-SIM-ST2-r1",
+    "user_ref": "SIM-ST2",
     "mission_type": "stay_valuable_ai_work",
     "revision": 1,
-    "status": "superseded",
+    "status": "active",
     "created_at": "2026-10-02",
     "generated_by": {
       "method": "llm",
@@ -48,11 +48,9 @@
     },
     "time_budget_minutes_per_week": 60,
     "employer_ai_policy": {
-      "status": "unknown",
-      "approved_tools": [
-        "Microsoft 365 Copilot"
-      ],
-      "notes": "IT email says Copilot is the only approved tool; user does not know whether ledger/financial data may be used with it."
+      "status": "prohibits",
+      "approved_tools": [],
+      "notes": "Employer policy prohibits AI tools for work; manager discourages AI use."
     },
     "ai_experience": "tried",
     "constraints": [
@@ -429,7 +427,7 @@
   "uncertainty_ledger": [
     {
       "id": "UQ01",
-      "statement": "Does the Copilot approval cover internal financial data such as ledger extracts and variance tables?",
+      "statement": "Does the prohibition also cover personal, off-work practice on made-up material?",
       "kind": "user_context",
       "route": "ask",
       "impact": "high",
@@ -699,7 +697,7 @@
       {
         "id": "S1",
         "step_type": "ask",
-        "description": "In a normal 1:1 or IT ticket, ask whether Copilot may be used with internal financial data, and what 'close should get faster' is meant to achieve.",
+        "description": "Ask HR or IT, in a normal channel, whether the policy covers personal off-work practice on made-up material; also ask what 'close should get faster' means.",
         "targets": [
           "UQ01",
           "UQ07"
@@ -861,7 +859,7 @@
   "first_experiment": {
     "id": "AX01",
     "archetype": "shadow_test",
-    "title": "Variance commentary: your way vs Copilot, on made-up numbers",
+    "title": "Variance commentary: your way vs an AI assistant, off-work, on made-up numbers",
     "hypothesis": {
       "statement": "If this user supplies the cause notes, Copilot can produce variance commentary they would send after light edits in at least 30% less time than their usual drafting.",
       "would_be_wrong_if": "Assisted drafting takes as long or longer including edits, or needs three or more substantive corrections of causes or numbers."
@@ -896,7 +894,7 @@
       },
       {
         "n": 3,
-        "instruction": "Give Copilot the invented table and cause notes; ask for commentary in your pack's style. Edit until you'd send it. Time drafting plus edits.",
+        "instruction": "Off-work, on a personal device, give an AI assistant the invented table and cause notes; edit until you'd send it. Time it. Never reuse the output at work.",
         "minutes": 20
       },
       {
@@ -907,10 +905,10 @@
     ],
     "materials": {
       "data_class": "synthetic",
-      "description": "Invented variance table and cause notes mirroring the real pack's structure.",
+      "description": "Invented table and notes; off-work practice only; output never used at work.",
       "tool": {
-        "name": "Microsoft 365 Copilot",
-        "employer_approved": "yes"
+        "name": "Personal AI assistant (off-work practice only)",
+        "employer_approved": "no"
       }
     },
     "effort": {
@@ -1017,7 +1015,7 @@
         "You are about to paste real figures, names or products: stop.",
         "Never send the assisted draft to anyone."
       ],
-      "notes": "Copilot is approved; synthetic data avoids the open question about ledger data (UQ01)."
+      "notes": "Prohibitive policy (MPR-14, FM-19): off-work practice on synthetic material only; never produce or reuse work deliverables."
     },
     "alternatives_considered": [
       {
@@ -1089,21 +1087,9 @@
   "operator_log": [
     {
       "at": "2026-10-02",
-      "path": "first_experiment.steps[0]",
+      "path": "first_experiment.materials",
       "change": "edited",
-      "reason": "Added 'outside close week' to respect C01; the engine draft had missed it."
-    },
-    {
-      "at": "2026-10-02",
-      "path": "claims",
-      "change": "removed",
-      "reason": "Removed an engine-drafted, unverified claim that AI 'mostly changes task mix rather than headcount'; held for S3 research (MPR-12)."
-    },
-    {
-      "at": "2026-10-02",
-      "path": "meta.status",
-      "change": "approved",
-      "reason": "Operator review complete."
+      "reason": "ST-2 regression: prohibitive policy handled as off-work synthetic practice (MPR-14, FM-19)."
     }
   ],
   "delivery": {

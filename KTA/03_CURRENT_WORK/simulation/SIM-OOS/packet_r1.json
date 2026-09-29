@@ -11,7 +11,13 @@
       "method": "llm",
       "engine_version": "lane02-spec-v0.1-sim"
     },
-    "simulated": true
+    "simulated": true,
+    "privacy_check": {
+      "performed": true,
+      "stage": "before_llm_drafting",
+      "items_redacted": 0,
+      "method": "operator_and_lint"
+    }
   },
   "scope_check": {
     "result": "out_of_scope",

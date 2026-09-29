@@ -202,6 +202,7 @@ Two overrides based on the baseline:
 - **Operator-attention users:** no stakeholder-facing experiments (MPR-02).
 - **Policy `prohibits` *(FM-19)*:** AI-tool experiments are allowed only as off-work practice on public or synthetic material, and must never produce work deliverables. Non-tool archetypes are preferred (`retro_audit`, `value_probe`, `visibility_move`, `market_probe`). A prohibition also matters for the decision itself: for a `leverage` goal, re-check the archetype with MPR-01.
 - **Approved tool, unconfirmed data scope *(FM-09)*:** treat the policy as `unknown` until the scope is confirmed.
+- **Intake abstraction *(DEC-009 P1, INV-16)*:** the planner works only from abstracted, redacted intake. It never asks for or reintroduces documents, names, identifiers or confidential organizational figures. Ranges and coarse quantities are enough for every rule in this file.
 - **Current-habit cross-check *(FM-11)*:** compare current AI use (DQ-09) with the stated rules (DQ-10). If a current habit appears to breach the user's *own* described rules, add a user-local `engine_judgment` claim and an explain step. Keep it matter-of-fact: no blame, and no suggestion of any reporting duty.
 
 ### MPR-15 · Omissions [OMI]
@@ -270,4 +271,5 @@ It is correct and useful for KTA to say "not much to do right now, and here's ho
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. MPR-01 to MPR-20. |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs (DEC-010): MPR-14 intake abstraction (R2). |
 | 0.1-rev1 | 2026-09-29 | Step 7–8 fixes: MPR-04 destination (FM-03); MPR-07 user-local explain (FM-05); MPR-13 timing filter (FM-07); MPR-14 prohibits, data scope and habit cross-check (FM-19, 09, 11); MPR-20 focus choice (FM-04); checklist (FM-13). |

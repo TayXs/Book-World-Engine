@@ -47,12 +47,13 @@ Each branch has a `condition_type`:
 - `confirms`
 - `disconfirms`
 - `mixed`
-- `null_result`: done, but no signal either way
+- `null_result`: done and **measured**, with no detectable effect. This is informative evidence.
+- `inconclusive`: done, but the evidence is too weak or missing to classify (E0/E1). Fix the measurement. Added by repair R1 (FM-23).
 - `partial`
 - `not_attempted`
 - `harm`: something went wrong
 
-**Required:** `not_attempted` and `null_result` (INV-12). **Strongly expected:** `confirms`, `disconfirms` and `harm`.
+**Required:** `not_attempted`, `null_result` and `inconclusive` (INV-12). **Strongly expected:** `confirms`, `disconfirms` and `harm`.
 
 `next_move` uses the adaptation vocabulary from step 6:
 - `continue`
@@ -178,3 +179,4 @@ Everything else stays internal.
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft, with a 9-archetype library. |
 | 0.1-rev1 | 2026-09-29 | `data_class` meaning (FM-08); `declined` status (FM-22); retrospective variant for blocked windows (FM-07, see MPR-13). |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs (DEC-010): `inconclusive` branch type, separate from `null_result` (R1). |

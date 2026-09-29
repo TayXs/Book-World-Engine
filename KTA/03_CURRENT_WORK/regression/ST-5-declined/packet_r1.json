@@ -542,7 +542,7 @@
       "window_days": 7
     },
     "prediction": {
-      "user": "It'll get the technical terms wrong.",
+      "user": null,
       "engine": "Faster on prose; errors in technical terms and test values likely."
     },
     "measures": [
@@ -626,10 +626,14 @@
         "why_not": "Time split is already high-confidence."
       }
     ],
-    "status": "accepted",
+    "status": "declined",
     "status_history": [
       {
-        "status": "accepted",
+        "status": "proposed",
+        "at": "2026-10-02"
+      },
+      {
+        "status": "declined",
         "at": "2026-10-02"
       }
     ]
@@ -676,6 +680,12 @@
       "path": "meta.status",
       "change": "approved",
       "reason": "Operator review complete; light-touch (MPR-20) and micro mode (MPR-17)."
+    },
+    {
+      "at": "2026-10-02",
+      "path": "first_experiment.status",
+      "change": "edited",
+      "reason": "ST-5 regression: user declined ('not doing homework'); explain and research steps continue (A18)."
     }
   ],
   "delivery": {

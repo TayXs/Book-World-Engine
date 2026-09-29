@@ -1,0 +1,18 @@
+{
+  "id": "AD01",
+  "packet_id": "MP-SIM-LOW-r1",
+  "feedback_id": "FB01",
+  "decided_at": "2026-10-11",
+  "decided_by": "operator",
+  "decision": "continue",
+  "table_rules": [
+    "A18"
+  ],
+  "branch_id": null,
+  "ledger_updates": [],
+  "task_map_updates": [],
+  "next": {
+    "summary": "Continue with explain and research; offer a smaller 10-minute voice-only version once; do not count this as a non-attempt."
+  },
+  "user_informed": true
+}

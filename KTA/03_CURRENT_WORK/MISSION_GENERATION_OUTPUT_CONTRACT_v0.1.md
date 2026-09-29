@@ -78,6 +78,7 @@ The notation follows the schema. Required fields are marked **R**.
 | `status` **R** | enum (see §3) | |
 | `created_at` **R** | ISO-8601 | |
 | `generated_by` **R** | `{method: human\|llm\|hybrid, engine_version, model_ref?}` | `model_ref` records which model was used; the design does not depend on it. |
+| `privacy_check` **R** | `{performed, stage: before_llm_drafting, items_redacted, method?, note?}` | INV-16 attestation: the confidential-information redaction pass happened **before** any LLM drafting (DEC-009 P1, repair R2). |
 
 ### 5.2 `scope_check` (R)
 | Field | Type | Notes |
@@ -172,7 +173,7 @@ An `ActionExperiment` (step 5). The contract requires:
 - It fits within the time budget.
 - It passes the safety rules (INV-08).
 - It has a user prediction recorded *before* acting.
-- It has branches that cover the `not_attempted` and `null_result` cases.
+- It has branches that cover the `not_attempted`, `null_result` and `inconclusive` cases (R1).
 - The user may **decline** it (status `declined`, FM-22). The packet then still delivers its explain and research steps. The check-in uses CQ-9, CQ-10 and CQ-12, and a smaller experiment is offered **once**, never pushed.
 
 ### 5.9 `feedback_plan` (R unless out of scope)
@@ -233,10 +234,11 @@ Each entry is `{at, path, change: added|edited|removed|approved, reason}`. This 
 | INV-09 | **Ledger hygiene.** Kind and route are compatible. Every `world_fact` has a `research` block. Every open high-impact item is targeted by a sequence step or the experiment, or it is `deferred` with a reason. |
 | INV-10 | **Forbidden content.** No `automation_risk`, `risk_score`, `replace_probability` or similar key or percentage. No `employer_name`, `client_name`, `colleague_name` or `salary` fields. |
 | INV-11 | **Revision chain.** `revision > 1` requires `parent_packet_id` and `decision_ref`. |
-| INV-12 | **Branch coverage.** The experiment's branches include `not_attempted` and `null_result`. |
+| INV-12 | **Branch coverage.** The experiment's branches include `not_attempted`, `null_result` (measured, no effect) and `inconclusive` (too little evidence to classify). The `inconclusive` case was added by repair R1 (FM-23). |
 | INV-13 | **Check-in timing.** `checkin_at_days` ≤ experiment `window_days` + 3. The mission triggers include `escalate` and `rediagnose`. |
 | INV-14 | **Pre-registration.** The experiment has a `prediction.user` field. Its value is filled in before the status moves past `accepted`. A `declined` experiment is exempt. |
 | INV-15 | **Thin task map** *(FM-18)*. With fewer than 3 tasks, the first experiment must be a `retro_audit` or `time_audit` that targets map coverage, and `map_confidence` must be `low`. |
+| INV-16 | **Confidential Information Boundary** (DEC-007 CORE, DEC-009 P1, repair R2). Two parts:<ol><li>`meta.privacy_check.performed` is true, which means the redaction pass ran before LLM drafting.</li><li>No record (packet, feedback or decision) contains an e-mail address, phone number or account identifier; these are errors. Exact monetary amounts, exact large figures, legal-entity names and URLs raise a **warning** for human review.</li></ol>Coarse workflow quantities are allowed: approximate hours, frequency, time share, rough counts and self-estimated proportions. |
 
 ## 7. Differentiation acceptance tests (human- or LLM-judged; see the simulation)
 
@@ -250,7 +252,7 @@ Each entry is `{at, path, change: added|edited|removed|approved, reason}`. This 
 ## 8. What a packet must never contain
 - Automation-risk percentages, replacement probabilities or occupation "scores". Lane 02 describes work; claims about the world belong to Lane 03.
 - An external factual claim with no evidence label.
-- Names of employers, clients or colleagues, pay details, or any identifiers not needed downstream.
+- Names of employers, clients, customers or colleagues, pay details, account identifiers, confidential or proprietary organizational figures, sensitive internal metrics, documents, or any identifier not needed downstream (INV-16). Use ranges and abstractions instead, such as "consistently above quota" or "a key client".
 - A list of courses or tools that isn't linked to a specific task and uncertainty.
 - More than 3 focus areas or more than 1 active experiment (V0).
 - An instruction to put confidential work material into a tool that isn't approved.
@@ -268,3 +270,4 @@ Complete, validated packets for three simulated users are in `simulation/` (step
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Implements review items AR-03, 04, 09, 11, 13, 14, 16, 17, 18 and 20 in the contract. |
 | 0.1-rev1 | 2026-09-29 | Step 7–8 fixes: INV-02 history exception (FM-01); `candidate_type`; policy scope and freelancer wording (FM-09, 10); omissions shown on delivery (FM-12); `declined` experiments (FM-22); INV-15 thin task map (FM-18). |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs (DEC-010): INV-12 adds `inconclusive` (R1); INV-16 and `meta.privacy_check` (R2); stricter wording on what a packet must never contain. |

@@ -44,6 +44,10 @@ The order is deliberate: neutral facts first, then comparison, then evaluation. 
 | CQ-10 | "Has this changed or confirmed anything you'll do or decide?" | `decision_change` |
 | CQ-11 | "0–10: how useful was this?" | `usefulness_0_10` |
 | CQ-12 | "0–10: how confident are you now that you're on track?" (compared with the baseline) | `goal_confidence_0_10` |
+| CQ-13 | "0–10: how much do you trust the reasoning behind this plan? Was anything we presented as fact wrong or doubtful?" *(R3)* | `trust.rating_0_10`, `trust.fact_error_reported` |
+| CQ-14 | "You named these signs of progress: <goal.success_signals>. Have you actually seen any of them? What exactly?" *(R3)* | `mission_progress.success_signals_observed`, `mission_progress.evidence_grade` |
+
+**Asked order:** 1–10, then **14**, then 11, 12 and 13. CQ-14 asks for facts, so it comes before the ratings. The check-in still takes ≤ 10 minutes.
 
 ## 4. Evidence grades (E0–E3)
 Each observation is graded. The record-level `evidence_grade` is the highest grade among the observations that bear directly on the hypothesis.
@@ -64,7 +68,7 @@ This is a controlled list so that blockers can be aggregated later (AR-11). A fr
 
 ## 6. Adaptation decision table
 First, classify the result:
-- `result_class` is `confirms`, `disconfirms`, `mixed` or `null_result`, judged against the experiment's `learning_criteria`;
+- `result_class` is `confirms`, `disconfirms`, `mixed` or `null_result`, judged against the experiment's `learning_criteria`, and **only with E2+ evidence**. With E0/E1 evidence the class is `inconclusive` (repair R1);
 - or `not_applicable` when nothing was attempted.
 
 Then apply the first matching rule, in precedence order.
@@ -86,7 +90,8 @@ Then apply the first matching rule, in precedence order.
 | **A13** | Completed, `confirms`, ≥ E2 | `continue` | Resolve the target item and move to the next step in the sequence. The next experiment targets the next open high-impact item. |
 | **A14** | Completed, `disconfirms`, ≥ E2 | `modify` | Update the ledger and the task map, then **re-run MPR-09**; the focus may change. Design a new experiment. |
 | **A15** | Completed, `mixed` | `investigate_further` | Split the hypothesis and design a narrower follow-up. If the mixed result points to a world fact, add a research item. |
-| **A16** | Completed, `null_result`, **or** only E1 evidence | `modify` | Fix the measurement (add an observable) or simplify. **Never treat this as confirmation.** |
+| **A16a** | Completed, `null_result` with **E2+** evidence (measured, no effect) | *(the experiment's pre-agreed `null_result` branch)* | A null result is informative: the hypothesised effect didn't appear. Follow the branch, which may say stop, modify or change intervention. **It is not a confirmation.** |
+| **A16b** | Completed, `inconclusive` (E0/E1 evidence) | `modify` | Fix the measurement (add an observable) or simplify. **Never treat this as confirmation or as a null result.** |
 | **A17** | *(runs alongside any rule above)* The feedback raised a new world-fact question | + `investigate_further` on that line | Add a research item. It doesn't block other lines. |
 | **A18** | The experiment was **declined** at delivery (FM-22) | `continue` on the explain and research steps | The check-in uses CQ-9, CQ-10 and CQ-12. Offer one smaller experiment. This is an informed choice, **not** a non-attempt, so it doesn't count toward A5. |
 
@@ -118,21 +123,22 @@ The user receives a short summary covering what we learned, what changes, and wh
 - Learning across users, such as "shadow tests on reporting tasks usually disconfirm for X", is a *hypothesis* for the Lane 08 Experiment Registry. It follows the Constitution's Evidence Rule: observation → hypothesis → experiment → decision. It never goes straight into planner rules.
 - The fields that can be aggregated are the controlled-vocabulary ones: archetype, target trait profile, `attempt_status`, blockers, `result_class`, `evidence_grade`, `prediction_comparison`, effort. Free text is not aggregated. Aggregation needs pilot consent.
 
-## 9. Meaningful Action capture
-The pilot records everything needed to compute **both** definitions, so the owner can compare them with real data. This does not pre-empt decision MCP-4.
-
-| Definition | An action counts when |
+## 9. Metrics capture (DEC-005 as amended; computed by `tools/kta_metrics.py`)
+| Metric | Definition |
 |---|---|
-| **Current (DEC-005), literal reading** | `attempt_status ∈ {fully, partly}` **and** (`usefulness_0_10 ≥ 6` **or** `decision_change ∈ {changed, confirmed}`) |
-| **Proposed (MCP-4)** | `attempt_status ∈ {fully, partly}` **and** `evidence_grade ∈ {E2, E3}` **and** `decision_change ∈ {changed, confirmed}` |
-| Diagnostics (proposed) | Attention Cost = packet reading + `effort_minutes_actual` + `checkin_minutes` · harm reports · LLM-Baseline Preference (pilot only) |
+| **DUAR, the PROVISIONAL primary candidate** | Of all recommended experiments with a check-in, including `declined` and `no_response`: the share where `attempt_status ∈ {fully, partly}`, **and** either the evidence is interpretable (`evidence_grade ∈ {E2, E3}` and `result_class ∈ {confirms, disconfirms, mixed, null_result}`) or an observed success signal is recorded (`mission_progress`, E2+), **and** the AdaptationDecision cites the check-in under a result-driven rule (A11, A13–A15, A16a). |
+| DUAR per-user companion | Users with ≥1 decision-useful action ÷ users with ≥1 check-in |
+| **MAR (comparison), literal DEC-005 v0.1 reading** | `attempt_status ∈ {fully, partly}` **and** (`usefulness_0_10 ≥ 6` **or** `decision_change ∈ {changed, confirmed}`) |
+| Real-World Decision Rate | `decision_change ∈ {changed, confirmed}` with a description |
+| Supporting | attempt, completion, decline, no-response · evidence-grade mix · usefulness (CQ-11) · **trust** (CQ-13) and fact-error reports · **mission progress** (CQ-14; confidence change against the baseline) · attention cost (reading + `effort_minutes_actual` + `checkin_minutes`) · high-impact targeting share (anti-gaming) |
+| **Safety gate (separate from every metric)** | Any `harm_report.severity = serious` **triggers the gate**, which may fail, pause or end the pilot or cohort regardless of DUAR. DUAR is still recorded normally (owner decision D4 amendment). |
 
-The denominator is every delivered experiment, *including* `no_response`.
+Experiments delivered but not yet checked in are reported as *pending* and are left out of the denominators.
 
 ## 10. Failure modes this logic guards against
 | Risk | Guard |
 |---|---|
-| Treating completion as success | The result is classified against the learning criteria. A null result goes to A16. |
+| Treating completion as success | The result is classified against the learning criteria. A measured null goes to A16a, and weak evidence goes to A16b as inconclusive. |
 | The user reports what the operator seems to want | Neutral-first ordering, a pre-registered prediction, and requests for records before ratings. |
 | Pushing a user who has disengaged | A5 caps it at two non-attempts, then rediagnose or stop. |
 | Engine errors counted as user failure | A9 separates unclear instructions. |
@@ -147,3 +153,4 @@ Rename `first_experiment` to `current_experiment` when the contract is next revi
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Implements AR-13, AR-15 (capture only) and AR-19. |
 | 0.1-rev1 | 2026-09-29 | A18 declined (FM-22); rediagnose mini-protocol (FM-20); escalation playbook pointer (FM-21). |
+| 0.1-rev2 | 2026-09-29 | Acceptance repairs (DEC-010): A16 split into A16a (measured null) and A16b (inconclusive) (R1); CQ-13 trust and CQ-14 mission progress (R3); §9 metrics per DEC-005 as amended, with the safety gate kept separate (R4). |

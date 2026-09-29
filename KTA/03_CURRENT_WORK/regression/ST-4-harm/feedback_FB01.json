@@ -37,11 +37,12 @@
   ],
   "effort_minutes_actual": 75,
   "prediction_comparison": "better_than_predicted",
-  "surprises": "The sign flip; I'd have missed it on a tired close day.",
+  "surprises": "How easy it was to paste real numbers by habit.",
   "blockers": [],
   "harm_report": {
-    "occurred": false,
-    "severity": "none"
+    "occurred": true,
+    "severity": "minor",
+    "description": "Pasted two real figures from last month's pack into the tool before IT had confirmed the data scope; noticed straight away."
   },
   "belief_update": {
     "direction": "changed_view",

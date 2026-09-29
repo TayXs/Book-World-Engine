@@ -1,0 +1,18 @@
+{
+  "id": "AD01",
+  "packet_id": "MP-SIM-ACC-r1",
+  "feedback_id": "FB01",
+  "decided_at": "2026-10-14",
+  "decided_by": "operator",
+  "decision": "escalate",
+  "table_rules": [
+    "A1"
+  ],
+  "branch_id": "B6",
+  "ledger_updates": [],
+  "task_map_updates": [],
+  "next": {
+    "summary": "Escalation playbook: acknowledge without blame; establish facts; point to the employer's IT or data process; no legal advice; stop this line; log the incident; spec post-mortem."
+  },
+  "user_informed": true
+}

@@ -188,3 +188,4 @@ It is not mostly in having a smarter headline. That has two consequences:
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First simulation: 3 users, 2 edge cases, 7 packets, 3 check-ins. |
+| 0.1-rev2 | 2026-09-29 | Fixtures regenerated from `tools/fixtures/` after repairs. Changes: `inconclusive` branches added, with DES and SAL B4 relabelled from null to inconclusive (R1); `meta.privacy_check` added (R2); CQ-13 trust and CQ-14 progress added to check-ins (R3); a SAL promotion criterion abstracted from an internal figure to "consistently above quota" (INV-16). Metrics (R4): DUAR 2/3, MAR 2/3, safety gate clear. |

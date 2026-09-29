@@ -1,0 +1,26 @@
+{
+  "id": "AD01",
+  "packet_id": "MP-SIM-DES-r1",
+  "feedback_id": "FB01",
+  "decided_at": "2026-10-11",
+  "decided_by": "operator",
+  "decision": "simplify",
+  "table_rules": [
+    "A6"
+  ],
+  "branch_id": "B5",
+  "ledger_updates": [
+    {
+      "uncertainty_id": "UQ01",
+      "new_status": "open",
+      "note": "Unchanged; smaller audit next."
+    }
+  ],
+  "task_map_updates": [],
+  "next": {
+    "summary": "Same question, half the size: audit your last 3 projects in about 30 minutes, split into two 15-minute sittings.",
+    "next_packet_id": "MP-SIM-DES-r2",
+    "next_experiment_archetype": "retro_audit"
+  },
+  "user_informed": true
+}

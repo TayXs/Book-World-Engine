@@ -1,36 +1,34 @@
 {
   "id": "FB01",
-  "packet_id": "MP-SIM-DES-r1",
+  "packet_id": "MP-SIM-LOW-r1",
   "experiment_id": "AX01",
   "collected_at": "2026-10-11",
   "channel": "operator_message",
-  "attempt_status": "not_attempted",
-  "actions_taken": "Opened the project folder once; a rush job for a repeat client took the week.",
+  "attempt_status": "declined",
+  "actions_taken": "Read the half-page explanation; chose not to try the test.",
   "observations": [],
   "effort_minutes_actual": 5,
   "prediction_comparison": "no_prediction",
   "surprises": "",
-  "blockers": [
-    "time"
-  ],
-  "blocker_note": "Rush job; 6 projects felt like a big sit-down.",
+  "blockers": [],
   "harm_report": {
     "occurred": false,
     "severity": "none"
   },
   "belief_update": {
-    "direction": "unchanged"
+    "direction": "more_confident",
+    "note": "Seeing my week by task helped more than the headlines."
   },
   "decision_change": {
     "status": "not_yet"
   },
   "usefulness_0_10": null,
-  "goal_confidence_0_10": 3,
+  "goal_confidence_0_10": 6,
   "evidence_grade": "E0",
   "result_class": "not_applicable",
-  "checkin_minutes": 4,
+  "checkin_minutes": 5,
   "trust": {
-    "rating_0_10": 6,
+    "rating_0_10": 7,
     "fact_error_reported": false
   },
   "mission_progress": {

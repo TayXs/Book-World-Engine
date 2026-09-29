@@ -1,0 +1,521 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-ST1-r1",
+    "user_ref": "SIM-ST1",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 1,
+    "status": "delivered",
+    "created_at": "2026-10-02",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true,
+    "privacy_check": {
+      "performed": true,
+      "stage": "before_llm_drafting",
+      "items_redacted": 0,
+      "method": "operator_and_lint"
+    }
+  },
+  "scope_check": {
+    "result": "in_scope"
+  },
+  "goal": {
+    "stated_goal": "Which AI tool should I learn so I don't get left behind?",
+    "diagnosed_goal": "Within 12 months, know which parts of this person's actual week are changing, before choosing anything to learn.",
+    "divergence_note": "The stated goal is a means (learn a tool); the end is unclear because the person couldn't describe their week in detail.",
+    "archetype": "clarify",
+    "horizon_months": 12,
+    "success_signals": [
+      "Can name the 2-3 tasks that take most of the week, from a real log"
+    ],
+    "baseline": {
+      "goal_confidence_0_10": 4,
+      "main_concern": "Vague sense of being left behind.",
+      "captured_at": "2026-10-01"
+    }
+  },
+  "context": {
+    "role": {
+      "function": "Marketing coordinator",
+      "seniority_band": "early",
+      "sector_band": "Consumer services",
+      "employment_type": "employee"
+    },
+    "time_budget_minutes_per_week": 15,
+    "employer_ai_policy": {
+      "status": "unknown"
+    },
+    "ai_experience": "tried",
+    "preferences": {
+      "format": "checklist"
+    }
+  },
+  "task_map": {
+    "tasks": [
+      {
+        "id": "T01",
+        "name": "Campaign social posts",
+        "description": "Write and schedule posts for current campaigns.",
+        "output": "Scheduled posts",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "low"
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "low"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "low"
+          },
+          "friction": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "low"
+          }
+        },
+        "data_sensitivity": "internal",
+        "ai_current_use": {
+          "level": "tried"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T02",
+        "name": "Weekly campaign report",
+        "description": "Pull numbers from the ad platforms into the weekly report.",
+        "output": "Weekly report",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "low"
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "low"
+          },
+          "information_retrieval": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "low"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "low"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      }
+    ],
+    "coverage_estimate": {
+      "band": "low",
+      "source": "user_stated"
+    },
+    "map_confidence": "low",
+    "unlisted_work_note": "The user said 'meetings and lots of small things' but couldn't list them."
+  },
+  "uncertainty_ledger": [
+    {
+      "id": "UQ01",
+      "statement": "Where does this person's working week actually go?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": true,
+      "decision_links": [
+        "F1",
+        "AX01"
+      ],
+      "task_links": [
+        "T01",
+        "T02"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "You couldn't list most of your week, so any advice now would be a guess.",
+        "grounded_in": [
+          "T01",
+          "T02"
+        ]
+      }
+    },
+    {
+      "id": "UQ02",
+      "statement": "Which tools, if any, may be used with campaign data at this employer?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S2"
+      ],
+      "task_links": [
+        "T02"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "The weekly report uses confidential campaign numbers.",
+        "grounded_in": [
+          "T02",
+          "context.employer_ai_policy"
+        ]
+      }
+    },
+    {
+      "id": "UQ03",
+      "statement": "Which marketing-coordinator tasks are AI tools changing most, per current evidence?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S3"
+      ],
+      "task_links": [
+        "T01",
+        "T02"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do recent studies or practitioner surveys (last 12 months) report about AI changing entry-level marketing coordination tasks?",
+        "required_strength": "moderate",
+        "freshness": "≤12 months",
+        "preferred_source_types": [
+          "primary_study",
+          "practitioner_report"
+        ],
+        "answer_changes": [
+          {
+            "if": "Content drafting changes most",
+            "then": "Look at T01 after the audit"
+          },
+          {
+            "if": "Reporting changes most",
+            "then": "Look at T02 after the audit"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Answers the 'left behind' worry with evidence once we know your week.",
+        "grounded_in": [
+          "goal.baseline"
+        ]
+      }
+    }
+  ],
+  "mission": {
+    "focus_areas": [
+      {
+        "id": "F1",
+        "title": "Map where your week actually goes",
+        "candidate_type": "clarify",
+        "task_ids": [
+          "T01",
+          "T02"
+        ],
+        "uncertainty_ids": [
+          "UQ01"
+        ],
+        "rationale": "Thin task map (INV-15): only 2 tasks with low coverage, so map-building comes first.",
+        "planner_rule_refs": [
+          "MPR-07",
+          "MPR-11",
+          "MPR-17"
+        ],
+        "priority": 1,
+        "relevance": {
+          "why_for_this_user": "You could only name two tasks, and 'lots of small things'.",
+          "grounded_in": [
+            "T01",
+            "T02"
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "id": "S1",
+        "step_type": "experiment",
+        "description": "Run AX01: log your time for 3 working days.",
+        "targets": [
+          "AX01",
+          "UQ01"
+        ],
+        "depends_on": [],
+        "timebox_days": 14,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "A few minutes a day replaces guesses with your own numbers.",
+          "grounded_in": [
+            "T01",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S2",
+        "step_type": "ask",
+        "description": "Find out which tools, if any, are allowed with campaign data.",
+        "targets": [
+          "UQ02"
+        ],
+        "depends_on": [],
+        "timebox_days": 14,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Needed before any test on the report.",
+          "grounded_in": [
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S3",
+        "step_type": "research",
+        "description": "Operator checks UQ03.",
+        "targets": [
+          "UQ03"
+        ],
+        "depends_on": [],
+        "timebox_days": 14,
+        "owner": "operator",
+        "relevance": {
+          "why_for_this_user": "Evidence for the 'left behind' worry.",
+          "grounded_in": [
+            "goal.baseline"
+          ]
+        }
+      },
+      {
+        "id": "S4",
+        "step_type": "decide",
+        "description": "At check-in, re-run focus selection on the logged week.",
+        "targets": [
+          "AX01"
+        ],
+        "depends_on": [
+          "S1"
+        ],
+        "timebox_days": 16,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Your next step is chosen from your real week.",
+          "grounded_in": [
+            "goal"
+          ]
+        }
+      }
+    ],
+    "omissions": [
+      {
+        "id": "O1",
+        "what": "Choosing an AI tool to learn",
+        "why_omitted": "We don't yet know which of your tasks matter most.",
+        "revisit_condition": "After the time log shows your biggest tasks.",
+        "relevance": {
+          "why_for_this_user": "You asked which tool to learn; this is why it waits.",
+          "grounded_in": [
+            "goal.stated_goal"
+          ]
+        }
+      }
+    ],
+    "exit_criteria": [
+      {
+        "type": "no_decision_relevant_uncertainty",
+        "statement": "Nothing open would change your next step."
+      },
+      {
+        "type": "user_opt_out",
+        "statement": "You ask to stop."
+      },
+      {
+        "type": "risk_detected",
+        "statement": "Any risk appears."
+      }
+    ],
+    "attention_budget": {
+      "user_minutes_planned_total": 30,
+      "plan_weeks": 2
+    }
+  },
+  "first_experiment": {
+    "id": "AX01",
+    "archetype": "time_audit",
+    "title": "Log your week in 5-minute daily tallies",
+    "hypothesis": {
+      "statement": "Campaign posts and the weekly report together take at least half of the working week.",
+      "would_be_wrong_if": "They take under half, or large unlisted work shows up."
+    },
+    "targets": {
+      "uncertainty_ids": [
+        "UQ01"
+      ],
+      "task_ids": [
+        "T01",
+        "T02"
+      ]
+    },
+    "depends_on": [],
+    "relevance": {
+      "why_for_this_user": "Your map is too thin to plan from; this builds it in 15 minutes total.",
+      "grounded_in": [
+        "T01",
+        "T02",
+        "context.time_budget_minutes_per_week"
+      ]
+    },
+    "steps": [
+      {
+        "n": 1,
+        "instruction": "At the end of 3 working days, tally roughly how many minutes went to posts, the report, meetings and 'other'.",
+        "minutes": 15
+      }
+    ],
+    "materials": {
+      "data_class": "none",
+      "description": "Your own tallies; no tool, no work content."
+    },
+    "effort": {
+      "minutes_total": 15,
+      "sessions": 3,
+      "window_days": 14
+    },
+    "prediction": {
+      "user": "Meetings probably eat more than I think.",
+      "engine": "Expect a large 'meetings and other' share, which means the map needs new tasks."
+    },
+    "measures": [
+      {
+        "id": "M1",
+        "what": "Minutes per bucket per day",
+        "how_recorded": "Tally template",
+        "type": "time_minutes"
+      },
+      {
+        "id": "M2",
+        "what": "Work that fits no bucket",
+        "how_recorded": "One line per day",
+        "type": "text_observation"
+      }
+    ],
+    "learning_criteria": {
+      "confirms_if": "Posts plus report are at least half of the logged time",
+      "disconfirms_if": "They are under half, or unlisted work is large"
+    },
+    "branches": [
+      {
+        "id": "B1",
+        "condition_type": "confirms",
+        "condition": "Posts plus report dominate",
+        "next_move": "continue",
+        "next_description": "Pick the larger one as focus."
+      },
+      {
+        "id": "B2",
+        "condition_type": "disconfirms",
+        "condition": "Unlisted work dominates",
+        "next_move": "rediagnose",
+        "next_description": "Rebuild the task map from the log."
+      },
+      {
+        "id": "B3",
+        "condition_type": "null_result",
+        "condition": "Time spread evenly, no dominant task",
+        "next_move": "modify",
+        "next_description": "Group tasks by output and re-run focus selection."
+      },
+      {
+        "id": "B4",
+        "condition_type": "inconclusive",
+        "condition": "Fewer than 2 days logged",
+        "next_move": "simplify",
+        "next_description": "One day's tally only."
+      },
+      {
+        "id": "B5",
+        "condition_type": "not_attempted",
+        "condition": "Didn't log",
+        "next_move": "simplify",
+        "next_description": "One day's tally only."
+      },
+      {
+        "id": "B6",
+        "condition_type": "harm",
+        "condition": "Anything felt wrong",
+        "next_move": "escalate",
+        "next_description": "Operator reviews."
+      }
+    ],
+    "safety": {
+      "stakeholder_exposure": "none",
+      "reversibility": "reversible",
+      "stop_conditions": [
+        "Record minutes only, never work content."
+      ]
+    },
+    "alternatives_considered": [
+      {
+        "archetype": "shadow_test",
+        "why_not": "INV-15: no reliable map yet, and the policy is unknown."
+      }
+    ],
+    "status": "accepted",
+    "status_history": [
+      {
+        "status": "accepted",
+        "at": "2026-10-02"
+      }
+    ]
+  },
+  "feedback_plan": {
+    "checkin_at_days": 16,
+    "channel": "operator_message",
+    "question_set": "CQ-v0.1",
+    "mission_triggers": [
+      {
+        "condition": "Any harm or discomfort reported (CQ-8)",
+        "decision": "escalate"
+      },
+      {
+        "condition": "Experiment not attempted or no response at two consecutive check-ins",
+        "decision": "rediagnose"
+      },
+      {
+        "condition": "User asks to stop",
+        "decision": "stop"
+      }
+    ]
+  },
+  "claims": [],
+  "operator_log": [
+    {
+      "at": "2026-10-02",
+      "path": "meta.status",
+      "change": "approved",
+      "reason": "ST-1 regression: thin-map path (INV-15, micro mode)."
+    }
+  ],
+  "delivery": {
+    "format": "checklist",
+    "estimated_user_minutes": 5
+  }
+}

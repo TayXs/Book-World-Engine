@@ -2,7 +2,8 @@
 
 It checks:
   * JSON Schema structure (03_CURRENT_WORK/schemas/*.schema.json)
-  * the cross-field invariants INV-01..INV-15 from MISSION_GENERATION_OUTPUT_CONTRACT_v0.1
+  * the cross-field invariants INV-01..INV-16 from MISSION_GENERATION_OUTPUT_CONTRACT_v0.1
+  * the INV-16 confidential-information lint over every record (DEC-007/DEC-009)
   * planner-rule warnings (MPR-*) that need human judgment
   * feedback / adaptation-decision consistency (FEEDBACK_ADAPTATION_LOGIC_v0.1)
   * diagnostic-registry traceability (DIAGNOSTIC_ARCHITECTURE_v0.1)
@@ -10,7 +11,7 @@ It checks:
 
 Usage (from the repo root or from KTA/):
     pip install jsonschema
-    python KTA/tools/kta_check.py                 # registry + every simulation folder
+    python KTA/tools/kta_check.py                 # registry + every simulation and regression folder
     python KTA/tools/kta_check.py path/to/packet_r1.json [...]
     python KTA/tools/kta_check.py --registry
     python KTA/tools/kta_check.py --swap KTA/03_CURRENT_WORK/simulation
@@ -35,6 +36,7 @@ KTA = Path(__file__).resolve().parent.parent
 WORK = KTA / "03_CURRENT_WORK"
 SCHEMAS = WORK / "schemas"
 SIMULATION = WORK / "simulation"
+REGRESSION = WORK / "regression"
 REGISTRY_FILE = WORK / "diagnostic_question_registry_v0.1.json"
 
 KIND_ROUTES = {
@@ -56,6 +58,21 @@ FORBIDDEN_VALUE = [
     re.compile(r"\b\d{1,3}\s?%\s*(automat|replac|exposure|risk|chance)", re.I),
     re.compile(r"(automat\w*|replac\w*)\s+(risk|probability|likelihood|chance)\s*(of|is|:)?\s*\d", re.I),
 ]
+# INV-16 lint (DEC-009 P1). Coarse workflow quantities (hours, %, counts) are allowed.
+# ERROR patterns are never acceptable in a record; WARN patterns need human review.
+CONFIDENTIAL_ERROR = [
+    ("email address", re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")),
+    ("account identifier", re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b")),
+]
+PHONE_CANDIDATE = re.compile(r"\+?\d[\d ()./-]{8,}\d")
+ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}")
+CONFIDENTIAL_WARN = [
+    ("exact monetary amount", re.compile(r"[£$€¥]\s?\d|\b\d[\d,.]*\s?(k|m|bn|million|billion)?\s?(usd|eur|gbp|dollars|euros|pounds)\b", re.I)),
+    ("exact large figure", re.compile(r"\b\d{1,3}(,\d{3})+\b|\b\d{5,}\b")),
+    ("organization name", re.compile(r"\b[A-Z][\w&.-]*(?:\s[A-Z][\w&.-]*)*\s(?:Ltd|LLC|Inc|GmbH|plc|PLC|Pty|AG|BV|Limited|Corp)\b")),
+    ("URL", re.compile(r"https?://\S+")),
+]
+
 GENERIC_PATTERNS = [
     r"\blearn(ing)? (about )?ai\b", r"\b(learn|use|adopt|master|try|explore) (new |more |the latest |some )?ai tools?\b", r"\bimprove (your )?communication\b",
     r"\bcommunication skills\b", r"\bhuman skills\b", r"\bsoft skills\b", r"\btake an? .*course\b",
@@ -156,6 +173,23 @@ def ref_ok(ref, ids, p):
     return False
 
 
+def confidential_lint(doc, rep, where):
+    """INV-16: flag identifiers and exact organizational figures anywhere in a record."""
+    for kind, path, val in walk(doc):
+        if kind != "str":
+            continue
+        for label, rx in CONFIDENTIAL_ERROR:
+            if rx.search(val):
+                rep.err(where, f"INV-16 {label} at {path}: redact before drafting")
+        for m in PHONE_CANDIDATE.finditer(val):
+            cand = m.group(0)
+            if sum(ch.isdigit() for ch in cand) >= 10 and not ISO_DATE.match(cand):
+                rep.err(where, f"INV-16 phone number at {path}: redact before drafting")
+        for label, rx in CONFIDENTIAL_WARN:
+            if rx.search(val):
+                rep.warn(where, f"INV-16 possible {label} at {path}: {val[:70]!r}; prefer ranges or abstraction")
+
+
 def generic_hits(text):
     return [pat for pat in GENERIC_PATTERNS if re.search(pat, text, re.I)]
 
@@ -165,6 +199,11 @@ def check_packet(p, rep, where):
     scope = p["scope_check"]["result"]
     body = ["task_map", "mission", "first_experiment"]
     required_in_scope = body + ["goal", "context", "uncertainty_ledger", "feedback_plan"]
+
+    # INV-16 procedural: redaction pass before LLM drafting (all packets)
+    pc = p["meta"].get("privacy_check") or {}
+    if not pc.get("performed"):
+        rep.err(where, "INV-16 meta.privacy_check.performed must be true (redaction before LLM drafting)")
 
     # INV-01 scope
     if scope == "out_of_scope":
@@ -290,6 +329,8 @@ def check_packet(p, rep, where):
             rep.err(where, f"INV-08 {mat['data_class']} material requires an employer-approved listed tool (policy={pol['status']})")
     elif mat["data_class"] not in SAFE_DATA:
         rep.err(where, f"INV-08 unknown data_class {mat['data_class']}")
+    if pol["status"] == "prohibits" and mat.get("tool") and mat["data_class"] not in {"none", "public", "synthetic"}:
+        rep.err(where, "INV-08/MPR-14 prohibitive policy: AI-tool practice only off-work on public or synthetic material")
     if scope == "in_scope_operator_attention" and ax["safety"]["stakeholder_exposure"] != "none":
         rep.err(where, "INV-08/MPR-02 operator-attention users get no stakeholder-facing experiments")
     for t in ax["targets"]["task_ids"]:
@@ -328,7 +369,7 @@ def check_packet(p, rep, where):
 
     # INV-12 branch coverage
     types = {b["condition_type"] for b in ax["branches"]}
-    for needed in ("not_attempted", "null_result"):
+    for needed in ("not_attempted", "null_result", "inconclusive"):
         if needed not in types:
             rep.err(where, f"INV-12 experiment branches missing '{needed}'")
     for recommended in ("confirms", "disconfirms", "harm"):
@@ -420,6 +461,20 @@ def check_feedback(fb, packet, rep, where):
             rep.err(where, "not_attempted requires blockers (CQ-7)")
     if fb["harm_report"]["occurred"] != (fb["harm_report"]["severity"] != "none"):
         rep.err(where, "harm_report.occurred inconsistent with severity")
+    # R1: classified results need E2+; weaker evidence is 'inconclusive'
+    if fb["attempt_status"] in {"fully", "partly"}:
+        if fb["result_class"] in {"confirms", "disconfirms", "mixed", "null_result"} and fb["evidence_grade"] not in {"E2", "E3"}:
+            rep.err(where, f"R1 result_class={fb['result_class']} needs E2+ evidence; use 'inconclusive'")
+        if fb["result_class"] == "not_applicable":
+            rep.err(where, "attempted experiment needs a result_class other than not_applicable")
+    # R3: mission progress must refer to the packet's own success signals
+    mp = fb.get("mission_progress") or {}
+    signals = set((packet.get("goal") or {}).get("success_signals", []))
+    for sig in mp.get("success_signals_observed", []):
+        if sig not in signals:
+            rep.err(where, f"R3 observed success signal not in packet goal.success_signals: {sig[:60]!r}")
+    if mp.get("success_signals_observed") and mp.get("evidence_grade") == "E0":
+        rep.err(where, "R3 success signals observed but evidence_grade is E0")
 
 
 def expected_rules(fb, prior_non_attempt):
@@ -447,8 +502,10 @@ def expected_rules(fb, prior_non_attempt):
     if status == "partly" and not strong:
         return "A12", "simplify"
     rc = fb["result_class"]
-    if not strong or rc == "null_result":
-        return "A16", "modify"
+    if not strong or rc == "inconclusive":
+        return "A16b", "modify"
+    if rc == "null_result":
+        return "A16a", None  # follow the experiment's pre-agreed null_result branch
     return {"confirms": ("A13", "continue"), "disconfirms": ("A14", "modify"), "mixed": ("A15", "investigate_further")}.get(rc, (None, None))
 
 
@@ -457,6 +514,12 @@ def check_decision(ad, fb, packet, rep, where, prior_non_attempt=False):
     if ad["feedback_id"] != fb["id"]:
         rep.err(where, f"decision feedback_id {ad['feedback_id']} != {fb['id']}")
     rule, move = expected_rules(fb, prior_non_attempt)
+    if rule == "A16a":
+        nb = [b for b in ax.get("branches", []) if b["condition_type"] == "null_result"]
+        move = nb[0]["next_move"] if nb else None
+        if move and ad["decision"] != move and not ad.get("deviation_reason"):
+            rep.err(where, f"A16a: null result should follow branch {nb[0]['id']} ({move}) or give deviation_reason")
+        move = None
     if rule and rule not in ad["table_rules"]:
         rep.err(where, f"decision table expects {rule} ({move}); decision lists {ad['table_rules']}")
     if move and ad["decision"] != move and not (fb["attempt_status"] == "partly" and rule not in {"A12"}):
@@ -507,6 +570,7 @@ def check_folder(folder, schemas, registry, rep):
         doc = json.loads(f.read_text())
         docs[f.name] = doc
         schema_validate(doc, SCHEMA_BY_PREFIX[prefix], schemas, registry, rep, f.name)
+        confidential_lint(doc, rep, f.name)
     packets = sorted((n for n in docs if n.startswith("packet_")), key=lambda n: docs[n]["meta"]["revision"])
     for n in packets:
         try:
@@ -644,12 +708,14 @@ def main(argv=None):
                 doc = json.loads(p.read_text())
                 print(f"\n== {p}")
                 schema_validate(doc, SCHEMA_BY_PREFIX.get(prefix, "mission_packet.schema.json"), schemas, registry, rep, p.name)
+                confidential_lint(doc, rep, p.name)
                 if prefix == "packet":
                     check_packet(doc, rep, p.name)
     else:
         check_registry(schemas, rep)
         folders = sorted(d for d in SIMULATION.iterdir() if d.is_dir()) if SIMULATION.exists() else []
-        for d in folders:
+        regression = sorted(d for d in REGRESSION.iterdir() if d.is_dir()) if REGRESSION.exists() else []
+        for d in folders + regression:
             check_folder(d, schemas, registry, rep)
         if folders:
             swap_aid(folders, rep)

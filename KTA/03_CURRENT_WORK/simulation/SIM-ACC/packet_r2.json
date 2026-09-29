@@ -12,6 +12,12 @@
       "engine_version": "lane02-spec-v0.1-sim"
     },
     "simulated": true,
+    "privacy_check": {
+      "performed": true,
+      "stage": "before_llm_drafting",
+      "items_redacted": 0,
+      "method": "operator_and_lint"
+    },
     "parent_packet_id": "MP-SIM-ACC-r1",
     "decision_ref": "AD01"
   },
@@ -1030,6 +1036,13 @@
         "condition": "Real figures or names went into a tool, or anything felt risky",
         "next_move": "escalate",
         "next_description": "Stop; operator reviews and suggests how to report under company policy."
+      },
+      {
+        "id": "B7",
+        "condition_type": "inconclusive",
+        "condition": "Timings not recorded, or the two versions can't be compared",
+        "next_move": "modify",
+        "next_description": "Re-run with the timer template filled in during each step."
       }
     ],
     "safety": {
