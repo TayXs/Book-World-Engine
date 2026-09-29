@@ -1,27 +1,24 @@
 {
   "project": "Knowledge → Action",
-  "project_version": "KTA v0.1",
-  "current_stage": "Pre-V0; Lane 02 v0.1 AWAITING OWNER ACCEPTANCE",
-  "current_lane": "02 — Mission & Diagnostic Engine",
-  "current_objective": "Owner acceptance checkpoint for Mission Generation Engine v0.1",
-  "current_artifact": "03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md",
-  "last_completed": "Lane 02 acceptance packet v0.1 (recommendation: ACCEPT WITH SPECIFIED REPAIRS R1-R5; new defect FM-23 found)",
+  "project_version": "KTA v0.1 (release KTA-REL-0.1)",
+  "current_stage": "Pre-V0; Lane 02 v0.1 ACCEPTED with repairs R1-R5 (complete); released KTA-REL-0.1",
+  "current_lane": "02 → V0 readiness (blind/adversarial evaluation preparation)",
+  "current_objective": "V0 readiness: blind eval case preparation → drafting/compiler prompt → freeze → blind evaluation → repairs → pilot → decision gate",
+  "current_artifact": "05_HANDOFFS/RELEASE_KTA-REL-0.1_HANDOFF.md",
+  "last_completed": "Owner decisions D1-D6 applied; authoritative changes (KTA-004..008, DEC-005/007-011); repairs R1-R5; validation GREEN (5/5, 52 tests); release KTA-REL-0.1 built and tagged",
   "active_questions": [
-    "Owner decisions D1-D6 (acceptance packet section 8)"
+    "Owner: 3 human seed cases + isolated case-generation session (BLIND_EVAL_PROTOCOL §8)",
+    "Owner: manual Drive upload of KTA-REL-0.1",
+    "Pilot decision batch 2 (after blind evaluation)"
   ],
-  "proposed_material_changes": [
-    "D1 (KTA-004) Dual-layer source of truth: Git workspace + Drive governance/release mirror; session-independence wording",
-    "D2 (DEC-007 CORE, DEC-009 CURRENT, KTA-006) Confidential Information Boundary incl. KTA itself",
-    "D3 (KTA-005) Blueprint data-model and architecture reconciliation",
-    "D4 (DEC-005 amend) Decision-Useful Action Rate as PROVISIONAL candidate; MAR retained",
-    "D5 (DEC-008/010) Lane 02 v0.1 acceptance with repairs R1-R5"
-  ],
-  "blockers": [
-    "Owner decisions D1-D6 required before applying changes, repairs or drafting prompt",
-    "Drive sync: connected Drive cannot see KTA Drive files (part of D1)"
-  ],
-  "next_action": "Wait for owner reply to D1-D6. Then apply approved authoritative changes + release KTA-REL-0.1, do repairs R1-R5, seal blind cases, then drafting prompt (packet section 10). Do NOT start the drafting prompt before acceptance.",
+  "proposed_material_changes": [],
+  "blockers": [],
+  "next_action": "Builder paused. On owner go-ahead with DEV cases: build 03_CURRENT_WORK/ENGINE_DRAFTING_PROMPT_v0.1.md using simulation + dev cases only. Never read sealed cases before the freeze.",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
-  "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:53Z"
+  "last_updated": "2026-09-29T23:25Z",
+  "waiting_on_owner": [
+    "Drive upload of KTA-REL-0.1 (non-blocking)",
+    "Dev cases from the isolated session plus go-ahead for the drafting prompt"
+  ],
+  "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md"
 }

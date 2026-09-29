@@ -42,3 +42,10 @@ Next:
 - New defect found: **FM-23** (A16 treats a measured null the same as an inconclusive result) → repair R1.
 - Recommendation: **ACCEPT WITH SPECIFIED REPAIRS R1–R5.** Nothing material has been applied.
 - **Lane 02 is waiting for owner acceptance.**
+
+## 2026-09-29: Lane 02 accepted; repairs; release KTA-REL-0.1
+- Owner decisions: D1 approved (option B, manual release); D2 CORE approved with P1 revised; D3 approved; D4 approved with the safety gate kept separate from DUAR; D5 accepted with repairs; D6 blind evaluation authorized.
+- Applied: Constitution and Blueprint v0.1-r1, Lane Map, Source Manifest, registries (KTA-004..008, DEC-005 amended, DEC-007..011, EXP-V0-00..04, PARK-001/002/003/005), Current State, CLAUDE.md.
+- Repairs R1–R5 done. Specs are at 0.1-rev2. New tools: `kta_metrics.py`, `validate_all.py`, `build_release.py`, `verify_release.py`, `tools/fixtures/`. Validation GREEN (5/5, 52 tests, 0 checker errors).
+- Blind evaluation protocol written, with the seed template and the isolated-session prompt. **No cases were created in the builder session.**
+- Release KTA-REL-0.1 built and tagged. Drive mirror pending the owner's upload.

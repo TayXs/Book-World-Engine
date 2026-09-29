@@ -84,6 +84,7 @@ Lane 02 v0.1 is specified. **The next stage is V0 pilot readiness**, in this ord
 Other gaps to schedule: a Lane 03 minimum spec (the EvidenceClaim schema and a research-reuse cache) and a Lane 04 minimum spec (packet presentation).
 
 ## 9. Exact next action
+> **Superseded, 2026-09-29:** see `RELEASE_KTA-REL-0.1_HANDOFF.md`.
 > **Update, 2026-09-29:** the owner has called an acceptance checkpoint. **Do not start the drafting prompt.** Lane 02 is waiting for owner decisions D1–D6 in `03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md`. The acceptance packet's §10 replaces the order below.
 
 If batch 1 is answered: apply the approved changes and propagate them (Propagation Rule).

@@ -2,13 +2,13 @@
 ## Recovery Snapshot
 
 ### Version
-KTA v0.1
+KTA v0.1, release **KTA-REL-0.1** (2026-09-29)
 
 ### Stage
-Pre-V0 product definition. Lane 02 Mission Generation Engine v0.1 is specified in draft (all 9 build steps, 2026-09-29) and awaits owner acceptance.
+Pre-V0. Lane 02 Mission Generation Engine v0.1 was accepted with specified repairs on 2026-09-29. Repairs R1–R5 are complete, the validation suite is green, and the release is KTA-REL-0.1.
 
 ### Current Objective
-Build Mission Generation Engine v0.1.
+V0 readiness, in this order: blind/adversarial evaluation case preparation → engine drafting/compiler prompt → freeze → blind evaluation → repairs → small human-assisted pilot → decision gate.
 
 ### Current Market
 Working adults adapting to AI-driven changes in their profession.
@@ -20,27 +20,30 @@ Stay Valuable as AI Changes My Work.
 Goal → Diagnosis → Mission → Evidence → Explanation → Action → Feedback → Adaptation.
 
 ### Current Build Area
-Diagnostic intake → Task Map → Mission Planner → first ActionExperiment → check-in criteria.
+Blind evaluation case preparation (EXP-V0-00, owner plus an isolated session), then the engine drafting/compiler prompt.
 
 ### Approved Governance
-- KTA-GOV-001 — Structured Project Governance.
-- KTA-GOV-002 — Chat Independence & Continuity.
-- KTA-GOV-003 — External Source of Truth using Google Drive.
+- KTA-GOV-001: Structured Project Governance.
+- KTA-GOV-002: Session Independence & Continuity (amended, KTA-004).
+- KTA-GOV-003: Dual-Layer Source of Truth, with the Git workspace plus a Drive governance/release mirror (amended, KTA-004). The operational mode is manual release.
+- DEC-007: Confidential Information Boundary (CORE).
 
 ### Current North Star
-Meaningful Action Rate is provisional pending pilot evidence.
+Decision-Useful Action Rate is the PROVISIONAL primary candidate under V0 evaluation. Meaningful Action Rate is retained for comparison. It is not locked. The safety gate is separate from all metrics.
 
 ### Active Experiment
-None yet.
+EXP-V0-00 blind/adversarial evaluation: PLANNED (protocol `03_CURRENT_WORK/BLIND_EVAL_PROTOCOL_v0.1.md`).
 
 ### Known Blockers
-None.
+None blocking development. The Drive mirror of KTA-REL-0.1 is pending the owner's manual upload (D1 option B).
 
 ### Next Work
-V0 pilot readiness: owner decision batch 1 (`02_STATE/OWNER_DECISIONS_PENDING.md`), the engine drafting template, pilot decision batch 2, and a dry run. See `05_HANDOFFS/LANE_02_HANDOFF_v0.1.md`.
+1. Owner: upload the release bundle to Drive.
+2. Owner: write the 3 seed cases and run the isolated case-generation session; hand the dev set to the builder.
+3. Builder: drafting/compiler prompt, after owner go-ahead.
 
 ### Pending Material Proposals
-MCP-1 source of truth · MCP-2 data-safety rule · MCP-3 Blueprint reconciliation · MCP-4 North Star definition. None of them has been applied.
+None.
 
 ### Recovery Instruction
-When a new chat replaces an old one, read this Current State document first, then the Master Blueprint, then the latest relevant lane handoff and Registry entries before continuing work.
+When a new AI session replaces an old one, read this Current State document first, then the Master Blueprint, then the latest relevant lane handoff and Registry entries. In the Git workspace, also read 02_STATE/PROJECT_STATE.json, PROGRESS.md and NEXT_ACTION.md. If the Git workspace and the latest Drive release disagree, apply the sync rule in the Constitution.
