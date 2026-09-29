@@ -33,8 +33,23 @@ Clarifications (non-material, recorded in `03_CURRENT_WORK/KTA_ARCHITECTURE_REFI
 - `02_STATE/KTA_CURRENT_STATE.md` is the product-state snapshot. `02_STATE/PROJECT_STATE.json`, `PROGRESS.md` and `NEXT_ACTION.md` are operational work pointers. They never override product doctrine.
 - `04_REGISTRIES/KTA_REGISTRIES_v0.1_RENDERED.md` is a convenience rendering of the XLSX. The XLSX remains authoritative unless the owner approves otherwise.
 
-## Workspace location
+## Workspace location and source of truth
 Since 2026-09-29 this project lives in the `KTA/` folder of the git repository `TayXs/Book-World-Engine`. All paths in this file are relative to `KTA/`. The repo root also contains an unrelated project (Truthcast). Leave it alone unless the owner asks. Pending owner decisions are listed in `02_STATE/OWNER_DECISIONS_PENDING.md`.
+
+The Constitution's **Dual-Layer Source of Truth Rule** (KTA-004) governs where things live:
+- Git is the canonical active development workspace.
+- Google Drive is the canonical governance and release mirror.
+
+**Operational mode: manual release** (owner decision D1, option B). At every owner-accepted milestone:
+1. Update the approved governance files.
+2. Build a checksummed release bundle in `06_RELEASES/<release-id>/` (see `06_RELEASES/RELEASE_LOG.md`).
+3. Commit it and tag it `<release-id>`.
+4. Hand the bundle to the owner to upload to Drive.
+
+Never block development on Drive connectivity. At the start of each session, if the owner reports a direct edit in Drive, import and register it before any other work (Constitution rule 5c).
+
+## Blind evaluation isolation (DEC-011)
+The builder session must **never** request, open, read or generate sealed blind-evaluation test cases or their evaluator keys until the drafting/compiler prompt is frozen and tagged. Only the dev cases the owner deliberately hands over may be used for iteration. If sealed material appears in the workspace by mistake, stop and tell the owner without reading it.
 
 ## Governance
 Material ideas must be classified as one of:
@@ -118,7 +133,8 @@ Before context compaction, session end, or a major checkpoint:
 - replace `02_STATE/NEXT_ACTION.md` with the exact next task;
 - create/update the applicable handoff in `05_HANDOFFS/`;
 - preserve unfinished work in files rather than relying on conversation memory;
-- commit a checkpoint if git is available and the workspace supports it.
+- commit a checkpoint if git is available and the workspace supports it;
+- at an owner-accepted milestone, cut a release as described in "Workspace location and source of truth".
 
 Do not stop early merely because the context window is getting full. Save state cleanly and continue when possible.
 

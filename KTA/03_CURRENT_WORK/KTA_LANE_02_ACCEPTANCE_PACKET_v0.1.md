@@ -1,6 +1,6 @@
 # KTA LANE 02 ACCEPTANCE PACKET v0.1
-Owner checkpoint · 2026-09-29 · Status: **AWAITING OWNER ACCEPTANCE**
-Nothing in §7 has been applied. All authoritative files are unchanged.
+Owner checkpoint · 2026-09-29 · Status: **DECIDED 2026-09-29: ACCEPTED WITH SPECIFIED REPAIRS**
+The rulings, including the D1 option B, D2 P1 revision and D4 safety-gate amendments, are recorded in `02_STATE/OWNER_DECISIONS_PENDING.md`. The §7 diffs were applied in amended form; see the registry rows KTA-004..008 and DEC-005/007–011.
 
 ---
 
