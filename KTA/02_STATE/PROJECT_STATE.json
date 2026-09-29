@@ -4,10 +4,9 @@
   "current_stage": "Pre-V0 product definition; Lane 02 specification",
   "current_lane": "02 — Mission & Diagnostic Engine",
   "current_objective": "Build Mission Generation Engine v0.1",
-  "current_artifact": "Task Map Schema v0.1",
-  "last_completed": "Lane 02 step 2: Diagnostic Question Architecture v0.1 (draft) + diagnostic_question_registry_v0.1.json",
+  "current_artifact": "Mission Planner Decision Rules v0.1",
+  "last_completed": "Lane 02 step 3: Task Map Schema v0.1 (draft) + schemas/task_map.schema.json",
   "active_questions": [
-    "Task Map schema and evidence boundaries",
     "Mission Planner decision rules",
     "ActionExperiment schema",
     "Feedback and adaptation logic"
@@ -19,8 +18,8 @@
     "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
   ],
   "blockers": [],
-  "next_action": "Draft 03_CURRENT_WORK/TASK_MAP_SCHEMA_v0.1.md + schemas/task_map.schema.json (step 3)",
+  "next_action": "Draft 03_CURRENT_WORK/MISSION_PLANNER_RULES_v0.1.md (step 4), MPR-01..MPR-20",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
   "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:07Z"
+  "last_updated": "2026-09-29T22:08Z"
 }

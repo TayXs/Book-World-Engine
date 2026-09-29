@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/task_map.schema.json",
+  "title": "Task Map v0.1",
+  "description": "What the user actually does. No automation-risk scores (INV-10). See TASK_MAP_SCHEMA_v0.1.md.",
+  "type": "object",
+  "required": [
+    "tasks",
+    "coverage_estimate",
+    "map_confidence"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "trait": {
+      "type": "object",
+      "required": [
+        "value",
+        "source",
+        "confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/source"
+        },
+        "confidence": {
+          "$ref": "common.schema.json#/$defs/confidence"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "properties": {
+    "tasks": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "output",
+          "frequency",
+          "time_share",
+          "traits",
+          "data_sensitivity",
+          "ai_current_use",
+          "confirmed_by_user"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^T\\d{2}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          },
+          "frequency": {
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "quarterly",
+              "ad_hoc"
+            ]
+          },
+          "time_share": {
+            "type": "object",
+            "required": [
+              "band",
+              "source",
+              "confidence"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "band": {
+                "enum": [
+                  "large",
+                  "medium",
+                  "small"
+                ]
+              },
+              "pct_estimate": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "source": {
+                "$ref": "common.schema.json#/$defs/source"
+              },
+              "confidence": {
+                "$ref": "common.schema.json#/$defs/confidence"
+              }
+            }
+          },
+          "traits": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 3,
+            "properties": {
+              "predictability": {
+                "$ref": "#/$defs/trait"
+              },
+              "information_retrieval": {
+                "$ref": "#/$defs/trait"
+              },
+              "analysis_intensity": {
+                "$ref": "#/$defs/trait"
+              },
+              "judgment_intensity": {
+                "$ref": "#/$defs/trait"
+              },
+              "relationship_intensity": {
+                "$ref": "#/$defs/trait"
+              },
+              "accountability": {
+                "$ref": "#/$defs/trait"
+              },
+              "creativity_synthesis": {
+                "$ref": "#/$defs/trait"
+              },
+              "tool_dependency": {
+                "$ref": "#/$defs/trait"
+              },
+              "autonomy": {
+                "$ref": "#/$defs/trait"
+              },
+              "friction": {
+                "$ref": "#/$defs/trait"
+              },
+              "identity_value": {
+                "$ref": "#/$defs/trait"
+              }
+            }
+          },
+          "data_sensitivity": {
+            "enum": [
+              "none",
+              "internal",
+              "confidential",
+              "regulated"
+            ]
+          },
+          "stakeholders": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "internal_manager",
+                "internal_team",
+                "client",
+                "public",
+                "regulator",
+                "vendor",
+                "other"
+              ]
+            }
+          },
+          "ai_current_use": {
+            "type": "object",
+            "required": [
+              "level"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "level": {
+                "enum": [
+                  "none",
+                  "tried",
+                  "occasional",
+                  "regular"
+                ]
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          },
+          "future_value": {
+            "type": "object",
+            "required": [
+              "direction",
+              "basis"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "direction": {
+                "enum": [
+                  "rising",
+                  "stable",
+                  "declining",
+                  "unclear"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "user_belief",
+                  "operator_hypothesis"
+                ]
+              },
+              "uncertainty_id": {
+                "type": "string",
+                "pattern": "^UQ\\d{2}$"
+              }
+            }
+          },
+          "exposure_hypothesis": {
+            "type": "object",
+            "required": [
+              "statement",
+              "uncertainty_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "statement": {
+                "type": "string"
+              },
+              "uncertainty_id": {
+                "type": "string",
+                "pattern": "^UQ\\d{2}$"
+              }
+            }
+          },
+          "evidence_flags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^UQ\\d{2}$"
+            }
+          },
+          "confirmed_by_user": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "coverage_estimate": {
+      "type": "object",
+      "required": [
+        "band",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "band": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/source"
+        }
+      }
+    },
+    "unlisted_work_note": {
+      "type": "string"
+    },
+    "map_confidence": {
+      "$ref": "common.schema.json#/$defs/confidence"
+    },
+    "verified_by": {
+      "type": "string",
+      "pattern": "^(none|FB\\d{2})$"
+    }
+  }
+}
