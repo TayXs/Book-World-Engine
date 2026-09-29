@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/adaptation_decision.schema.json",
+  "title": "AdaptationDecision v0.1",
+  "description": "The decision taken after a check-in. See FEEDBACK_ADAPTATION_LOGIC_v0.1.md section 6.",
+  "type": "object",
+  "required": [
+    "id",
+    "packet_id",
+    "feedback_id",
+    "decided_at",
+    "decided_by",
+    "decision",
+    "table_rules",
+    "ledger_updates",
+    "next"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^AD\\d{2}$"
+    },
+    "packet_id": {
+      "type": "string"
+    },
+    "feedback_id": {
+      "type": "string",
+      "pattern": "^FB\\d{2}$"
+    },
+    "decided_at": {
+      "$ref": "common.schema.json#/$defs/iso_datetime"
+    },
+    "decided_by": {
+      "enum": [
+        "operator",
+        "engine",
+        "hybrid"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "continue",
+        "modify",
+        "investigate_further",
+        "simplify",
+        "change_intervention",
+        "stop",
+        "escalate",
+        "rediagnose"
+      ]
+    },
+    "table_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^A\\d{1,2}$"
+      }
+    },
+    "branch_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^B\\d$"
+    },
+    "deviation_reason": {
+      "type": "string"
+    },
+    "ledger_updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "uncertainty_id",
+          "new_status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "uncertainty_id": {
+            "type": "string",
+            "pattern": "^UQ\\d{2}$"
+          },
+          "new_status": {
+            "enum": [
+              "open",
+              "resolved",
+              "deferred",
+              "dropped",
+              "added"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "task_map_updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "task_id",
+          "field",
+          "new_value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "pattern": "^T\\d{2}$"
+          },
+          "field": {
+            "type": "string"
+          },
+          "new_value": {},
+          "source": {
+            "const": "observed"
+          }
+        }
+      }
+    },
+    "next": {
+      "type": "object",
+      "required": [
+        "summary"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "next_packet_id": {
+          "type": "string"
+        },
+        "next_experiment_archetype": {
+          "enum": [
+            "shadow_test",
+            "retro_audit",
+            "time_audit",
+            "value_probe",
+            "market_probe",
+            "conversation_probe",
+            "skill_probe",
+            "visibility_move",
+            "delegation_test"
+          ]
+        }
+      }
+    },
+    "user_informed": {
+      "type": "boolean"
+    }
+  }
+}

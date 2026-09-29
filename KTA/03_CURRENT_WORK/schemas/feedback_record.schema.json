@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/feedback_record.schema.json",
+  "title": "FeedbackRecord v0.1",
+  "description": "One check-in (CQ-v0.1). See FEEDBACK_ADAPTATION_LOGIC_v0.1.md.",
+  "type": "object",
+  "required": [
+    "id",
+    "packet_id",
+    "experiment_id",
+    "collected_at",
+    "attempt_status",
+    "observations",
+    "harm_report",
+    "evidence_grade",
+    "result_class"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^FB\\d{2}$"
+    },
+    "packet_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string",
+      "pattern": "^AX\\d{2}$"
+    },
+    "collected_at": {
+      "$ref": "common.schema.json#/$defs/iso_datetime"
+    },
+    "channel": {
+      "enum": [
+        "operator_message",
+        "email",
+        "in_app",
+        "call",
+        "form"
+      ]
+    },
+    "attempt_status": {
+      "enum": [
+        "fully",
+        "partly",
+        "not_attempted",
+        "no_response"
+      ]
+    },
+    "actions_taken": {
+      "type": "string"
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "measure_id",
+          "value",
+          "grade"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "measure_id": {
+            "type": "string",
+            "pattern": "^M\\d$"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          },
+          "grade": {
+            "$ref": "common.schema.json#/$defs/evidence_grade"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "effort_minutes_actual": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "prediction_comparison": {
+      "enum": [
+        "matched",
+        "better_than_predicted",
+        "worse_than_predicted",
+        "different_dimension",
+        "no_prediction"
+      ]
+    },
+    "surprises": {
+      "type": "string"
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "time",
+          "forgot",
+          "access_or_tool",
+          "policy",
+          "skill",
+          "unclear_instructions",
+          "motivation_or_relevance",
+          "stakeholder_unavailable",
+          "circumstances_changed",
+          "other"
+        ]
+      }
+    },
+    "blocker_note": {
+      "type": "string"
+    },
+    "harm_report": {
+      "type": "object",
+      "required": [
+        "occurred",
+        "severity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "occurred": {
+          "type": "boolean"
+        },
+        "severity": {
+          "enum": [
+            "none",
+            "minor",
+            "serious"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "belief_update": {
+      "type": "object",
+      "required": [
+        "direction"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "more_confident",
+            "less_confident",
+            "unchanged",
+            "changed_view"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "decision_change": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "changed",
+            "confirmed",
+            "no",
+            "not_yet"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "usefulness_0_10": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 10
+    },
+    "goal_confidence_0_10": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 10
+    },
+    "evidence_grade": {
+      "$ref": "common.schema.json#/$defs/evidence_grade"
+    },
+    "result_class": {
+      "enum": [
+        "confirms",
+        "disconfirms",
+        "mixed",
+        "null_result",
+        "not_applicable"
+      ]
+    },
+    "checkin_minutes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    }
+  }
+}

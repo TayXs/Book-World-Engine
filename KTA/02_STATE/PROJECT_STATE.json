@@ -4,11 +4,11 @@
   "current_stage": "Pre-V0 product definition; Lane 02 specification",
   "current_lane": "02 — Mission & Diagnostic Engine",
   "current_objective": "Build Mission Generation Engine v0.1",
-  "current_artifact": "Feedback & Adaptation Logic v0.1",
-  "last_completed": "Lane 02 step 5: ActionExperiment Schema v0.1 (draft) + schemas/action_experiment.schema.json + 9-archetype library",
+  "current_artifact": "Three-User Simulation v0.1 (+ tools/kta_check.py)",
+  "last_completed": "Lane 02 step 6: Feedback & Adaptation Logic v0.1 (draft) + feedback_record and adaptation_decision schemas",
   "active_questions": [
-    "Feedback and adaptation logic",
-    "Three-user simulation"
+    "Three-user simulation",
+    "Failure-mode review"
   ],
   "proposed_material_changes": [
     "MCP-1 (AR-01) Repo canonical source of truth; Drive mirror",
@@ -17,8 +17,8 @@
     "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
   ],
   "blockers": [],
-  "next_action": "Draft 03_CURRENT_WORK/FEEDBACK_ADAPTATION_LOGIC_v0.1.md + schemas/feedback_record.schema.json + adaptation_decision.schema.json (step 6)",
+  "next_action": "Build tools/kta_check.py (schema + INV-01..14 + registry + lint/swap aids), then simulate the accountant, designer and sales users as validated packets in 03_CURRENT_WORK/simulation/ (step 7)",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
   "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:11Z"
+  "last_updated": "2026-09-29T22:13Z"
 }
