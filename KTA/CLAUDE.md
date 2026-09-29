@@ -28,6 +28,14 @@ When project information conflicts, use this order:
 
 Never treat a chat message, model memory, or inferred intent as more authoritative than these files.
 
+Clarifications (non-material, recorded in `03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md`, AR-02):
+- Rank 3 means the **Change Registry and Decision Registry** only, as in the Constitution. The Experiment Registry and Parking Lot sheets are non-authoritative, as the workbook's Overview sheet already states.
+- `02_STATE/KTA_CURRENT_STATE.md` is the product-state snapshot. `02_STATE/PROJECT_STATE.json`, `PROGRESS.md` and `NEXT_ACTION.md` are operational work pointers. They never override product doctrine.
+- `04_REGISTRIES/KTA_REGISTRIES_v0.1_RENDERED.md` is a convenience rendering of the XLSX. The XLSX remains authoritative unless the owner approves otherwise.
+
+## Workspace location
+Since 2026-09-29 this project lives in the `KTA/` folder of the git repository `TayXs/Book-World-Engine`. All paths in this file are relative to `KTA/`. The repo root also contains an unrelated project (Truthcast). Leave it alone unless the owner asks. Pending owner decisions are listed in `02_STATE/OWNER_DECISIONS_PENDING.md`.
+
 ## Governance
 Material ideas must be classified as one of:
 `CORE`, `CURRENT`, `PROVISIONAL`, `EXPERIMENT`, `PARKED`, `DEPRECATED`, `REJECTED`, `ARCHIVED`.

@@ -1,8 +1,5 @@
 # NEXT ACTION
 
-1. Read the authoritative KTA files.
-2. Create `03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md`.
-3. Implement only clearly non-material refinements.
-4. Batch material change proposals for owner approval.
-5. Draft `03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md`.
-6. Update project state and checkpoint files before moving to the next component.
+Draft `03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md` (Lane 02 build step 1) with a machine-checkable JSON Schema in `03_CURRENT_WORK/schemas/`. Apply review items AR-03, 04, 11, 13, 14, 16, 17, 18, 20 inside it. Then update state and continue to step 2 (Diagnostic Question Architecture).
+
+Pending owner decisions (non-blocking): `02_STATE/OWNER_DECISIONS_PENDING.md`.

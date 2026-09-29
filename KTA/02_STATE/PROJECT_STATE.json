@@ -1,11 +1,11 @@
 {
-  "project": "Knowledge \u2192 Action",
+  "project": "Knowledge → Action",
   "project_version": "KTA v0.1",
   "current_stage": "Pre-V0 product definition; Lane 02 specification",
-  "current_lane": "02 \u2014 Mission & Diagnostic Engine",
+  "current_lane": "02 — Mission & Diagnostic Engine",
   "current_objective": "Build Mission Generation Engine v0.1",
   "current_artifact": "Mission Generation Output Contract v0.1",
-  "last_completed": "KTA v0.1 governance, Drive source-of-truth structure, master blueprint, constitution, registries, external handover",
+  "last_completed": "Architecture refinement review v0.1 (03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md); non-material refinements applied; material proposals batched",
   "active_questions": [
     "Exact Mission Generation Output Contract",
     "Minimum necessary adaptive diagnostic inputs",
@@ -14,8 +14,15 @@
     "ActionExperiment schema",
     "Feedback and adaptation logic"
   ],
-  "proposed_material_changes": [],
+  "proposed_material_changes": [
+    "MCP-1 (AR-01) Repo canonical source of truth; Drive mirror",
+    "MCP-2 (AR-08) Employer/client data safety rule as CURRENT",
+    "MCP-3 (AR-10) Blueprint data-object and lane-interface reconciliation at Lane 02 handoff",
+    "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
+  ],
   "blockers": [],
-  "next_action": "Read authoritative state; perform bounded architecture refinement review; then draft Mission Generation Output Contract v0.1.",
-  "last_updated": "2026-09-30"
+  "next_action": "Draft 03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md plus machine-checkable schema",
+  "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
+  "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
+  "last_updated": "2026-09-29T22:20Z"
 }

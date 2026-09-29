@@ -18,3 +18,6 @@ This package adds:
 - optional git-based state tracking.
 
 The original authoritative KTA project artifacts are preserved inside the package.
+
+## Integrity note (added 2026-09-29)
+`CHECKSUMS_SHA256.json` certifies the handover package **as received**. All 18 files verified OK on import (git commit `114706b`). Files have changed since then, so git history is now the integrity and version record, not that manifest.

@@ -18,3 +18,10 @@ Current work:
 Next:
 - Claude Code architecture refinement review.
 - Mission Generation Output Contract v0.1.
+
+## 2026-09-29 — Claude Code session 1: recovery + architecture review
+- Imported handover ZIP into repo `KTA/` (all 18 checksums OK). Drive originals not reachable from this session's connector; ZIP treated as authoritative state.
+- Completed `03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md`: 25 findings (4 material, 16 non-material, 5 no-change).
+- Non-material refinements applied: authority clarification in `CLAUDE.md`; repo-root routing `CLAUDE.md`; registry Markdown mirror + `tools/render_registries.py`; integrity note; UTC timestamps.
+- Material proposals batched in `02_STATE/OWNER_DECISIONS_PENDING.md` (none block Lane 02).
+- Next: Mission Generation Output Contract v0.1.
