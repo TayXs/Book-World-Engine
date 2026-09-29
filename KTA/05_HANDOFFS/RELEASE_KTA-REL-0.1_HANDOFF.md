@@ -31,6 +31,7 @@ python KTA/tools/kta_metrics.py       # simulation: DUAR 2/3, safety gate clear
 
 ## 4. Remaining
 - **Drive mirror:** pending the owner's manual upload (`06_RELEASES/README.md`).
+- **Remote Git tag:** the tag push was refused (HTTP 403; the session can push only its branch). The owner creates tag `KTA-REL-0.1` on commit `f4a71d4` in GitHub → Releases (steps in `06_RELEASES/RELEASE_LOG.md`).
 - **Blind evaluation:** waiting on the owner's 3 seed cases and the isolated case-generation session (protocol §8).
 - **Pilot consent text:** needs final owner approval in pilot decision batch 2, which comes after the blind evaluation.
 - **Not started:** the drafting/compiler prompt and the human pilot, both on hold by owner instruction.

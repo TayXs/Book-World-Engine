@@ -18,4 +18,4 @@ The Markdown copies are portable renderings of the current authoritative documen
 ## Release log
 | Release | Date | Git tag | Bundle | Drive mirror |
 |---|---|---|---|---|
-| KTA-REL-0.1 | 2026-09-29 | `KTA-REL-0.1` | `06_RELEASES/KTA-REL-0.1/` (SHA-256 in `06_RELEASES/RELEASE_LOG.md`) | PENDING owner upload |
+| KTA-REL-0.1 | 2026-09-29 | `KTA-REL-0.1` on commit `f4a71d4` (remote tag PENDING owner creation; push refused with 403) | `06_RELEASES/KTA-REL-0.1/` (SHA-256 in `06_RELEASES/RELEASE_LOG.md`) | PENDING owner upload |

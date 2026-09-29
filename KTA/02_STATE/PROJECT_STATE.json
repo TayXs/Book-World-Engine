@@ -15,8 +15,9 @@
   "blockers": [],
   "next_action": "Builder paused. On owner go-ahead with DEV cases: build 03_CURRENT_WORK/ENGINE_DRAFTING_PROMPT_v0.1.md using simulation + dev cases only. Never read sealed cases before the freeze.",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
-  "last_updated": "2026-09-29T23:25Z",
+  "last_updated": "2026-09-29T23:27Z",
   "waiting_on_owner": [
+    "Create remote tag KTA-REL-0.1 on commit f4a71d4 via GitHub Releases (session push of tags refused: 403)",
     "Drive upload of KTA-REL-0.1 (non-blocking)",
     "Dev cases from the isolated session plus go-ahead for the drafting prompt"
   ],

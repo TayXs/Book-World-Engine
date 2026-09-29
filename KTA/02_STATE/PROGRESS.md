@@ -49,3 +49,4 @@ Next:
 - Repairs R1–R5 done. Specs are at 0.1-rev2. New tools: `kta_metrics.py`, `validate_all.py`, `build_release.py`, `verify_release.py`, `tools/fixtures/`. Validation GREEN (5/5, 52 tests, 0 checker errors).
 - Blind evaluation protocol written, with the seed template and the isolated-session prompt. **No cases were created in the builder session.**
 - Release KTA-REL-0.1 built and tagged. Drive mirror pending the owner's upload.
+- Bundle `06_RELEASES/KTA-REL-0.1/KTA-REL-0.1.zip` (SHA-256 `8359de1f…c228e6`) was committed in `f4a71d4`. The tag was created locally, but pushing it was refused with HTTP 403 (the session can push only its branch). The owner will create the tag on GitHub.
