@@ -1,5 +1,6 @@
 # NEXT ACTION
 
-Draft `03_CURRENT_WORK/V0_PILOT_PREPARATION_v0.1.md` (Lane 02 step 9). Cover: pilot questions and hypotheses, cohort and recruitment criteria (no recruiting; external action needs the owner), operator runbook (intake → packet → check-in → revision), escalation playbook (FM-21), consent and retention draft (needs owner approval), metrics (both MAR definitions; MCP-4 pending), LLM-baseline capture protocol, contrast profiles, research reuse, timeline, go/no-go criteria, and the owner decisions needed before launch. Then write `04_REGISTRIES/PROPOSED_REGISTRY_UPDATES_v0.1.md` and `05_HANDOFFS/LANE_02_HANDOFF_v0.1.md`, update `KTA_CURRENT_STATE.md` (stage and next work only), and checkpoint.
+1. **If the owner has answered batch 1** (`02_STATE/OWNER_DECISIONS_PENDING.md`): record the answers there. Apply each approved change to the authority docs and the registry XLSX, and regenerate the mirror (`python KTA/tools/render_registries.py`). Reconcile every affected artifact (Propagation Rule). Then ask pilot batch 2 (`03_CURRENT_WORK/V0_PILOT_PREPARATION_v0.1.md` §10).
+2. **Otherwise** (non-material, allowed now): build `03_CURRENT_WORK/ENGINE_DRAFTING_TEMPLATE_v0.1.md`. It is the LLM drafting prompt and packet skeleton that turns intake notes into `packet_r1.engine.json` following MPR-01..20. Include one worked example, from a new simulated intake, that passes `python KTA/tools/kta_check.py`.
 
-Pending owner decisions (non-blocking): `02_STATE/OWNER_DECISIONS_PENDING.md`.
+Verification commands (repo root): `pip install jsonschema && python KTA/tools/kta_check.py && python -m unittest KTA/tools/test_kta_check.py`

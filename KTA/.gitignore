@@ -7,3 +7,9 @@ Thumbs.db
 __pycache__/
 .env
 .env.*
+
+# Real pilot participant data must never be committed (V0_PILOT_PREPARATION §7)
+pilot_data/
+participants/
+*.participant.json
+baseline_llm_*.md

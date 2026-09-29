@@ -5,7 +5,7 @@
 KTA v0.1
 
 ### Stage
-Pre-V0 product definition and governance setup.
+Pre-V0 product definition. Lane 02 Mission Generation Engine v0.1 is specified in draft (all 9 build steps, 2026-09-29) and awaits owner acceptance.
 
 ### Current Objective
 Build Mission Generation Engine v0.1.
@@ -37,7 +37,10 @@ None yet.
 None.
 
 ### Next Work
-Define Mission Generation Engine v0.1: exact intake questions, Task Map schema, Mission Planner decision rules, first ActionExperiment format, and feedback logic.
+V0 pilot readiness: owner decision batch 1 (`02_STATE/OWNER_DECISIONS_PENDING.md`), the engine drafting template, pilot decision batch 2, and a dry run. See `05_HANDOFFS/LANE_02_HANDOFF_v0.1.md`.
+
+### Pending Material Proposals
+MCP-1 source of truth · MCP-2 data-safety rule · MCP-3 Blueprint reconciliation · MCP-4 North Star definition. None of them has been applied.
 
 ### Recovery Instruction
 When a new chat replaces an old one, read this Current State document first, then the Master Blueprint, then the latest relevant lane handoff and Registry entries before continuing work.
