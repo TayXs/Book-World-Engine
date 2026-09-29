@@ -1,0 +1,418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/action_experiment.schema.json",
+  "title": "ActionExperiment v0.1",
+  "description": "Lane 02 draft; Lane 05 steward. See ACTION_EXPERIMENT_SCHEMA_v0.1.md. Cross-field rules (INV-05/06/07/08/12/14) in tools/kta_check.py.",
+  "type": "object",
+  "required": [
+    "id",
+    "archetype",
+    "title",
+    "hypothesis",
+    "targets",
+    "relevance",
+    "steps",
+    "materials",
+    "effort",
+    "prediction",
+    "measures",
+    "learning_criteria",
+    "branches",
+    "safety",
+    "alternatives_considered",
+    "status"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "archetype": {
+      "enum": [
+        "shadow_test",
+        "retro_audit",
+        "time_audit",
+        "value_probe",
+        "market_probe",
+        "conversation_probe",
+        "skill_probe",
+        "visibility_move",
+        "delegation_test"
+      ]
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^AX\\d{2}$"
+    },
+    "archetype": {
+      "$ref": "#/$defs/archetype"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "hypothesis": {
+      "type": "object",
+      "required": [
+        "statement",
+        "would_be_wrong_if"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "statement": {
+          "type": "string",
+          "minLength": 15
+        },
+        "would_be_wrong_if": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "targets": {
+      "type": "object",
+      "required": [
+        "uncertainty_ids",
+        "task_ids"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "uncertainty_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^UQ\\d{2}$"
+          }
+        },
+        "task_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^T\\d{2}$"
+          }
+        }
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^UQ\\d{2}$"
+      }
+    },
+    "relevance": {
+      "$ref": "common.schema.json#/$defs/relevance"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "n",
+          "instruction",
+          "minutes"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "n": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "instruction": {
+            "type": "string",
+            "minLength": 10
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 120
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "required": [
+        "data_class",
+        "description"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "data_class": {
+          "enum": [
+            "none",
+            "public",
+            "synthetic",
+            "redacted_nonconfidential",
+            "internal",
+            "confidential",
+            "regulated"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "tool": {
+          "type": "object",
+          "required": [
+            "name",
+            "employer_approved"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "employer_approved": {
+              "enum": [
+                "yes",
+                "no",
+                "not_applicable"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "effort": {
+      "type": "object",
+      "required": [
+        "minutes_total",
+        "sessions",
+        "window_days"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "minutes_total": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 240
+        },
+        "sessions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "window_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 14
+        }
+      }
+    },
+    "prediction": {
+      "type": "object",
+      "required": [
+        "user",
+        "engine"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "user": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "engine": {
+          "type": "string",
+          "minLength": 10
+        }
+      }
+    },
+    "measures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "what",
+          "how_recorded",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^M\\d$"
+          },
+          "what": {
+            "type": "string"
+          },
+          "how_recorded": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "time_minutes",
+              "count",
+              "yes_no",
+              "rating_0_10",
+              "text_observation",
+              "artifact_comparison"
+            ]
+          }
+        }
+      }
+    },
+    "learning_criteria": {
+      "type": "object",
+      "required": [
+        "confirms_if",
+        "disconfirms_if"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "confirms_if": {
+          "type": "string"
+        },
+        "disconfirms_if": {
+          "type": "string"
+        },
+        "informative_note": {
+          "type": "string"
+        }
+      }
+    },
+    "branches": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "condition_type",
+          "condition",
+          "next_move",
+          "next_description"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^B\\d$"
+          },
+          "condition_type": {
+            "enum": [
+              "confirms",
+              "disconfirms",
+              "mixed",
+              "null_result",
+              "partial",
+              "not_attempted",
+              "harm"
+            ]
+          },
+          "condition": {
+            "type": "string"
+          },
+          "next_move": {
+            "enum": [
+              "continue",
+              "modify",
+              "investigate_further",
+              "simplify",
+              "change_intervention",
+              "stop",
+              "escalate",
+              "rediagnose"
+            ]
+          },
+          "next_description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "stakeholder_exposure",
+        "reversibility",
+        "stop_conditions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "stakeholder_exposure": {
+          "enum": [
+            "none",
+            "informed_stakeholder",
+            "public"
+          ]
+        },
+        "reversibility": {
+          "enum": [
+            "reversible",
+            "low_stakes"
+          ]
+        },
+        "stop_conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "alternatives_considered": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "archetype",
+          "why_not"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "archetype": {
+            "$ref": "#/$defs/archetype"
+          },
+          "why_not": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "accepted",
+        "scheduled",
+        "in_progress",
+        "completed",
+        "partial",
+        "not_attempted",
+        "abandoned",
+        "superseded"
+      ]
+    },
+    "status_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "status",
+          "at"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "at": {
+            "$ref": "common.schema.json#/$defs/iso_datetime"
+          }
+        }
+      }
+    }
+  }
+}
