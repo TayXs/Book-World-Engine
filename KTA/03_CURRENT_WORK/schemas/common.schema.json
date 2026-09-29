@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/common.schema.json",
+  "title": "KTA common definitions v0.1",
+  "$defs": {
+    "source": {
+      "description": "Where a value came from. Engine/operator inferences must be confirmable.",
+      "enum": ["user_stated", "user_confirmed", "operator_inferred", "engine_inferred", "observed"]
+    },
+    "confidence": { "enum": ["low", "medium", "high"] },
+    "impact": { "enum": ["low", "medium", "high"] },
+    "evidence_grade": {
+      "description": "Feedback/observation evidence grade: E3 measured observable, E2 specific qualitative observation, E1 general impression, E0 no information.",
+      "enum": ["E0", "E1", "E2", "E3"]
+    },
+    "ref": {
+      "description": "Reference to a packet element or context field.",
+      "type": "string",
+      "pattern": "^(T\\d{2}|UQ\\d{2}|F\\d|S\\d|O\\d|AX\\d{2}|CL\\d{2}|C\\d{2}|CAP\\d{2}|AD\\d{2}|FB\\d{2}|goal(\\.[a-z_]+)?|context\\.[a-z_]+)$"
+    },
+    "relevance": {
+      "description": "Why this element matters to THIS user. Collectively forms the Personal Relevance Map.",
+      "type": "object",
+      "required": ["why_for_this_user", "grounded_in"],
+      "additionalProperties": false,
+      "properties": {
+        "why_for_this_user": { "type": "string", "minLength": 20 },
+        "grounded_in": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/ref" } }
+      }
+    },
+    "iso_datetime": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}(:\\d{2})?Z?)?$" }
+  }
+}

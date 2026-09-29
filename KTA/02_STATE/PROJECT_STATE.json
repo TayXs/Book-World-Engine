@@ -4,10 +4,9 @@
   "current_stage": "Pre-V0 product definition; Lane 02 specification",
   "current_lane": "02 — Mission & Diagnostic Engine",
   "current_objective": "Build Mission Generation Engine v0.1",
-  "current_artifact": "Mission Generation Output Contract v0.1",
-  "last_completed": "Architecture refinement review v0.1 (03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md); non-material refinements applied; material proposals batched",
+  "current_artifact": "Diagnostic Question Architecture v0.1",
+  "last_completed": "Lane 02 step 1: Mission Generation Output Contract v0.1 (draft) + schemas (mission_packet, uncertainty_item, common)",
   "active_questions": [
-    "Exact Mission Generation Output Contract",
     "Minimum necessary adaptive diagnostic inputs",
     "Task Map schema and evidence boundaries",
     "Mission Planner decision rules",
@@ -21,8 +20,8 @@
     "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
   ],
   "blockers": [],
-  "next_action": "Draft 03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md plus machine-checkable schema",
+  "next_action": "Draft 03_CURRENT_WORK/DIAGNOSTIC_ARCHITECTURE_v0.1.md (step 2), derived backward from contract fields",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
   "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:20Z"
+  "last_updated": "2026-09-29T22:40Z"
 }

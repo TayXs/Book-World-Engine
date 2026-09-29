@@ -25,3 +25,4 @@ Next:
 - Non-material refinements applied: authority clarification in `CLAUDE.md`; repo-root routing `CLAUDE.md`; registry Markdown mirror + `tools/render_registries.py`; integrity note; UTC timestamps.
 - Material proposals batched in `02_STATE/OWNER_DECISIONS_PENDING.md` (none block Lane 02).
 - Next: Mission Generation Output Contract v0.1.
+- Step 1 done: `03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md` + `schemas/{mission_packet,uncertainty_item,common}.schema.json`. Key design: Uncertainty Ledger typed by resolver; 14 machine invariants; 4 differentiation acceptance tests.

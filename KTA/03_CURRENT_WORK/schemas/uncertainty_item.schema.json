@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kta.invalid/schemas/uncertainty_item.schema.json",
+  "title": "UncertaintyItem v0.1 (Uncertainty Ledger entry)",
+  "description": "One unknown that matters to the mission, typed by who can resolve it. Known Unknowns, Knowledge Gaps and Research Questions are views over these items.",
+  "type": "object",
+  "required": ["id", "statement", "kind", "route", "impact", "blocking", "decision_links", "status", "relevance"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^UQ\\d{2}$" },
+    "statement": { "type": "string", "minLength": 10 },
+    "kind": { "enum": ["user_context", "personal_empirical", "world_fact", "understanding_gap"] },
+    "route": { "enum": ["ask", "experiment", "research", "explain", "defer"] },
+    "impact": { "$ref": "common.schema.json#/$defs/impact" },
+    "blocking": { "type": "boolean" },
+    "decision_links": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ref" } },
+    "task_links": { "type": "array", "items": { "type": "string", "pattern": "^T\\d{2}$" } },
+    "current_belief": {
+      "type": "object",
+      "required": ["statement", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "statement": { "type": "string" },
+        "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+        "basis": { "type": "string" }
+      }
+    },
+    "status": { "enum": ["open", "resolved", "deferred", "dropped"] },
+    "defer_reason": { "type": "string" },
+    "resolution": {
+      "type": "object",
+      "required": ["summary", "source", "evidence_grade"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string" },
+        "source": { "enum": ["user", "experiment", "evidence", "explanation", "operator"] },
+        "ref": { "type": "string" },
+        "date": { "$ref": "common.schema.json#/$defs/iso_datetime" },
+        "evidence_grade": { "$ref": "common.schema.json#/$defs/evidence_grade" }
+      }
+    },
+    "research": {
+      "description": "Lane 02 -> Lane 03 interface. Required when kind = world_fact.",
+      "type": "object",
+      "required": ["question", "required_strength", "freshness", "answer_changes", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "question": { "type": "string", "minLength": 15 },
+        "required_strength": { "enum": ["strong", "moderate", "indicative"] },
+        "freshness": { "type": "string" },
+        "preferred_source_types": {
+          "type": "array",
+          "items": { "enum": ["primary_study", "official_statistics", "vendor_docs_tested", "practitioner_report", "regulator_guidance", "hands_on_test", "other"] }
+        },
+        "answer_changes": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["if", "then"], "additionalProperties": false,
+            "properties": { "if": { "type": "string" }, "then": { "type": "string" } }
+          }
+        },
+        "evidence_claim_ref": { "type": "string" },
+        "status": { "enum": ["queued", "in_progress", "answered", "unanswerable"] }
+      }
+    },
+    "relevance": { "$ref": "common.schema.json#/$defs/relevance" }
+  },
+  "allOf": [
+    { "if": { "properties": { "kind": { "const": "world_fact" } } }, "then": { "required": ["research"] } },
+    { "if": { "properties": { "status": { "const": "resolved" } } }, "then": { "required": ["resolution"] } },
+    { "if": { "properties": { "status": { "const": "deferred" } } }, "then": { "required": ["defer_reason"] } }
+  ]
+}
