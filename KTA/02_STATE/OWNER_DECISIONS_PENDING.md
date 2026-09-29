@@ -1,39 +1,23 @@
 # OWNER DECISIONS PENDING
 
-Batch 1 · raised 2026-09-29 · source: `03_CURRENT_WORK/KTA_ARCHITECTURE_REFINEMENT_REVIEW_v0.1.md`
-None of these block Lane 02. Work continues under the current rules until you reply.
+## Lane 02 acceptance checkpoint · raised 2026-09-29
+Full detail: `03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md` (§8)
 
-**Reply format:** `1A 2A 3A 4A` (the recommended defaults are A)
+**Reply:** `D1A D2A D3A D4A D5A D6A` (the recommended defaults), or change any letter.
 
----
+| # | Decision | Recommended |
+|---|---|---|
+| D1 | Storage: Git is the canonical workspace; Drive is the canonical governance and release mirror and the recovery layer. The exact wording and the sync/conflict rule are in packet §7.4. MATERIAL. | A: approve, and connect the Google account that owns the KTA Drive files |
+| D2 | Confidential information: the principle is CORE (DEC-007) and the rules P1–P7 are CURRENT (DEC-009), including "KTA itself" (INV-16) | A: approve |
+| D3 | Blueprint data-model delta (packet §7.1–7.2), applied only after D5 | A: approve |
+| D4 | North Star: the refined Decision-Useful Action Rate is the PROVISIONAL candidate; MAR is kept for comparison; the choice is made at the V0 gate | A: adopt the refined version |
+| D5 | Lane 02 acceptance | A: ACCEPT WITH REPAIRS R1–R5 |
+| D6 | Who writes the unseen blind-evaluation cases | A: you write 3–5; separate AI sessions (with no spec access) write and blind-review the rest |
 
-### 1 · Source of truth (AR-01) · changes CORE KTA-GOV-003
-- **Change:** Make the git repo folder `KTA/` the canonical project store, with Drive as a milestone mirror. Reword the Chat Independence rule so it covers any AI tool, not only ChatGPT.
-- **Why:** Claude Code writes to git. This session can't reach the Drive originals, so the two stores will drift apart.
-- **Accept risk:** Drive becomes stale between mirrors.
-- **Reject risk:** Two diverging "truths", plus a manual upload every session.
-- **A** Repo canonical, Drive mirror (recommended) · **B** Drive stays canonical; you sync the repo to Drive after each checkpoint · **C** Defer
-
-### 2 · Employer and client data safety rule (AR-08) · new CURRENT decision
-- **Change:** KTA never recommends putting confidential employer or client data into tools the employer hasn't approved. Experiments default to public, synthetic or redacted material. Employer AI policy becomes a required intake item.
-- **Why:** "Try AI on your real task" is the most natural experiment, and it can breach employment, contract or regulatory rules.
-- **Accept risk:** Some experiments become a bit less realistic.
-- **Reject risk:** Real user harm and a pilot trust incident.
-- **A** Adopt as CURRENT (recommended; the drafts already follow it) · **B** Adopt as PROVISIONAL · **C** Reject
-
-### 3 · Blueprint reconciliation at the Lane 02 handoff (AR-10, AR-04, AR-05)
-- **Change:** Add these data objects to the Blueprint: TaskMap, UncertaintyItem (covers research questions), FeedbackRecord, AdaptationDecision. Describe personalization as a property of planning, not a separate stage. Record that Lane 02 owns the first experiment and check-in interface and Lane 05 owns ongoing adaptation.
-- **Why:** The Blueprint doesn't list a Task Map at all. Its data model lags its own build priority.
-- **Accept risk:** Low; it formalizes the Lane 02 drafts.
-- **Reject risk:** The authority docs contradict the engine spec.
-- **A** Approve now; apply once, at the Lane 02 handoff (recommended) · **B** Review the diff first · **C** Reject
-
-### 4 · Operational North Star definition (AR-15) · changes PROVISIONAL DEC-005
-- **Change:** An action counts toward Meaningful Action Rate only if it was attempted, a *specific observation* was recorded (evidence grade E2 or higher), and the user names a decision or behavior it changed or confirmed. Add three pilot diagnostics: Attention Cost (minutes per cycle), Harm/Regret reports, and LLM-Baseline Preference.
-- **Why:** The current wording is satisfied by "felt useful". That is easy to inflate and doesn't separate KTA from a chatbot.
-- **Accept risk:** Lower headline numbers.
-- **Reject risk:** A pilot "success" that proves nothing.
-- **A** Adopt for V0 pilot (recommended) · **B** Adopt only the diagnostics · **C** Keep current wording
-
----
-_Decisions answered: none yet._
+## History
+- **Batch 1 (MCP-1..4), raised 2026-09-29.** The owner's directions were received on 2026-09-29:
+  - MCP-1 was revised into the dual-layer model, now D1.
+  - MCP-2 was approved in principle; its classification is now D2.
+  - MCP-3 was approved in principle, conditional on Lane 02 acceptance; now D3 and D5.
+  - MCP-4: the need was approved, but the metric is not locked; now D4.
+- **Nothing material has been applied.**

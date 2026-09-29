@@ -35,3 +35,10 @@ Next:
 - Step 8 done: `03_CURRENT_WORK/FAILURE_MODE_REVIEW_v0.1.md`. Stress traces ST-1..5 found thin-map, prohibits-policy, rediagnose, escalation and decline gaps; all fixed. Specs now 0.1-rev1. No material change triggered.
 - Step 9 done: `03_CURRENT_WORK/V0_PILOT_PREPARATION_v0.1.md` (runbook, escalation playbook, consent draft needing owner approval, LLM-baseline protocol, go/no-go, batch-2 decisions), `04_REGISTRIES/PROPOSED_REGISTRY_UPDATES_v0.1.md`, `05_HANDOFFS/LANE_02_HANDOFF_v0.1.md`. `.gitignore` guard added for real pilot data. `KTA_CURRENT_STATE.md` updated (stage and next work only; no doctrine changed).
 - **Lane 02 v0.1 is complete as a draft.** Next stage: V0 pilot readiness.
+
+## 2026-09-29: Lane 02 owner acceptance checkpoint
+- Owner gave batch-1 directions: dual-layer storage (revised), the confidential-information principle approved, the data model approved in principle, the North Star to be strengthened but not locked. The owner also said to hold the drafting prompt.
+- Created `03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md`, which covers the engine summary, architecture, invariants (CURRENT candidates vs PROVISIONAL), simulation results, all failure modes, the closed-loop limitation with a blind/adversarial evaluation proposal, exact diffs (not applied), decisions D1–D6, and the post-acceptance sequence.
+- New defect found: **FM-23** (A16 treats a measured null the same as an inconclusive result) → repair R1.
+- Recommendation: **ACCEPT WITH SPECIFIED REPAIRS R1–R5.** Nothing material has been applied.
+- **Lane 02 is waiting for owner acceptance.**

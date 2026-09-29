@@ -1,26 +1,27 @@
 {
   "project": "Knowledge → Action",
   "project_version": "KTA v0.1",
-  "current_stage": "Pre-V0; Lane 02 v0.1 specified (draft, 0.1-rev1); entering V0 pilot readiness",
+  "current_stage": "Pre-V0; Lane 02 v0.1 AWAITING OWNER ACCEPTANCE",
   "current_lane": "02 — Mission & Diagnostic Engine",
-  "current_objective": "Mission Generation Engine v0.1: all 9 build steps drafted; awaiting owner acceptance and decisions",
-  "current_artifact": "05_HANDOFFS/LANE_02_HANDOFF_v0.1.md",
-  "last_completed": "Lane 02 step 9: V0 pilot preparation draft + proposed registry updates + Lane 02 handoff",
+  "current_objective": "Owner acceptance checkpoint for Mission Generation Engine v0.1",
+  "current_artifact": "03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md",
+  "last_completed": "Lane 02 acceptance packet v0.1 (recommendation: ACCEPT WITH SPECIFIED REPAIRS R1-R5; new defect FM-23 found)",
   "active_questions": [
-    "Owner decisions batch 1 (MCP-1..4)",
-    "Owner acceptance of Lane 02 v0.1 specs (proposed DEC-008)",
-    "Pilot decisions batch 2 (after batch 1)",
-    "Engine drafting template (next build item)"
+    "Owner decisions D1-D6 (acceptance packet section 8)"
   ],
   "proposed_material_changes": [
-    "MCP-1 (AR-01) Repo canonical source of truth; Drive mirror",
-    "MCP-2 (AR-08) Employer/client data safety rule as CURRENT",
-    "MCP-3 (AR-10) Blueprint data-object and lane-interface reconciliation at Lane 02 handoff",
-    "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
+    "D1 (KTA-004) Dual-layer source of truth: Git workspace + Drive governance/release mirror; session-independence wording",
+    "D2 (DEC-007 CORE, DEC-009 CURRENT, KTA-006) Confidential Information Boundary incl. KTA itself",
+    "D3 (KTA-005) Blueprint data-model and architecture reconciliation",
+    "D4 (DEC-005 amend) Decision-Useful Action Rate as PROVISIONAL candidate; MAR retained",
+    "D5 (DEC-008/010) Lane 02 v0.1 acceptance with repairs R1-R5"
   ],
-  "blockers": [],
-  "next_action": "If owner answered batch 1: apply and propagate approved changes. Otherwise: build 03_CURRENT_WORK/ENGINE_DRAFTING_TEMPLATE_v0.1.md with a worked example that passes kta_check.py.",
+  "blockers": [
+    "Owner decisions D1-D6 required before applying changes, repairs or drafting prompt",
+    "Drive sync: connected Drive cannot see KTA Drive files (part of D1)"
+  ],
+  "next_action": "Wait for owner reply to D1-D6. Then apply approved authoritative changes + release KTA-REL-0.1, do repairs R1-R5, seal blind cases, then drafting prompt (packet section 10). Do NOT start the drafting prompt before acceptance.",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
   "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:33Z"
+  "last_updated": "2026-09-29T22:53Z"
 }

@@ -1,5 +1,7 @@
 # PROPOSED REGISTRY UPDATES v0.1
 
+> **Superseded in part (2026-09-29).** Rows KTA-004, KTA-005, DEC-005, DEC-007 and DEC-008 below are replaced by the revised set in `03_CURRENT_WORK/KTA_LANE_02_ACCEPTANCE_PACKET_v0.1.md` §7.5, which follows the owner's batch-1 directions. Where the two files differ, the acceptance packet wins. The Experiment Registry and Parking Lot rows still stand, with EXP-V0-00 and EXP-V0-04 added there.
+
 Status: **PROPOSED, NOT APPROVED.** None of these rows has been written to `KTA_REGISTRIES_v0.1.xlsx`. Each row is added only after owner approval, and then the Markdown mirror is regenerated with `tools/render_registries.py`.
 Sources: the architecture review (AR-nn), the failure-mode review (FM-nn), and the owner decision batch (`02_STATE/OWNER_DECISIONS_PENDING.md`).
 
