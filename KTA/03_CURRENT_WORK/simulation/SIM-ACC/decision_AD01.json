@@ -1,0 +1,41 @@
+{
+  "id": "AD01",
+  "packet_id": "MP-SIM-ACC-r1",
+  "feedback_id": "FB01",
+  "decided_at": "2026-10-14",
+  "decided_by": "operator",
+  "decision": "continue",
+  "table_rules": [
+    "A13"
+  ],
+  "branch_id": "B1",
+  "ledger_updates": [
+    {
+      "uncertainty_id": "UQ02",
+      "new_status": "resolved",
+      "note": "E3: 22 vs 38 min, sendable, 2 corrections."
+    },
+    {
+      "uncertainty_id": "UQ01",
+      "new_status": "resolved",
+      "note": "S1: IT confirmed Copilot (company tenant) is approved for internal financial data, not customer personal data."
+    },
+    {
+      "uncertainty_id": "UQ07",
+      "new_status": "resolved",
+      "note": "S1: manager wants close in 4 days instead of 6 so the team can do more analysis for ops."
+    },
+    {
+      "uncertainty_id": "UQ08",
+      "new_status": "added",
+      "note": "Does the saving hold on a real section with real cause notes?"
+    }
+  ],
+  "task_map_updates": [],
+  "next": {
+    "summary": "Repeat on last month's real section with Copilot (now in policy) after close; the manager's answer makes T03 the confirmed destination, and a demand check for T03 follows.",
+    "next_packet_id": "MP-SIM-ACC-r2",
+    "next_experiment_archetype": "shadow_test"
+  },
+  "user_informed": true
+}

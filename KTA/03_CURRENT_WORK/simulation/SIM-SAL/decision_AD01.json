@@ -1,0 +1,41 @@
+{
+  "id": "AD01",
+  "packet_id": "MP-SIM-SAL-r1",
+  "feedback_id": "FB01",
+  "decided_at": "2026-10-11",
+  "decided_by": "operator",
+  "decision": "investigate_further",
+  "table_rules": [
+    "A15",
+    "A17"
+  ],
+  "branch_id": "B3",
+  "ledger_updates": [
+    {
+      "uncertainty_id": "UQ02",
+      "new_status": "resolved",
+      "note": "E2: top market gaps are multi-threading (6+ stakeholders) and exec business cases, not deal size."
+    },
+    {
+      "uncertainty_id": "UQ01",
+      "new_status": "resolved",
+      "note": "Manager: 2 quarters at 110% plus co-running one enterprise deal with a mentor."
+    },
+    {
+      "uncertainty_id": "UQ06",
+      "new_status": "added",
+      "note": "personal_empirical: what does co-running a mentor-led enterprise deal involve, and how do I get onto one?"
+    },
+    {
+      "uncertainty_id": "UQ07",
+      "new_status": "added",
+      "note": "world_fact (A17): is 'AI-assisted prospecting' becoming a standard enterprise AE requirement?"
+    }
+  ],
+  "task_map_updates": [],
+  "next": {
+    "summary": "The internal route (mentor deal) matters more than the market list. Next: a 20-minute conversation with an enterprise AE at your company about the mentor-deal path; operator researches the 'AI-assisted prospecting' requirement.",
+    "next_experiment_archetype": "conversation_probe"
+  },
+  "user_informed": true
+}

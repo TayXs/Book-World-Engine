@@ -1,0 +1,1003 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-DES-r2",
+    "user_ref": "SIM-DES",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 2,
+    "status": "active",
+    "created_at": "2026-10-12",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true,
+    "parent_packet_id": "MP-SIM-DES-r1",
+    "decision_ref": "AD01"
+  },
+  "scope_check": {
+    "result": "in_scope"
+  },
+  "goal": {
+    "stated_goal": "Work out how to justify my prices when clients show up with AI mockups.",
+    "diagnosed_goal": "Within 18 months, shift the project mix so more revenue comes from concept and brand-direction work that clients buy for judgment, and less from production volume.",
+    "divergence_note": "The stated goal is defending prices; the diagnosis is that one bundled fee hides which part of the work clients value (UQ03 resolved at intake: all projects are priced as one fee).",
+    "archetype": "protect",
+    "horizon_months": 18,
+    "success_signals": [
+      "At least a third of new projects quoted with a separate concept fee",
+      "Fewer projects where revision hours exceed concept hours"
+    ],
+    "baseline": {
+      "goal_confidence_0_10": 3,
+      "main_concern": "Clients use AI mockups to push prices down and question what concept work is worth.",
+      "captured_at": "2026-10-01"
+    }
+  },
+  "context": {
+    "role": {
+      "function": "Graphic designer (packaging, social, brand)",
+      "seniority_band": "senior",
+      "sector_band": "Small consumer food and drink brands",
+      "employment_type": "freelance",
+      "years_in_role_band": "10+"
+    },
+    "time_budget_minutes_per_week": 90,
+    "employer_ai_policy": {
+      "status": "restricts",
+      "approved_tools": [],
+      "notes": "No employer; some client contracts require original work and no generative AI without consent, others are silent."
+    },
+    "ai_experience": "occasional",
+    "constraints": [
+      {
+        "id": "C01",
+        "type": "personal",
+        "statement": "Nothing that signals to clients that work is being automated or corners cut; can't risk losing a client.",
+        "source": "user_stated"
+      },
+      {
+        "id": "C02",
+        "type": "budget",
+        "statement": "Small monthly tool budget only if it pays back.",
+        "source": "user_stated"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "CAP01",
+        "statement": "Long-standing client relationships; several repeat clients.",
+        "source": "user_stated"
+      }
+    ],
+    "preferences": {
+      "format": "checklist"
+    },
+    "provenance": {
+      "time_budget_minutes_per_week": "user_stated",
+      "employer_ai_policy": "user_stated",
+      "role": "user_stated"
+    }
+  },
+  "task_map": {
+    "tasks": [
+      {
+        "id": "T01",
+        "name": "Concept development for new briefs",
+        "description": "Read the brief, research the category, build moodboards and 2-3 directions, present to the client.",
+        "output": "Concept presentation with 2-3 directions",
+        "frequency": "ad_hoc",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "low",
+          "pct_estimate": 20
+        },
+        "traits": {
+          "predictability": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium",
+            "note": "'It's why I do this'"
+          },
+          "friction": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "creativity_synthesis": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "tried",
+          "note": "Tried an image generator for moodboards; stopped over client IP worries."
+        },
+        "future_value": {
+          "direction": "unclear",
+          "basis": "user_belief",
+          "uncertainty_id": "UQ04"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T02",
+        "name": "Production and variations",
+        "description": "Resize and adapt approved designs for channels, packaging formats and social asset sets; prepare final files.",
+        "output": "Final artwork files and asset sets",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "large",
+          "source": "user_stated",
+          "confidence": "low",
+          "pct_estimate": 35
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "tool_dependency": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "occasional",
+          "note": "Uses generative fill to extend backgrounds."
+        },
+        "exposure_hypothesis": {
+          "statement": "Client access to generative image tools is putting more price pressure on production-type work than on concept work.",
+          "uncertainty_id": "UQ04"
+        },
+        "evidence_flags": [
+          "UQ04",
+          "UQ05"
+        ],
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T03",
+        "name": "Client revision rounds",
+        "description": "Calls and emails about feedback, applying changes, re-sending versions.",
+        "output": "Revised files and client emails",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "low",
+          "pct_estimate": 25
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T04",
+        "name": "Winning work: proposals, quotes, portfolio",
+        "description": "Quote new projects, write proposals, update portfolio and website.",
+        "output": "Proposals and quotes",
+        "frequency": "ad_hoc",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": false
+      },
+      {
+        "id": "T05",
+        "name": "Business admin",
+        "description": "Invoicing, file management, bookkeeping handoff.",
+        "output": "Invoices and organised files",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 0,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": false
+      }
+    ],
+    "coverage_estimate": {
+      "band": "high",
+      "source": "user_stated"
+    },
+    "map_confidence": "low",
+    "unlisted_work_note": "Revisions and production blur together, per the user."
+  },
+  "uncertainty_ledger": [
+    {
+      "id": "UQ01",
+      "statement": "Across recent projects, what share of hours went to concept, production and revisions, and where is the effective hourly rate lowest?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "F2",
+        "AX02"
+      ],
+      "task_links": [
+        "T01",
+        "T02",
+        "T03"
+      ],
+      "status": "open",
+      "current_belief": {
+        "statement": "User guesses production is about half their hours; time shares are low-confidence.",
+        "confidence": "low",
+        "basis": "DQ-07"
+      },
+      "relevance": {
+        "why_for_this_user": "Your time split was a guess, and pricing decisions depend on where the hours and money really go.",
+        "grounded_in": [
+          "T01",
+          "T02",
+          "T03"
+        ]
+      }
+    },
+    {
+      "id": "UQ02",
+      "statement": "Which part of the work do the best repeat clients say they value most, and would they pay for it separately?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "S5"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Separating a concept fee only works if your best clients see the concept as the valuable part.",
+        "grounded_in": [
+          "T01",
+          "CAP01"
+        ]
+      }
+    },
+    {
+      "id": "UQ03",
+      "statement": "Is concept work currently priced separately from production?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1"
+      ],
+      "task_links": [
+        "T01",
+        "T02"
+      ],
+      "status": "resolved",
+      "resolution": {
+        "summary": "No: every project is one fee estimated from expected hours.",
+        "source": "user",
+        "ref": "D6 follow-up FQ-1",
+        "date": "2026-10-01",
+        "evidence_grade": "E2"
+      },
+      "relevance": {
+        "why_for_this_user": "A single fee means clients compare your whole price to an AI mockup.",
+        "grounded_in": [
+          "T01",
+          "T02"
+        ]
+      }
+    },
+    {
+      "id": "UQ04",
+      "statement": "Is generative-AI competition putting more price pressure on production-type design work than on concept/brand work?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "CL02",
+        "S3"
+      ],
+      "task_links": [
+        "T02",
+        "T01"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What evidence from the last 12 months (surveys of freelancers or agencies, platform rate data) shows how rates for design production versus concept/brand work have changed since generative image tools spread?",
+        "required_strength": "moderate",
+        "freshness": "≤12 months",
+        "preferred_source_types": [
+          "primary_study",
+          "official_statistics",
+          "practitioner_report"
+        ],
+        "answer_changes": [
+          {
+            "if": "Production rates fell and concept rates held",
+            "then": "Supports splitting fees; F1 stays priority"
+          },
+          {
+            "if": "Both fell similarly",
+            "then": "Pricing structure alone won't help; re-weight toward client mix and positioning"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Checks whether the pressure you feel is specific to production or hits concept work too.",
+        "grounded_in": [
+          "T02",
+          "goal.baseline"
+        ]
+      }
+    },
+    {
+      "id": "UQ05",
+      "statement": "What are the licensing and IP positions of major generative image tools for commercial client work, and how do typical client contracts treat them?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "F2",
+        "S3"
+      ],
+      "task_links": [
+        "T02"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do the current commercial-use terms of the main generative image tools say about output ownership and indemnity, and what clauses on generative AI appear in standard design service contracts?",
+        "required_strength": "strong",
+        "freshness": "≤6 months",
+        "preferred_source_types": [
+          "vendor_docs_tested",
+          "regulator_guidance",
+          "practitioner_report"
+        ],
+        "answer_changes": [
+          {
+            "if": "Terms give clear commercial rights",
+            "then": "Consent-based production use can be offered to willing clients"
+          },
+          {
+            "if": "Terms are unclear or risky",
+            "then": "Keep generative tools out of client deliverables"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Some of your contracts restrict generative AI; you need the facts before using it more in production.",
+        "grounded_in": [
+          "context.employer_ai_policy",
+          "T02"
+        ]
+      }
+    },
+    {
+      "id": "UQ06",
+      "statement": "How do tiered or split pricing structures work for design services (concept fee plus production rate)?",
+      "kind": "understanding_gap",
+      "route": "explain",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S4"
+      ],
+      "task_links": [
+        "T01",
+        "T04"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Needed once the audit shows where your hours go, before you change a quote.",
+        "grounded_in": [
+          "T04",
+          "goal"
+        ]
+      }
+    },
+    {
+      "id": "UQ07",
+      "statement": "Which current client contracts allow generative tools in production with consent?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "F2",
+        "S2"
+      ],
+      "task_links": [
+        "T02"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Tells you where production leverage is even allowed.",
+        "grounded_in": [
+          "context.employer_ai_policy",
+          "T02"
+        ]
+      }
+    }
+  ],
+  "mission": {
+    "focus_areas": [
+      {
+        "id": "F1",
+        "title": "Make your concept thinking visible and separately priced",
+        "candidate_type": "anchor",
+        "task_ids": [
+          "T01"
+        ],
+        "uncertainty_ids": [
+          "UQ01",
+          "UQ02"
+        ],
+        "rationale": "High-judgment, identity-valued work that the single fee hides; the diagnosed goal depends on it.",
+        "planner_rule_refs": [
+          "MPR-05",
+          "MPR-08",
+          "MPR-09"
+        ],
+        "priority": 1,
+        "relevance": {
+          "why_for_this_user": "Concept work is why you do this, and it's what an AI mockup can't replace in the client's decision.",
+          "grounded_in": [
+            "T01",
+            "goal"
+          ]
+        }
+      },
+      {
+        "id": "F2",
+        "title": "Cut production hours where your client contracts allow",
+        "candidate_type": "leverage",
+        "task_ids": [
+          "T02"
+        ],
+        "uncertainty_ids": [
+          "UQ01",
+          "UQ05",
+          "UQ07"
+        ],
+        "rationale": "Largest (guessed) time block, highly repeatable, disliked; its destination is F1.",
+        "planner_rule_refs": [
+          "MPR-04",
+          "MPR-14"
+        ],
+        "priority": 2,
+        "relevance": {
+          "why_for_this_user": "You said you'd be glad to lose most production work, and time saved there can go into concept work.",
+          "grounded_in": [
+            "T02",
+            "T01"
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "id": "S1",
+        "step_type": "experiment",
+        "description": "Run AX02 (3-project audit, two short sittings).",
+        "targets": [
+          "AX02",
+          "UQ01"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Same question as before, sized for a busy week.",
+          "grounded_in": [
+            "T01",
+            "T02",
+            "T03"
+          ]
+        }
+      },
+      {
+        "id": "S2",
+        "step_type": "ask",
+        "description": "Check your current contracts and list which allow generative tools with consent.",
+        "targets": [
+          "UQ07"
+        ],
+        "depends_on": [],
+        "timebox_days": 10,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Shows where production leverage is allowed at all.",
+          "grounded_in": [
+            "context.employer_ai_policy",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S3",
+        "step_type": "research",
+        "description": "Operator researches UQ04 (rate pressure by work type) and UQ05 (tool licensing and contract clauses).",
+        "targets": [
+          "UQ04",
+          "UQ05"
+        ],
+        "depends_on": [],
+        "timebox_days": 10,
+        "owner": "operator",
+        "relevance": {
+          "why_for_this_user": "Checks the facts behind your worry and your contract limits.",
+          "grounded_in": [
+            "goal.baseline",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S4",
+        "step_type": "explain",
+        "description": "One-page primer on split concept/production pricing, using your audit numbers.",
+        "targets": [
+          "UQ06"
+        ],
+        "depends_on": [
+          "S1"
+        ],
+        "timebox_days": 12,
+        "owner": "engine",
+        "relevance": {
+          "why_for_this_user": "Gives you a way to quote that shows the thinking separately.",
+          "grounded_in": [
+            "T04",
+            "T01"
+          ]
+        }
+      },
+      {
+        "id": "S5",
+        "step_type": "decide",
+        "description": "At check-in, follow AX01's branches; default next test is asking 2 best clients what they value (UQ02).",
+        "targets": [
+          "AX02",
+          "UQ02"
+        ],
+        "depends_on": [
+          "S1"
+        ],
+        "timebox_days": 10,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Keeps any client conversation grounded in your own numbers.",
+          "grounded_in": [
+            "CAP01",
+            "T01"
+          ]
+        }
+      }
+    ],
+    "omissions": [
+      {
+        "id": "O1",
+        "what": "Rebuilding your website around 'human-made design'",
+        "why_omitted": "Premature before you know what your best clients actually value (UQ02).",
+        "revisit_condition": "After the client value conversations.",
+        "relevance": {
+          "why_for_this_user": "You mentioned planning this; it's parked, not rejected.",
+          "grounded_in": [
+            "T04",
+            "UQ02"
+          ]
+        }
+      },
+      {
+        "id": "O2",
+        "what": "Learning advanced image generators for concept work",
+        "why_omitted": "Concept is the work you value most, and several contracts restrict generative tools.",
+        "revisit_condition": "A client asks for AI-assisted concepts with explicit consent.",
+        "relevance": {
+          "why_for_this_user": "Protects the part of the job you said you'd miss.",
+          "grounded_in": [
+            "T01",
+            "context.employer_ai_policy"
+          ]
+        }
+      },
+      {
+        "id": "O3",
+        "what": "Redesigning your revision process",
+        "why_omitted": "Wait for the audit to show whether revisions really exceed concept hours.",
+        "revisit_condition": "Audit shows revisions >25% of hours or in most projects.",
+        "relevance": {
+          "why_for_this_user": "Revision rounds feel pointless to you, but the size is still a guess.",
+          "grounded_in": [
+            "T03"
+          ]
+        }
+      }
+    ],
+    "exit_criteria": [
+      {
+        "type": "goal_met",
+        "statement": "A third of new quotes carry a separate concept fee and clients accept it."
+      },
+      {
+        "type": "no_decision_relevant_uncertainty",
+        "statement": "No open question would change your next pricing move."
+      },
+      {
+        "type": "user_opt_out",
+        "statement": "You ask to stop."
+      },
+      {
+        "type": "risk_detected",
+        "statement": "Any client-relationship or contract risk appears."
+      }
+    ],
+    "attention_budget": {
+      "user_minutes_planned_total": 75,
+      "plan_weeks": 2
+    }
+  },
+  "first_experiment": {
+    "id": "AX02",
+    "archetype": "retro_audit",
+    "title": "Where your hours went on your last 3 projects (two short sittings)",
+    "hypothesis": {
+      "statement": "Concept work is under 30% of your hours but drives which clients stay, while production and revisions are where your effective hourly rate is lowest.",
+      "would_be_wrong_if": "Concept is already 40% or more of your hours, or production-heavy projects have your best effective rates."
+    },
+    "targets": {
+      "uncertainty_ids": [
+        "UQ01"
+      ],
+      "task_ids": [
+        "T01",
+        "T02",
+        "T03"
+      ]
+    },
+    "depends_on": [
+      "UQ03"
+    ],
+    "relevance": {
+      "why_for_this_user": "Last week showed a single 60-minute sitting doesn't fit around rush jobs, so this is the same question in two 15-minute pieces.",
+      "grounded_in": [
+        "T01",
+        "T02",
+        "T03",
+        "UQ03"
+      ]
+    },
+    "steps": [
+      {
+        "n": 1,
+        "instruction": "Sitting 1: for your last 3 finished projects, estimate hours for concept, production and revisions in the template.",
+        "minutes": 15
+      },
+      {
+        "n": 2,
+        "instruction": "Sitting 2: work out each project's relative effective rate, and note which phase the happiest client valued.",
+        "minutes": 15
+      }
+    ],
+    "materials": {
+      "data_class": "none",
+      "description": "The user's own project records, reviewed locally; only totals and ratios are recorded; no tool is used."
+    },
+    "effort": {
+      "minutes_total": 30,
+      "sessions": 2,
+      "window_days": 7
+    },
+    "prediction": {
+      "user": "Same as before: production about half, revisions bigger than I think.",
+      "engine": "Same expectation; fewer projects means a weaker signal, so B3 (mixed) is more likely."
+    },
+    "measures": [
+      {
+        "id": "M1",
+        "what": "Hours by phase per project (concept/production/revisions)",
+        "how_recorded": "Audit template",
+        "type": "count"
+      },
+      {
+        "id": "M2",
+        "what": "Relative effective rate per project (ratio to your average)",
+        "how_recorded": "Audit template",
+        "type": "count"
+      },
+      {
+        "id": "M3",
+        "what": "Projects where revision hours exceeded concept hours",
+        "how_recorded": "Count from template",
+        "type": "count"
+      },
+      {
+        "id": "M4",
+        "what": "Which phase the happiest clients valued, in your view",
+        "how_recorded": "Two lines",
+        "type": "text_observation"
+      }
+    ],
+    "learning_criteria": {
+      "confirms_if": "Concept <30% of hours and lowest effective rates on production/revision-heavy projects",
+      "disconfirms_if": "Concept ≥40% of hours, or production-heavy projects earn the best rates",
+      "informative_note": "Records too thin to estimate means we need a live time audit instead."
+    },
+    "branches": [
+      {
+        "id": "B1",
+        "condition_type": "confirms",
+        "condition": "Concept is a small share and production/revisions earn least",
+        "next_move": "continue",
+        "next_description": "Ask 2 best clients what they value (value_probe) and draft a split concept/production quote."
+      },
+      {
+        "id": "B2",
+        "condition_type": "disconfirms",
+        "condition": "Concept already large or production pays best",
+        "next_move": "modify",
+        "next_description": "Price pressure isn't about the mix; re-run focus selection toward client mix and positioning."
+      },
+      {
+        "id": "B3",
+        "condition_type": "mixed",
+        "condition": "Mixed across projects",
+        "next_move": "investigate_further",
+        "next_description": "Compare the projects by brief quality and client type."
+      },
+      {
+        "id": "B4",
+        "condition_type": "null_result",
+        "condition": "Records too thin to estimate",
+        "next_move": "change_intervention",
+        "next_description": "Switch to a 2-week live time audit on current projects."
+      },
+      {
+        "id": "B5",
+        "condition_type": "not_attempted",
+        "condition": "Didn't get to it",
+        "next_move": "simplify",
+        "next_description": "3 projects instead of 6, about 30 minutes."
+      },
+      {
+        "id": "B6",
+        "condition_type": "harm",
+        "condition": "Client material shared anywhere by accident, or anything felt wrong",
+        "next_move": "escalate",
+        "next_description": "Stop; operator reviews."
+      }
+    ],
+    "safety": {
+      "stakeholder_exposure": "none",
+      "reversibility": "reversible",
+      "stop_conditions": [
+        "Don't copy client files anywhere; record only totals and ratios."
+      ],
+      "notes": "No tool is used, so client contract restrictions are not touched."
+    },
+    "alternatives_considered": [
+      {
+        "archetype": "time_audit",
+        "why_not": "Live logging for 5 days is more burden during a busy stretch than 2 short sittings."
+      }
+    ],
+    "status": "accepted",
+    "status_history": [
+      {
+        "status": "proposed",
+        "at": "2026-10-11"
+      },
+      {
+        "status": "accepted",
+        "at": "2026-10-12"
+      }
+    ]
+  },
+  "feedback_plan": {
+    "checkin_at_days": 8,
+    "nudge_at_days": 4,
+    "channel": "operator_message",
+    "question_set": "CQ-v0.1",
+    "mission_triggers": [
+      {
+        "condition": "Any harm or discomfort reported (CQ-8)",
+        "decision": "escalate"
+      },
+      {
+        "condition": "Experiment not attempted or no response at two consecutive check-ins",
+        "decision": "rediagnose"
+      },
+      {
+        "condition": "User asks to stop",
+        "decision": "stop"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "CL01",
+      "text": "Production looks like your largest time block (you guessed ~35%), but that's a guess; the audit will tell us.",
+      "claim_type": "engine_judgment",
+      "evidence_status": "user_local",
+      "shown_as": "judgment"
+    },
+    {
+      "id": "CL02",
+      "text": "Clients' access to AI mockups may be putting more price pressure on production than on concept work; we're checking the evidence.",
+      "claim_type": "world_fact",
+      "evidence_status": "unverified",
+      "shown_as": "hypothesis",
+      "uncertainty_id": "UQ04"
+    }
+  ],
+  "operator_log": [
+    {
+      "at": "2026-10-12",
+      "path": "first_experiment",
+      "change": "added",
+      "reason": "AD01 simplify (A6, B5): AX02 halves AX01."
+    },
+    {
+      "at": "2026-10-12",
+      "path": "meta.status",
+      "change": "approved",
+      "reason": "Operator review complete."
+    }
+  ],
+  "delivery": {
+    "format": "checklist",
+    "estimated_user_minutes": 3
+  }
+}

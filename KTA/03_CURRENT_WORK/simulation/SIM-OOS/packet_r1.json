@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-OOS-r1",
+    "user_ref": "SIM-OOS",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 1,
+    "status": "out_of_scope",
+    "created_at": "2026-10-02",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true
+  },
+  "scope_check": {
+    "result": "out_of_scope",
+    "flags": [
+      "acute_job_loss_financial_distress",
+      "psychological_distress"
+    ],
+    "note": "[SIGNPOST WORDING PENDING OWNER APPROVAL] Acknowledge the situation; point to local employment and financial support services and, because distress was expressed, to appropriate support lines; offer to return to career planning when the person is ready. No mission, no task map, no advice on retraining."
+  },
+  "claims": [],
+  "operator_log": [
+    {
+      "at": "2026-10-02",
+      "path": "scope_check",
+      "change": "approved",
+      "reason": "D0/DQ-02: laid off last week, rent due, not sleeping; MPR-02 out_of_scope."
+    }
+  ]
+}

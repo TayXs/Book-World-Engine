@@ -160,7 +160,7 @@ The allowed routes for each kind:
 ### 5.7 `mission` (R unless out of scope)
 | Field | Type | Notes |
 |---|---|---|
-| `focus_areas` **R** | 1–3 × `{id F.., title, task_ids[≥1], uncertainty_ids, rationale, priority, relevance}` | *Selection.* Each focus area must be anchored in at least one task. |
+| `focus_areas` **R** | 1–3 × `{id F.., title, candidate_type, task_ids[≥1], uncertainty_ids, rationale, planner_rule_refs, priority, relevance}` | *Selection.* Each focus area must be anchored in at least one task. `candidate_type` is `leverage`, `anchor`, `transition`, `clarify` or `light_touch` (MPR-04 to 07, MPR-20); it was added in step 7 so the checker can test the pairing rule. |
 | `sequence` **R** | 2–6 × `{id S.., step_type, description, targets[], depends_on[], timebox_days, owner, relevance}` | *Sequencing.* `step_type` is one of `ask`, `experiment`, `research`, `explain` or `decide`. `owner` is `user`, `operator` or `engine`. |
 | `omissions` **R** | ≥1 × `{id O.., what, why_omitted, revisit_condition, relevance}` | *Omission.* What the user can safely set aside for now, and when to look at it again. |
 | `exit_criteria` **R** | ≥1 × `{type, statement}` | `type` is one of `goal_met`, `no_decision_relevant_uncertainty`, `user_opt_out`, `risk_detected` or `custom`. |
@@ -222,7 +222,7 @@ Each entry is `{at, path, change: added|edited|removed|approved, reason}`. This 
 | ID | Rule |
 |---|---|
 | INV-01 | **Scope.** `out_of_scope` means there is no `task_map`, `mission` or `first_experiment`. Any other result means all three, plus `goal`, `context`, `uncertainty_ledger` and `feedback_plan`, are present. |
-| INV-02 | **Reference integrity.** Every ID that is referenced also exists in the packet. IDs are unique. |
+| INV-02 | **Reference integrity.** Every ID that is referenced also exists in the packet. IDs are unique. *Exception, added in step 7:* `decision_links` on `resolved` or `dropped` ledger items may point to elements of earlier revisions. They are kept as history. |
 | INV-03 | **Grounding.** Every focus area, sequence step, omission, uncertainty and experiment has `relevance.grounded_in` with ≥1 valid reference. Every focus area has ≥1 task. |
 | INV-04 | **Omission.** There is at least 1 omission. |
 | INV-05 | **Targeting.** There are 1–3 focus areas and exactly one first experiment. The experiment targets ≥1 open uncertainty of route `experiment` and ≥1 task. |

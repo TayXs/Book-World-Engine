@@ -1,0 +1,59 @@
+{
+  "id": "FB01",
+  "packet_id": "MP-SIM-ACC-r1",
+  "experiment_id": "AX01",
+  "collected_at": "2026-10-14",
+  "channel": "operator_message",
+  "attempt_status": "fully",
+  "actions_taken": "Built a fake page with 4 cost centres and 3 cause notes; wrote it normally, then with Copilot; asked IT and manager (S1).",
+  "observations": [
+    {
+      "measure_id": "M1",
+      "value": 38,
+      "grade": "E3"
+    },
+    {
+      "measure_id": "M2",
+      "value": 22,
+      "grade": "E3",
+      "note": "13 min drafting + 9 min edits"
+    },
+    {
+      "measure_id": "M3",
+      "value": 2,
+      "grade": "E3",
+      "note": "One invented cause where a note was vague; one favourable/unfavourable flip"
+    },
+    {
+      "measure_id": "M4",
+      "value": true,
+      "grade": "E3"
+    },
+    {
+      "measure_id": "M5",
+      "value": "It filled a vague cause note with a plausible but invented reason, and flipped a sign.",
+      "grade": "E2"
+    }
+  ],
+  "effort_minutes_actual": 75,
+  "prediction_comparison": "better_than_predicted",
+  "surprises": "The sign flip; I'd have missed it on a tired close day.",
+  "blockers": [],
+  "harm_report": {
+    "occurred": false,
+    "severity": "none"
+  },
+  "belief_update": {
+    "direction": "changed_view",
+    "note": "Drafting isn't the hard part; checking causes and signs is."
+  },
+  "decision_change": {
+    "status": "changed",
+    "description": "Will try it on last month's real section now IT has said yes, keeping a cause and sign check."
+  },
+  "usefulness_0_10": 8,
+  "goal_confidence_0_10": 5,
+  "evidence_grade": "E3",
+  "result_class": "confirms",
+  "checkin_minutes": 9
+}

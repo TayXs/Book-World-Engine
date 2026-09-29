@@ -1,0 +1,1100 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-ACC-r1",
+    "user_ref": "SIM-ACC",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 1,
+    "status": "superseded",
+    "created_at": "2026-10-02",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true
+  },
+  "scope_check": {
+    "result": "in_scope"
+  },
+  "goal": {
+    "stated_goal": "Work out whether Copilot means my job shrinks.",
+    "diagnosed_goal": "Within 24 months, move about a day a month from pack assembly into analysis for ops managers, so they seek this person out for decisions.",
+    "divergence_note": "The stated goal is a worry (protect), but the future picture (DQ-04) is leverage with a clear destination: more business-partnering analysis (T03), which the user calls the best part of the job.",
+    "archetype": "leverage",
+    "horizon_months": 24,
+    "success_signals": [
+      "Ops managers bring decision questions directly at least twice a month",
+      "Pack assembly time falls noticeably without quality complaints"
+    ],
+    "baseline": {
+      "goal_confidence_0_10": 4,
+      "main_concern": "Manager said 'close should get faster' after Copilot licences arrived; worried the role shrinks.",
+      "captured_at": "2026-10-01"
+    }
+  },
+  "context": {
+    "role": {
+      "function": "Management accountant",
+      "seniority_band": "mid",
+      "sector_band": "Manufacturing (mid-size)",
+      "employment_type": "employee",
+      "years_in_role_band": "6-10"
+    },
+    "time_budget_minutes_per_week": 60,
+    "employer_ai_policy": {
+      "status": "unknown",
+      "approved_tools": [
+        "Microsoft 365 Copilot"
+      ],
+      "notes": "IT email says Copilot is the only approved tool; user does not know whether ledger/financial data may be used with it."
+    },
+    "ai_experience": "tried",
+    "constraints": [
+      {
+        "id": "C01",
+        "type": "time",
+        "statement": "Close week (working days 1-5 of each month) is off-limits for anything extra.",
+        "source": "user_stated"
+      },
+      {
+        "id": "C02",
+        "type": "budget",
+        "statement": "No personal spend on tools or training.",
+        "source": "user_stated"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "CAP01",
+        "statement": "Knows the operational causes behind variances from regular contact with ops managers.",
+        "source": "operator_inferred"
+      },
+      {
+        "id": "CAP02",
+        "statement": "Strong Excel; used a general chatbot once to write a formula successfully.",
+        "source": "user_stated"
+      }
+    ],
+    "preferences": {
+      "format": "text"
+    },
+    "provenance": {
+      "time_budget_minutes_per_week": "user_stated",
+      "employer_ai_policy": "user_stated",
+      "ai_experience": "user_stated",
+      "role": "user_stated"
+    }
+  },
+  "task_map": {
+    "tasks": [
+      {
+        "id": "T01",
+        "name": "Month-end variance pack",
+        "description": "Pull actuals vs budget from the ERP, explain variances over threshold, assemble the pack for ops managers and the CFO.",
+        "output": "Monthly management pack with variance commentary",
+        "frequency": "monthly",
+        "time_share": {
+          "band": "large",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 30
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium",
+            "note": "Glad to lose the assembly; likes the explaining part"
+          },
+          "analysis_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "information_retrieval": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "tool_dependency": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "internal_manager"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "exposure_hypothesis": {
+          "statement": "Drafting variance commentary from a variance table plus cause notes is within reach of current general AI assistants at reviewable quality.",
+          "uncertainty_id": "UQ03"
+        },
+        "evidence_flags": [
+          "UQ03"
+        ],
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T02",
+        "name": "Balance sheet reconciliations",
+        "description": "Bank, intercompany and accrual reconciliations; investigate and clear differences.",
+        "output": "Signed-off reconciliations",
+        "frequency": "monthly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 20
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium",
+            "note": "Matching rules and tooling are set by the ERP/finance systems team"
+          },
+          "tool_dependency": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "internal_manager",
+          "regulator"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T03",
+        "name": "Ad-hoc analysis for ops managers",
+        "description": "Answer questions such as the cost of a line changeover or why scrap rose; short analysis and recommendation.",
+        "output": "Short analysis note or email with a recommendation",
+        "frequency": "ad_hoc",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 15
+        },
+        "traits": {
+          "predictability": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium",
+            "note": "'Best part of the job'"
+          },
+          "relationship_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "analysis_intensity": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "stakeholders": [
+          "internal_manager"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "future_value": {
+          "direction": "rising",
+          "basis": "user_belief",
+          "uncertainty_id": "UQ06"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T04",
+        "name": "Quarterly reforecast inputs",
+        "description": "Update forecast workbook with ops input and run-rate adjustments.",
+        "output": "Forecast workbook",
+        "frequency": "quarterly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "low",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "internal_manager"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T05",
+        "name": "Journals and accruals",
+        "description": "Prepare and post recurring journals and month-end accruals.",
+        "output": "Posted journals",
+        "frequency": "monthly",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": false
+      },
+      {
+        "id": "T06",
+        "name": "Audit and other queries",
+        "description": "Answer auditor and colleague queries; pull supporting documents.",
+        "output": "Answers and supporting documents",
+        "frequency": "ad_hoc",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 5
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "information_retrieval": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "regulator"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": false
+      }
+    ],
+    "coverage_estimate": {
+      "band": "high",
+      "source": "user_stated"
+    },
+    "map_confidence": "medium"
+  },
+  "uncertainty_ledger": [
+    {
+      "id": "UQ01",
+      "statement": "Does the Copilot approval cover internal financial data such as ledger extracts and variance tables?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "S1",
+        "S5"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "current_belief": {
+        "statement": "Unknown; treat as not allowed until confirmed.",
+        "confidence": "low",
+        "basis": "DQ-10 answer"
+      },
+      "relevance": {
+        "why_for_this_user": "Decides whether the next test can use a real pack section instead of made-up numbers.",
+        "grounded_in": [
+          "context.employer_ai_policy",
+          "T01"
+        ]
+      }
+    },
+    {
+      "id": "UQ02",
+      "statement": "Can this user get reviewable variance commentary with assistance in clearly less time than their usual way, at their own standard?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "AX01"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "current_belief": {
+        "statement": "User predicts a small saving with heavy rewriting.",
+        "confidence": "low",
+        "basis": "DQ-09"
+      },
+      "relevance": {
+        "why_for_this_user": "The variance pack is 30% of this user's time; whether it can shrink decides how much time could move to ops analysis.",
+        "grounded_in": [
+          "T01",
+          "goal"
+        ]
+      }
+    },
+    {
+      "id": "UQ03",
+      "statement": "How reliable are current general AI assistants at drafting variance commentary, and what are their typical error types?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "CL02",
+        "S4"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do tested evaluations or practitioner reports (last 12 months) show about AI assistants drafting financial variance commentary: accuracy of causal statements, sign/direction errors, and review effort?",
+        "required_strength": "moderate",
+        "freshness": "≤12 months",
+        "preferred_source_types": [
+          "hands_on_test",
+          "practitioner_report",
+          "vendor_docs_tested"
+        ],
+        "answer_changes": [
+          {
+            "if": "Causal fabrication is common",
+            "then": "Keep the human-supplied cause notes as a mandatory input and add a cause-check step to any real use"
+          },
+          {
+            "if": "Errors are rare and minor",
+            "then": "Explanation can be shorter; review step stays but lighter"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Tells the user which checks to keep if drafting is handed to Copilot, so a fast draft doesn't reach the CFO with a wrong cause.",
+        "grounded_in": [
+          "T01"
+        ]
+      }
+    },
+    {
+      "id": "UQ04",
+      "statement": "Do the ops managers value this user's ad-hoc analysis enough to bring more decisions to them if time were freed?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F2",
+        "S5"
+      ],
+      "task_links": [
+        "T03"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "The destination for any time saved: without demand for T03 analysis, faster packs just shrink the role.",
+        "grounded_in": [
+          "T03",
+          "goal.success_signals"
+        ]
+      }
+    },
+    {
+      "id": "UQ05",
+      "statement": "What would 'close should get faster' mean for which parts of this role change and which stay?",
+      "kind": "understanding_gap",
+      "route": "explain",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S4"
+      ],
+      "task_links": [
+        "T01",
+        "T02",
+        "T03"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "This is the user's main worry, and it's currently framed as the whole job rather than specific tasks.",
+        "grounded_in": [
+          "goal.baseline",
+          "T01",
+          "T03"
+        ]
+      }
+    },
+    {
+      "id": "UQ06",
+      "statement": "What evidence exists on how AI adoption in finance teams has changed role content versus headcount?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S4"
+      ],
+      "task_links": [
+        "T03"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do studies or credible surveys (last 18 months) report about how AI assistant adoption in corporate finance/FP&A changed analysts' task mix and staffing?",
+        "required_strength": "moderate",
+        "freshness": "≤18 months",
+        "preferred_source_types": [
+          "primary_study",
+          "official_statistics",
+          "practitioner_report"
+        ],
+        "answer_changes": [
+          {
+            "if": "Task mix shifts toward analysis with stable staffing",
+            "then": "Explanation supports the leverage path; keep F2"
+          },
+          {
+            "if": "Staffing reductions dominate",
+            "then": "Raise priority of making T03 value visible (visibility_move) and consider a protect framing"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Grounds the explanation of the user's worry in evidence instead of headlines.",
+        "grounded_in": [
+          "goal.baseline"
+        ]
+      }
+    },
+    {
+      "id": "UQ07",
+      "statement": "What does the manager intend by 'close should get faster': fewer hours, faster timetable, or more analysis capacity?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S1",
+        "F2"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "If the manager wants analysis capacity, the destination for saved time already exists; if hours, the user needs to show T03 value sooner.",
+        "grounded_in": [
+          "goal.baseline",
+          "T03"
+        ]
+      }
+    }
+  ],
+  "mission": {
+    "focus_areas": [
+      {
+        "id": "F1",
+        "title": "Shrink the drafting part of the month-end variance pack",
+        "candidate_type": "leverage",
+        "task_ids": [
+          "T01"
+        ],
+        "uncertainty_ids": [
+          "UQ02",
+          "UQ01",
+          "UQ03"
+        ],
+        "rationale": "Largest time block (30%); the commentary is repeatable enough to test; directly frees time for the destination (F2).",
+        "planner_rule_refs": [
+          "MPR-03",
+          "MPR-04",
+          "MPR-09"
+        ],
+        "priority": 1,
+        "relevance": {
+          "why_for_this_user": "Your pack takes about 30% of your month, and you said you'd be glad to lose the assembly.",
+          "grounded_in": [
+            "T01"
+          ]
+        }
+      },
+      {
+        "id": "F2",
+        "title": "Grow the ops analysis that managers come to you for",
+        "candidate_type": "anchor",
+        "task_ids": [
+          "T03"
+        ],
+        "uncertainty_ids": [
+          "UQ04",
+          "UQ07"
+        ],
+        "rationale": "High-judgment, identity-valued work that matches the diagnosed goal; the destination required by MPR-04.",
+        "planner_rule_refs": [
+          "MPR-05",
+          "MPR-08",
+          "MPR-09"
+        ],
+        "priority": 2,
+        "relevance": {
+          "why_for_this_user": "You called ad-hoc analysis the best part of the job and it's where you want the freed time to go.",
+          "grounded_in": [
+            "T03",
+            "goal"
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "id": "S1",
+        "step_type": "ask",
+        "description": "In a normal 1:1 or IT ticket, ask whether Copilot may be used with internal financial data, and what 'close should get faster' is meant to achieve.",
+        "targets": [
+          "UQ01",
+          "UQ07"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Both answers decide whether the next test can use real data and where saved time should go.",
+          "grounded_in": [
+            "context.employer_ai_policy",
+            "goal.baseline"
+          ]
+        }
+      },
+      {
+        "id": "S2",
+        "step_type": "experiment",
+        "description": "Run AX01 outside close week.",
+        "targets": [
+          "AX01",
+          "UQ02"
+        ],
+        "depends_on": [],
+        "timebox_days": 10,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Tests the biggest time block directly, within your data rules.",
+          "grounded_in": [
+            "T01",
+            "C01"
+          ]
+        }
+      },
+      {
+        "id": "S3",
+        "step_type": "research",
+        "description": "Operator checks UQ03 (AI drafting error types) and UQ06 (role-content vs headcount evidence).",
+        "targets": [
+          "UQ03",
+          "UQ06"
+        ],
+        "depends_on": [],
+        "timebox_days": 10,
+        "owner": "operator",
+        "relevance": {
+          "why_for_this_user": "So what we tell you about your worry rests on evidence, not headlines.",
+          "grounded_in": [
+            "goal.baseline",
+            "T01"
+          ]
+        }
+      },
+      {
+        "id": "S4",
+        "step_type": "explain",
+        "description": "Short explanation: which parts of your role 'faster close' touches, with the evidence from S3.",
+        "targets": [
+          "UQ05"
+        ],
+        "depends_on": [
+          "S3"
+        ],
+        "timebox_days": 12,
+        "owner": "engine",
+        "relevance": {
+          "why_for_this_user": "Turns the whole-job worry into a task-by-task picture you can act on.",
+          "grounded_in": [
+            "goal.baseline",
+            "T01",
+            "T03"
+          ]
+        }
+      },
+      {
+        "id": "S5",
+        "step_type": "decide",
+        "description": "At check-in, choose the next move from AX01's branches; the default next test is demand for T03 analysis (UQ04).",
+        "targets": [
+          "AX01",
+          "UQ04"
+        ],
+        "depends_on": [
+          "S2"
+        ],
+        "timebox_days": 12,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Keeps the plan tied to what actually happened in your test.",
+          "grounded_in": [
+            "T03",
+            "goal"
+          ]
+        }
+      }
+    ],
+    "omissions": [
+      {
+        "id": "O1",
+        "what": "Reconciliations (T02)",
+        "why_omitted": "Matching rules and tooling are set by the finance systems team, not by you; your effort there wouldn't change the outcome.",
+        "revisit_condition": "Your team announces or pilots automated matching.",
+        "relevance": {
+          "why_for_this_user": "Reconciliations are 20% of your time, but you don't control how they're done.",
+          "grounded_in": [
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "O2",
+        "what": "The general 2-hour Copilot webinar IT offered",
+        "why_omitted": "AX01 tests the one use that matters most to your week; general features can wait.",
+        "revisit_condition": "AX01 shows your prompting, not the tool, was the bottleneck.",
+        "relevance": {
+          "why_for_this_user": "You mentioned the webinar; this is why it's not first.",
+          "grounded_in": [
+            "context.ai_experience",
+            "T01"
+          ]
+        }
+      },
+      {
+        "id": "O3",
+        "what": "Reforecast work (T04)",
+        "why_omitted": "Quarterly and about 10% of your time; not where change would move your goal first.",
+        "revisit_condition": "Next quarter's reforecast, if F1 frees time.",
+        "relevance": {
+          "why_for_this_user": "It's a smaller, quarterly block in your map.",
+          "grounded_in": [
+            "T04"
+          ]
+        }
+      }
+    ],
+    "exit_criteria": [
+      {
+        "type": "goal_met",
+        "statement": "Ops managers bring decision questions directly at least twice a month and pack time has fallen."
+      },
+      {
+        "type": "no_decision_relevant_uncertainty",
+        "statement": "No open question would change what you do next."
+      },
+      {
+        "type": "user_opt_out",
+        "statement": "You ask to stop."
+      },
+      {
+        "type": "risk_detected",
+        "statement": "Any data, policy or job-risk issue appears."
+      }
+    ],
+    "attention_budget": {
+      "user_minutes_planned_total": 105,
+      "plan_weeks": 3
+    }
+  },
+  "first_experiment": {
+    "id": "AX01",
+    "archetype": "shadow_test",
+    "title": "Variance commentary: your way vs Copilot, on made-up numbers",
+    "hypothesis": {
+      "statement": "If this user supplies the cause notes, Copilot can produce variance commentary they would send after light edits in at least 30% less time than their usual drafting.",
+      "would_be_wrong_if": "Assisted drafting takes as long or longer including edits, or needs three or more substantive corrections of causes or numbers."
+    },
+    "targets": {
+      "uncertainty_ids": [
+        "UQ02"
+      ],
+      "task_ids": [
+        "T01"
+      ]
+    },
+    "depends_on": [],
+    "relevance": {
+      "why_for_this_user": "The pack is this user's largest time block and the commentary is the part they already find slow; a synthetic stand-in keeps within the unclear Copilot data rules.",
+      "grounded_in": [
+        "T01",
+        "context.employer_ai_policy",
+        "C01"
+      ]
+    },
+    "steps": [
+      {
+        "n": 1,
+        "instruction": "Outside close week, copy the layout of one page of your variance table into a new file and fill it with invented numbers. Add 3-4 invented cause notes like the ones ops would tell you. No real figures, names or products.",
+        "minutes": 15
+      },
+      {
+        "n": 2,
+        "instruction": "Write the commentary for that page your usual way. Time it.",
+        "minutes": 25
+      },
+      {
+        "n": 3,
+        "instruction": "Give Copilot the invented table and cause notes; ask for commentary in your pack's style. Edit until you'd send it. Time drafting plus edits.",
+        "minutes": 20
+      },
+      {
+        "n": 4,
+        "instruction": "Compare the two versions and fill the note template: minutes each way, substantive corrections, would-you-send.",
+        "minutes": 10
+      }
+    ],
+    "materials": {
+      "data_class": "synthetic",
+      "description": "Invented variance table and cause notes mirroring the real pack's structure.",
+      "tool": {
+        "name": "Microsoft 365 Copilot",
+        "employer_approved": "yes"
+      }
+    },
+    "effort": {
+      "minutes_total": 70,
+      "sessions": 2,
+      "window_days": 10
+    },
+    "prediction": {
+      "user": "Maybe 10 minutes saved, but I'll have to rewrite the explanations.",
+      "engine": "Expect ≥30% time saving on prose, with corrections concentrated on causal wording and favourable/unfavourable signs."
+    },
+    "measures": [
+      {
+        "id": "M1",
+        "what": "Minutes to finished commentary, usual way",
+        "how_recorded": "Timer, step 2",
+        "type": "time_minutes"
+      },
+      {
+        "id": "M2",
+        "what": "Minutes to sendable commentary with Copilot, including edits",
+        "how_recorded": "Timer, step 3",
+        "type": "time_minutes"
+      },
+      {
+        "id": "M3",
+        "what": "Substantive corrections (wrong cause, wrong number, wrong sign, misleading framing)",
+        "how_recorded": "Tally while editing",
+        "type": "count"
+      },
+      {
+        "id": "M4",
+        "what": "Would you send the assisted version after ≤10 minutes of edits?",
+        "how_recorded": "Yes/no after step 3",
+        "type": "yes_no"
+      },
+      {
+        "id": "M5",
+        "what": "Where the assisted draft went wrong",
+        "how_recorded": "One or two lines",
+        "type": "text_observation"
+      }
+    ],
+    "learning_criteria": {
+      "confirms_if": "M2 ≤ 0.7 × M1 and M4 = yes and M3 ≤ 2",
+      "disconfirms_if": "M2 ≥ M1, or M3 ≥ 3",
+      "informative_note": "Either way we learn whether drafting or checking is the real work in the pack."
+    },
+    "branches": [
+      {
+        "id": "B1",
+        "condition_type": "confirms",
+        "condition": "Faster and sendable",
+        "next_move": "continue",
+        "next_description": "Confirm the Copilot data scope (UQ01); if allowed, repeat on one real section; then test demand for T03 analysis (UQ04)."
+      },
+      {
+        "id": "B2",
+        "condition_type": "disconfirms",
+        "condition": "Not faster, or many substantive errors",
+        "next_move": "modify",
+        "next_description": "Drop drafting as the lever; look at data assembly in T01 instead, and re-run focus selection."
+      },
+      {
+        "id": "B3",
+        "condition_type": "mixed",
+        "condition": "Faster but 3+ corrections",
+        "next_move": "investigate_further",
+        "next_description": "Narrower test: stricter cause-note format on one variance type."
+      },
+      {
+        "id": "B4",
+        "condition_type": "null_result",
+        "condition": "No clear difference",
+        "next_move": "simplify",
+        "next_description": "Retest on a single paragraph type (e.g., cost-centre commentary)."
+      },
+      {
+        "id": "B5",
+        "condition_type": "not_attempted",
+        "condition": "Didn't get to it",
+        "next_move": "simplify",
+        "next_description": "Split into two 35-minute sessions; switch archetype if the blocker is tool access."
+      },
+      {
+        "id": "B6",
+        "condition_type": "harm",
+        "condition": "Real figures or names went into a tool, or anything felt risky",
+        "next_move": "escalate",
+        "next_description": "Stop; operator reviews and suggests how to report under company policy."
+      }
+    ],
+    "safety": {
+      "stakeholder_exposure": "none",
+      "reversibility": "reversible",
+      "stop_conditions": [
+        "You are about to paste real figures, names or products: stop.",
+        "Never send the assisted draft to anyone."
+      ],
+      "notes": "Copilot is approved; synthetic data avoids the open question about ledger data (UQ01)."
+    },
+    "alternatives_considered": [
+      {
+        "archetype": "value_probe",
+        "why_not": "Stakeholder-facing and only worth doing once it's known whether time can actually be freed; sequenced next (S5)."
+      },
+      {
+        "archetype": "retro_audit",
+        "why_not": "Time split is already confident (coverage high); an audit would not change focus."
+      },
+      {
+        "archetype": "delegation_test",
+        "why_not": "Reconciliations (T02) run on ERP matching rules the user doesn't control."
+      }
+    ],
+    "status": "accepted",
+    "status_history": [
+      {
+        "status": "proposed",
+        "at": "2026-10-02"
+      },
+      {
+        "status": "accepted",
+        "at": "2026-10-03"
+      }
+    ]
+  },
+  "feedback_plan": {
+    "checkin_at_days": 12,
+    "nudge_at_days": 6,
+    "channel": "operator_message",
+    "question_set": "CQ-v0.1",
+    "mission_triggers": [
+      {
+        "condition": "Any harm or discomfort reported (CQ-8)",
+        "decision": "escalate"
+      },
+      {
+        "condition": "Experiment not attempted or no response at two consecutive check-ins",
+        "decision": "rediagnose"
+      },
+      {
+        "condition": "User asks to stop",
+        "decision": "stop"
+      },
+      {
+        "condition": "Company says no AI with financial data at all",
+        "decision": "change_intervention"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "CL01",
+      "text": "Your month-end pack is your largest single time block (~30%), so it's where a change would matter most to your week.",
+      "claim_type": "engine_judgment",
+      "evidence_status": "user_local",
+      "shown_as": "judgment"
+    },
+    {
+      "id": "CL02",
+      "text": "AI assistants can write plausible variance explanations that state the wrong cause; we're checking how common this is.",
+      "claim_type": "world_fact",
+      "evidence_status": "unverified",
+      "shown_as": "hypothesis",
+      "uncertainty_id": "UQ03"
+    }
+  ],
+  "operator_log": [
+    {
+      "at": "2026-10-02",
+      "path": "first_experiment.steps[0]",
+      "change": "edited",
+      "reason": "Added 'outside close week' to respect C01; the engine draft had missed it."
+    },
+    {
+      "at": "2026-10-02",
+      "path": "claims",
+      "change": "removed",
+      "reason": "Removed an engine-drafted, unverified claim that AI 'mostly changes task mix rather than headcount'; held for S3 research (MPR-12)."
+    },
+    {
+      "at": "2026-10-02",
+      "path": "meta.status",
+      "change": "approved",
+      "reason": "Operator review complete."
+    }
+  ],
+  "delivery": {
+    "format": "text",
+    "estimated_user_minutes": 7
+  }
+}

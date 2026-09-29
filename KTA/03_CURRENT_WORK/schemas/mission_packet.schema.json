@@ -4,112 +4,323 @@
   "title": "Mission Packet v0.1",
   "description": "Structural contract for the Mission Generation Engine output. Cross-field invariants (INV-01..14) are enforced by tools/kta_check.py, not by this schema alone. See MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md.",
   "type": "object",
-  "required": ["meta", "scope_check", "claims", "operator_log"],
+  "required": [
+    "meta",
+    "scope_check",
+    "claims",
+    "operator_log"
+  ],
   "additionalProperties": false,
   "properties": {
     "meta": {
       "type": "object",
-      "required": ["contract_version", "packet_id", "user_ref", "mission_type", "revision", "status", "created_at", "generated_by"],
+      "required": [
+        "contract_version",
+        "packet_id",
+        "user_ref",
+        "mission_type",
+        "revision",
+        "status",
+        "created_at",
+        "generated_by"
+      ],
       "additionalProperties": false,
       "properties": {
-        "contract_version": { "const": "0.1" },
-        "packet_id": { "type": "string", "pattern": "^MP-[A-Za-z0-9]+(-[A-Za-z0-9]+)*-r\\d+$" },
-        "user_ref": { "type": "string", "pattern": "^[A-Za-z0-9-]{2,40}$" },
-        "mission_type": { "const": "stay_valuable_ai_work" },
-        "revision": { "type": "integer", "minimum": 1 },
-        "parent_packet_id": { "type": "string" },
-        "decision_ref": { "type": "string", "pattern": "^AD\\d{2}$" },
-        "status": { "enum": ["draft", "operator_reviewed", "delivered", "active", "superseded", "closed", "out_of_scope"] },
-        "created_at": { "$ref": "common.schema.json#/$defs/iso_datetime" },
+        "contract_version": {
+          "const": "0.1"
+        },
+        "packet_id": {
+          "type": "string",
+          "pattern": "^MP-[A-Za-z0-9]+(-[A-Za-z0-9]+)*-r\\d+$"
+        },
+        "user_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]{2,40}$"
+        },
+        "mission_type": {
+          "const": "stay_valuable_ai_work"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parent_packet_id": {
+          "type": "string"
+        },
+        "decision_ref": {
+          "type": "string",
+          "pattern": "^AD\\d{2}$"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "operator_reviewed",
+            "delivered",
+            "active",
+            "superseded",
+            "closed",
+            "out_of_scope"
+          ]
+        },
+        "created_at": {
+          "$ref": "common.schema.json#/$defs/iso_datetime"
+        },
         "generated_by": {
           "type": "object",
-          "required": ["method", "engine_version"],
+          "required": [
+            "method",
+            "engine_version"
+          ],
           "additionalProperties": false,
           "properties": {
-            "method": { "enum": ["human", "llm", "hybrid"] },
-            "engine_version": { "type": "string" },
-            "model_ref": { "type": "string" }
+            "method": {
+              "enum": [
+                "human",
+                "llm",
+                "hybrid"
+              ]
+            },
+            "engine_version": {
+              "type": "string"
+            },
+            "model_ref": {
+              "type": "string"
+            }
           }
         },
-        "simulated": { "type": "boolean", "description": "True for simulation fixtures; never true for real users." }
+        "simulated": {
+          "type": "boolean",
+          "description": "True for simulation fixtures; never true for real users."
+        }
       }
     },
     "scope_check": {
       "type": "object",
-      "required": ["result"],
+      "required": [
+        "result"
+      ],
       "additionalProperties": false,
       "properties": {
-        "result": { "enum": ["in_scope", "in_scope_operator_attention", "out_of_scope"] },
+        "result": {
+          "enum": [
+            "in_scope",
+            "in_scope_operator_attention",
+            "out_of_scope"
+          ]
+        },
         "flags": {
           "type": "array",
-          "items": { "enum": ["acute_job_loss_financial_distress", "legal_or_employment_dispute", "psychological_distress", "not_in_work_or_seeking", "outside_mission_domain", "under_18", "other"] }
+          "items": {
+            "enum": [
+              "acute_job_loss_financial_distress",
+              "legal_or_employment_dispute",
+              "psychological_distress",
+              "not_in_work_or_seeking",
+              "outside_mission_domain",
+              "under_18",
+              "other"
+            ]
+          }
         },
-        "note": { "type": "string" }
+        "note": {
+          "type": "string"
+        }
       }
     },
     "goal": {
       "type": "object",
-      "required": ["stated_goal", "diagnosed_goal", "archetype", "horizon_months", "success_signals", "baseline"],
+      "required": [
+        "stated_goal",
+        "diagnosed_goal",
+        "archetype",
+        "horizon_months",
+        "success_signals",
+        "baseline"
+      ],
       "additionalProperties": false,
       "properties": {
-        "stated_goal": { "type": "string", "minLength": 5 },
-        "diagnosed_goal": { "type": "string", "minLength": 10 },
-        "divergence_note": { "type": "string" },
-        "archetype": { "enum": ["protect", "leverage", "transition", "clarify"] },
-        "horizon_months": { "type": "integer", "minimum": 3, "maximum": 36 },
-        "success_signals": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "stated_goal": {
+          "type": "string",
+          "minLength": 5
+        },
+        "diagnosed_goal": {
+          "type": "string",
+          "minLength": 10
+        },
+        "divergence_note": {
+          "type": "string"
+        },
+        "archetype": {
+          "enum": [
+            "protect",
+            "leverage",
+            "transition",
+            "clarify"
+          ]
+        },
+        "horizon_months": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 36
+        },
+        "success_signals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
         "baseline": {
           "type": "object",
-          "required": ["goal_confidence_0_10", "main_concern", "captured_at"],
+          "required": [
+            "goal_confidence_0_10",
+            "main_concern",
+            "captured_at"
+          ],
           "additionalProperties": false,
           "properties": {
-            "goal_confidence_0_10": { "type": "integer", "minimum": 0, "maximum": 10 },
-            "main_concern": { "type": "string" },
-            "captured_at": { "$ref": "common.schema.json#/$defs/iso_datetime" }
+            "goal_confidence_0_10": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "main_concern": {
+              "type": "string"
+            },
+            "captured_at": {
+              "$ref": "common.schema.json#/$defs/iso_datetime"
+            }
           }
         }
       }
     },
     "context": {
       "type": "object",
-      "required": ["role", "time_budget_minutes_per_week", "employer_ai_policy", "ai_experience"],
+      "required": [
+        "role",
+        "time_budget_minutes_per_week",
+        "employer_ai_policy",
+        "ai_experience"
+      ],
       "additionalProperties": false,
       "properties": {
         "role": {
           "type": "object",
-          "required": ["function", "seniority_band", "sector_band", "employment_type"],
+          "required": [
+            "function",
+            "seniority_band",
+            "sector_band",
+            "employment_type"
+          ],
           "additionalProperties": false,
           "properties": {
-            "function": { "type": "string" },
-            "seniority_band": { "enum": ["early", "mid", "senior", "lead"] },
-            "sector_band": { "type": "string" },
-            "employment_type": { "enum": ["employee", "freelance", "contractor", "owner", "between_roles"] },
-            "years_in_role_band": { "enum": ["0-2", "3-5", "6-10", "10+"] }
+            "function": {
+              "type": "string"
+            },
+            "seniority_band": {
+              "enum": [
+                "early",
+                "mid",
+                "senior",
+                "lead"
+              ]
+            },
+            "sector_band": {
+              "type": "string"
+            },
+            "employment_type": {
+              "enum": [
+                "employee",
+                "freelance",
+                "contractor",
+                "owner",
+                "between_roles"
+              ]
+            },
+            "years_in_role_band": {
+              "enum": [
+                "0-2",
+                "3-5",
+                "6-10",
+                "10+"
+              ]
+            }
           }
         },
-        "time_budget_minutes_per_week": { "type": "integer", "minimum": 0, "maximum": 1200 },
+        "time_budget_minutes_per_week": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1200
+        },
         "employer_ai_policy": {
           "type": "object",
-          "required": ["status"],
+          "required": [
+            "status"
+          ],
           "additionalProperties": false,
           "properties": {
-            "status": { "enum": ["allows_listed_tools", "restricts", "prohibits", "none_known", "unknown", "not_applicable"] },
-            "approved_tools": { "type": "array", "items": { "type": "string" } },
-            "notes": { "type": "string" }
+            "status": {
+              "enum": [
+                "allows_listed_tools",
+                "restricts",
+                "prohibits",
+                "none_known",
+                "unknown",
+                "not_applicable"
+              ]
+            },
+            "approved_tools": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
           }
         },
-        "ai_experience": { "enum": ["none", "tried", "occasional", "regular"] },
+        "ai_experience": {
+          "enum": [
+            "none",
+            "tried",
+            "occasional",
+            "regular"
+          ]
+        },
         "constraints": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id", "type", "statement", "source"],
+            "required": [
+              "id",
+              "type",
+              "statement",
+              "source"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": { "type": "string", "pattern": "^C\\d{2}$" },
-              "type": { "enum": ["time", "budget", "policy", "access", "skill", "personal", "other"] },
-              "statement": { "type": "string" },
-              "source": { "$ref": "common.schema.json#/$defs/source" }
+              "id": {
+                "type": "string",
+                "pattern": "^C\\d{2}$"
+              },
+              "type": {
+                "enum": [
+                  "time",
+                  "budget",
+                  "policy",
+                  "access",
+                  "skill",
+                  "personal",
+                  "other"
+                ]
+              },
+              "statement": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "common.schema.json#/$defs/source"
+              }
             }
           }
         },
@@ -117,12 +328,23 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id", "statement", "source"],
+            "required": [
+              "id",
+              "statement",
+              "source"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": { "type": "string", "pattern": "^CAP\\d{2}$" },
-              "statement": { "type": "string" },
-              "source": { "$ref": "common.schema.json#/$defs/source" }
+              "id": {
+                "type": "string",
+                "pattern": "^CAP\\d{2}$"
+              },
+              "statement": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "common.schema.json#/$defs/source"
+              }
             }
           }
         },
@@ -130,121 +352,327 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "format": { "enum": ["text", "audio", "checklist", "mixed"] },
-            "notes": { "type": "string" }
+            "format": {
+              "enum": [
+                "text",
+                "audio",
+                "checklist",
+                "mixed"
+              ]
+            },
+            "notes": {
+              "type": "string"
+            }
           }
         },
         "provenance": {
           "type": "object",
-          "additionalProperties": { "$ref": "common.schema.json#/$defs/source" }
+          "additionalProperties": {
+            "$ref": "common.schema.json#/$defs/source"
+          }
         }
       }
     },
-    "task_map": { "$ref": "task_map.schema.json" },
+    "task_map": {
+      "$ref": "task_map.schema.json"
+    },
     "uncertainty_ledger": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "uncertainty_item.schema.json" }
+      "items": {
+        "$ref": "uncertainty_item.schema.json"
+      }
     },
     "mission": {
       "type": "object",
-      "required": ["focus_areas", "sequence", "omissions", "exit_criteria", "attention_budget"],
+      "required": [
+        "focus_areas",
+        "sequence",
+        "omissions",
+        "exit_criteria",
+        "attention_budget"
+      ],
       "additionalProperties": false,
       "properties": {
         "focus_areas": {
-          "type": "array", "minItems": 1, "maxItems": 3,
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
           "items": {
             "type": "object",
-            "required": ["id", "title", "task_ids", "rationale", "priority", "relevance"],
+            "required": [
+              "id",
+              "title",
+              "task_ids",
+              "rationale",
+              "priority",
+              "relevance"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": { "type": "string", "pattern": "^F\\d$" },
-              "title": { "type": "string" },
-              "task_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^T\\d{2}$" } },
-              "uncertainty_ids": { "type": "array", "items": { "type": "string", "pattern": "^UQ\\d{2}$" } },
-              "rationale": { "type": "string" },
-              "planner_rule_refs": { "type": "array", "items": { "type": "string", "pattern": "^MPR-\\d{2}$" } },
-              "priority": { "type": "integer", "minimum": 1, "maximum": 3 },
-              "relevance": { "$ref": "common.schema.json#/$defs/relevance" }
+              "id": {
+                "type": "string",
+                "pattern": "^F\\d$"
+              },
+              "title": {
+                "type": "string"
+              },
+              "task_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^T\\d{2}$"
+                }
+              },
+              "uncertainty_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^UQ\\d{2}$"
+                }
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "planner_rule_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^MPR-\\d{2}$"
+                }
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "relevance": {
+                "$ref": "common.schema.json#/$defs/relevance"
+              },
+              "candidate_type": {
+                "enum": [
+                  "leverage",
+                  "anchor",
+                  "transition",
+                  "clarify",
+                  "light_touch"
+                ],
+                "description": "Which planner heuristic produced this focus (MPR-04..07, MPR-20). Added during step 7 so the checker can test MPR-04/09."
+              }
             }
           }
         },
         "sequence": {
-          "type": "array", "minItems": 2, "maxItems": 6,
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
           "items": {
             "type": "object",
-            "required": ["id", "step_type", "description", "targets", "timebox_days", "owner", "relevance"],
+            "required": [
+              "id",
+              "step_type",
+              "description",
+              "targets",
+              "timebox_days",
+              "owner",
+              "relevance"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": { "type": "string", "pattern": "^S\\d$" },
-              "step_type": { "enum": ["ask", "experiment", "research", "explain", "decide"] },
-              "description": { "type": "string" },
-              "targets": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/ref" } },
-              "depends_on": { "type": "array", "items": { "type": "string", "pattern": "^S\\d$" } },
-              "timebox_days": { "type": "integer", "minimum": 0, "maximum": 60 },
-              "owner": { "enum": ["user", "operator", "engine"] },
-              "relevance": { "$ref": "common.schema.json#/$defs/relevance" }
+              "id": {
+                "type": "string",
+                "pattern": "^S\\d$"
+              },
+              "step_type": {
+                "enum": [
+                  "ask",
+                  "experiment",
+                  "research",
+                  "explain",
+                  "decide"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "targets": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/ref"
+                }
+              },
+              "depends_on": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^S\\d$"
+                }
+              },
+              "timebox_days": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 60
+              },
+              "owner": {
+                "enum": [
+                  "user",
+                  "operator",
+                  "engine"
+                ]
+              },
+              "relevance": {
+                "$ref": "common.schema.json#/$defs/relevance"
+              }
             }
           }
         },
         "omissions": {
-          "type": "array", "minItems": 1,
+          "type": "array",
+          "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["id", "what", "why_omitted", "revisit_condition", "relevance"],
+            "required": [
+              "id",
+              "what",
+              "why_omitted",
+              "revisit_condition",
+              "relevance"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": { "type": "string", "pattern": "^O\\d$" },
-              "what": { "type": "string" },
-              "why_omitted": { "type": "string" },
-              "revisit_condition": { "type": "string" },
-              "relevance": { "$ref": "common.schema.json#/$defs/relevance" }
+              "id": {
+                "type": "string",
+                "pattern": "^O\\d$"
+              },
+              "what": {
+                "type": "string"
+              },
+              "why_omitted": {
+                "type": "string"
+              },
+              "revisit_condition": {
+                "type": "string"
+              },
+              "relevance": {
+                "$ref": "common.schema.json#/$defs/relevance"
+              }
             }
           }
         },
         "exit_criteria": {
-          "type": "array", "minItems": 1,
+          "type": "array",
+          "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["type", "statement"],
+            "required": [
+              "type",
+              "statement"
+            ],
             "additionalProperties": false,
             "properties": {
-              "type": { "enum": ["goal_met", "no_decision_relevant_uncertainty", "user_opt_out", "risk_detected", "custom"] },
-              "statement": { "type": "string" }
+              "type": {
+                "enum": [
+                  "goal_met",
+                  "no_decision_relevant_uncertainty",
+                  "user_opt_out",
+                  "risk_detected",
+                  "custom"
+                ]
+              },
+              "statement": {
+                "type": "string"
+              }
             }
           }
         },
         "attention_budget": {
           "type": "object",
-          "required": ["user_minutes_planned_total", "plan_weeks"],
+          "required": [
+            "user_minutes_planned_total",
+            "plan_weeks"
+          ],
           "additionalProperties": false,
           "properties": {
-            "user_minutes_planned_total": { "type": "integer", "minimum": 0 },
-            "plan_weeks": { "type": "integer", "minimum": 1, "maximum": 12 }
+            "user_minutes_planned_total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "plan_weeks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            }
           }
         }
       }
     },
-    "first_experiment": { "$ref": "action_experiment.schema.json" },
+    "first_experiment": {
+      "$ref": "action_experiment.schema.json"
+    },
     "feedback_plan": {
       "type": "object",
-      "required": ["checkin_at_days", "channel", "question_set", "mission_triggers"],
+      "required": [
+        "checkin_at_days",
+        "channel",
+        "question_set",
+        "mission_triggers"
+      ],
       "additionalProperties": false,
       "properties": {
-        "checkin_at_days": { "type": "integer", "minimum": 1, "maximum": 30 },
-        "nudge_at_days": { "type": "integer", "minimum": 1, "maximum": 30 },
-        "channel": { "enum": ["operator_message", "email", "in_app", "call"] },
-        "question_set": { "const": "CQ-v0.1" },
-        "custom_questions": { "type": "array", "items": { "type": "string" } },
+        "checkin_at_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "nudge_at_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "channel": {
+          "enum": [
+            "operator_message",
+            "email",
+            "in_app",
+            "call"
+          ]
+        },
+        "question_set": {
+          "const": "CQ-v0.1"
+        },
+        "custom_questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "mission_triggers": {
-          "type": "array", "minItems": 2,
+          "type": "array",
+          "minItems": 2,
           "items": {
             "type": "object",
-            "required": ["condition", "decision"],
+            "required": [
+              "condition",
+              "decision"
+            ],
             "additionalProperties": false,
             "properties": {
-              "condition": { "type": "string" },
-              "decision": { "enum": ["continue", "modify", "investigate_further", "simplify", "change_intervention", "stop", "escalate", "rediagnose"] }
+              "condition": {
+                "type": "string"
+              },
+              "decision": {
+                "enum": [
+                  "continue",
+                  "modify",
+                  "investigate_further",
+                  "simplify",
+                  "change_intervention",
+                  "stop",
+                  "escalate",
+                  "rediagnose"
+                ]
+              }
             }
           }
         }
@@ -254,16 +682,50 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "text", "claim_type", "evidence_status", "shown_as"],
+        "required": [
+          "id",
+          "text",
+          "claim_type",
+          "evidence_status",
+          "shown_as"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^CL\\d{2}$" },
-          "text": { "type": "string" },
-          "claim_type": { "enum": ["world_fact", "personal_evidence", "engine_judgment"] },
-          "evidence_status": { "enum": ["verified", "user_local", "unverified"] },
-          "shown_as": { "enum": ["fact", "hypothesis", "judgment"] },
-          "evidence_ref": { "type": "string" },
-          "uncertainty_id": { "type": "string", "pattern": "^UQ\\d{2}$" }
+          "id": {
+            "type": "string",
+            "pattern": "^CL\\d{2}$"
+          },
+          "text": {
+            "type": "string"
+          },
+          "claim_type": {
+            "enum": [
+              "world_fact",
+              "personal_evidence",
+              "engine_judgment"
+            ]
+          },
+          "evidence_status": {
+            "enum": [
+              "verified",
+              "user_local",
+              "unverified"
+            ]
+          },
+          "shown_as": {
+            "enum": [
+              "fact",
+              "hypothesis",
+              "judgment"
+            ]
+          },
+          "evidence_ref": {
+            "type": "string"
+          },
+          "uncertainty_id": {
+            "type": "string",
+            "pattern": "^UQ\\d{2}$"
+          }
         }
       }
     },
@@ -271,13 +733,31 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["at", "path", "change", "reason"],
+        "required": [
+          "at",
+          "path",
+          "change",
+          "reason"
+        ],
         "additionalProperties": false,
         "properties": {
-          "at": { "$ref": "common.schema.json#/$defs/iso_datetime" },
-          "path": { "type": "string" },
-          "change": { "enum": ["added", "edited", "removed", "approved"] },
-          "reason": { "type": "string" }
+          "at": {
+            "$ref": "common.schema.json#/$defs/iso_datetime"
+          },
+          "path": {
+            "type": "string"
+          },
+          "change": {
+            "enum": [
+              "added",
+              "edited",
+              "removed",
+              "approved"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
         }
       }
     },
@@ -285,8 +765,19 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "format": { "enum": ["text", "audio", "checklist", "mixed"] },
-        "estimated_user_minutes": { "type": "integer", "minimum": 1, "maximum": 60 }
+        "format": {
+          "enum": [
+            "text",
+            "audio",
+            "checklist",
+            "mixed"
+          ]
+        },
+        "estimated_user_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        }
       }
     }
   }

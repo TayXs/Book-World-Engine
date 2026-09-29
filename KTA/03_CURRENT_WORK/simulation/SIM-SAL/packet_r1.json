@@ -1,0 +1,999 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-SAL-r1",
+    "user_ref": "SIM-SAL",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 1,
+    "status": "active",
+    "created_at": "2026-10-02",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true
+  },
+  "scope_check": {
+    "result": "in_scope"
+  },
+  "goal": {
+    "stated_goal": "Not fall behind reps who use AI, and move up to enterprise accounts.",
+    "diagnosed_goal": "Within 24 months, move from mid-market to enterprise AE by showing the multi-stakeholder deal skills enterprise roles require, using approved assistance to cut prep time.",
+    "divergence_note": "The fear of 'falling behind' is secondary; the future picture (DQ-04) names a different role, so this is a transition mission.",
+    "archetype": "transition",
+    "horizon_months": 24,
+    "success_signals": [
+      "Assigned or mentored on an enterprise-sized deal",
+      "Manager confirms readiness criteria met"
+    ],
+    "baseline": {
+      "goal_confidence_0_10": 6,
+      "main_concern": "Company is piloting AI SDR tools; manager says reps who use AI will replace reps who don't.",
+      "captured_at": "2026-10-01"
+    }
+  },
+  "context": {
+    "role": {
+      "function": "Account executive (mid-market)",
+      "seniority_band": "mid",
+      "sector_band": "B2B software",
+      "employment_type": "employee",
+      "years_in_role_band": "3-5"
+    },
+    "time_budget_minutes_per_week": 45,
+    "employer_ai_policy": {
+      "status": "allows_listed_tools",
+      "approved_tools": [
+        "CRM built-in assistant",
+        "Company enterprise chat assistant"
+      ],
+      "notes": "No customer data in personal tools."
+    },
+    "ai_experience": "occasional",
+    "constraints": [
+      {
+        "id": "C01",
+        "type": "personal",
+        "statement": "Nothing that risks a live deal or changes how buyers are contacted on live deals.",
+        "source": "user_stated"
+      },
+      {
+        "id": "C02",
+        "type": "time",
+        "statement": "Last two weeks of each quarter are off-limits.",
+        "source": "user_stated"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "CAP01",
+        "statement": "Consistently hits mid-market quota; strong discovery calls by own account.",
+        "source": "user_stated"
+      }
+    ],
+    "preferences": {
+      "format": "audio",
+      "notes": "Listens while driving between meetings."
+    },
+    "provenance": {
+      "time_budget_minutes_per_week": "user_stated",
+      "employer_ai_policy": "user_stated",
+      "role": "user_stated"
+    }
+  },
+  "task_map": {
+    "tasks": [
+      {
+        "id": "T01",
+        "name": "Account and prospect research before calls",
+        "description": "Company news, org charts, earlier CRM notes, public profiles; turn into call-prep notes.",
+        "output": "Call-prep notes",
+        "frequency": "daily",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 20
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "information_retrieval": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "stakeholders": [
+          "internal_team"
+        ],
+        "ai_current_use": {
+          "level": "none",
+          "note": "Approved CRM assistant available but unused."
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T02",
+        "name": "Discovery and demo calls",
+        "description": "Run discovery with buyers, qualify, demo, agree next steps.",
+        "output": "Qualified opportunities with agreed next steps",
+        "frequency": "daily",
+        "time_share": {
+          "band": "large",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 30
+        },
+        "traits": {
+          "predictability": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium",
+            "note": "'I'd miss it'"
+          },
+          "friction": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "future_value": {
+          "direction": "rising",
+          "basis": "user_belief",
+          "uncertainty_id": "UQ04"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T03",
+        "name": "CRM updates and pipeline admin",
+        "description": "Log calls, update stages and fields, clean pipeline for forecast.",
+        "output": "Up-to-date CRM records",
+        "frequency": "daily",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 15
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium",
+            "note": "Fields and process set by sales ops"
+          },
+          "tool_dependency": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "internal_manager"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T04",
+        "name": "Proposals and follow-up emails",
+        "description": "Write proposals, recap emails and follow-ups after calls.",
+        "output": "Proposals and emails to buyers",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 15
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "occasional",
+          "note": "Polishes some emails in a personal chatbot on their phone."
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T05",
+        "name": "Negotiation and closing",
+        "description": "Work with champions and procurement on terms, pricing and signature.",
+        "output": "Signed deals",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 3,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "confidential",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T06",
+        "name": "Internal forecast and pipeline meetings",
+        "description": "Weekly forecast call and deal reviews with manager.",
+        "output": "Forecast commitments",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "stakeholders": [
+          "internal_manager"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": false
+      }
+    ],
+    "coverage_estimate": {
+      "band": "high",
+      "source": "user_stated"
+    },
+    "map_confidence": "medium"
+  },
+  "uncertainty_ledger": [
+    {
+      "id": "UQ01",
+      "statement": "What are this company's criteria and usual path for promotion to enterprise AE?",
+      "kind": "user_context",
+      "route": "ask",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "S1"
+      ],
+      "task_links": [
+        "T02",
+        "T05"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Your manager's criteria may matter more than any market signal for your next move.",
+        "grounded_in": [
+          "goal",
+          "T02"
+        ]
+      }
+    },
+    {
+      "id": "UQ02",
+      "statement": "What do enterprise AE roles in this user's market require that the user does not yet show?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "AX01"
+      ],
+      "task_links": [
+        "T02",
+        "T05"
+      ],
+      "status": "open",
+      "current_belief": {
+        "statement": "User assumes bigger deal sizes are the main gap.",
+        "confidence": "low",
+        "basis": "DQ-04"
+      },
+      "relevance": {
+        "why_for_this_user": "Shows the concrete gap between your current work and the role you want.",
+        "grounded_in": [
+          "T02",
+          "T05",
+          "goal"
+        ]
+      }
+    },
+    {
+      "id": "UQ03",
+      "statement": "With the approved CRM assistant on public information, can call prep be as useful in clearly less time?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F2",
+        "S5"
+      ],
+      "task_links": [
+        "T01"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Prep is 20% of your week and the part you'd happily lose; saved time could fund enterprise-style account mapping.",
+        "grounded_in": [
+          "T01",
+          "goal"
+        ]
+      }
+    },
+    {
+      "id": "UQ04",
+      "statement": "What evidence exists on how AI SDR and prospecting tools are changing AE roles and required skills?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "CL02",
+        "S3"
+      ],
+      "task_links": [
+        "T02"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do recent studies or credible industry data (≤12 months) show about the effect of AI SDR/prospecting tools on account executive roles, quotas and skill requirements, especially mid-market vs enterprise?",
+        "required_strength": "moderate",
+        "freshness": "≤12 months",
+        "preferred_source_types": [
+          "primary_study",
+          "practitioner_report"
+        ],
+        "answer_changes": [
+          {
+            "if": "AI SDRs mainly change top-of-funnel roles",
+            "then": "Keep the fear as an omission; the explanation reassures on AE scope"
+          },
+          {
+            "if": "AE roles are also shrinking or changing",
+            "then": "Raise priority of the leverage focus and review the transition timeline"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Checks your manager's warning against evidence for your actual role.",
+        "grounded_in": [
+          "goal.baseline",
+          "T02"
+        ]
+      }
+    },
+    {
+      "id": "UQ05",
+      "statement": "What do AI SDR tools actually automate, compared with the AE's work of discovery, multi-threading and negotiation?",
+      "kind": "understanding_gap",
+      "route": "explain",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S4"
+      ],
+      "task_links": [
+        "T02",
+        "T05"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Your worry is about outbound tools, but outbound isn't in your task map.",
+        "grounded_in": [
+          "goal.baseline",
+          "T02"
+        ]
+      }
+    }
+  ],
+  "mission": {
+    "focus_areas": [
+      {
+        "id": "F1",
+        "title": "Map and close the gap to enterprise AE",
+        "candidate_type": "transition",
+        "task_ids": [
+          "T02",
+          "T05"
+        ],
+        "uncertainty_ids": [
+          "UQ01",
+          "UQ02"
+        ],
+        "rationale": "Direct goal alignment; discovery calls are the largest block and the most transferable skill.",
+        "planner_rule_refs": [
+          "MPR-06",
+          "MPR-09"
+        ],
+        "priority": 1,
+        "relevance": {
+          "why_for_this_user": "Discovery and closing are where you're strongest, and they're what enterprise roles build on.",
+          "grounded_in": [
+            "T02",
+            "T05",
+            "CAP01"
+          ]
+        }
+      },
+      {
+        "id": "F2",
+        "title": "Cut call-prep time with the approved CRM assistant",
+        "candidate_type": "leverage",
+        "task_ids": [
+          "T01"
+        ],
+        "uncertainty_ids": [
+          "UQ03"
+        ],
+        "rationale": "Repeatable, disliked, 20% of time; destination is F1 (account mapping practice).",
+        "planner_rule_refs": [
+          "MPR-04",
+          "MPR-14"
+        ],
+        "priority": 2,
+        "relevance": {
+          "why_for_this_user": "You'd happily lose prep time, and the approved assistant is already in your CRM.",
+          "grounded_in": [
+            "T01",
+            "context.employer_ai_policy"
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "id": "S1",
+        "step_type": "ask",
+        "description": "In your next 1:1, ask your manager what the enterprise AE criteria and usual path are.",
+        "targets": [
+          "UQ01"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "The internal route may be faster than the market route.",
+          "grounded_in": [
+            "goal",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S2",
+        "step_type": "experiment",
+        "description": "Run AX01 (7 postings).",
+        "targets": [
+          "AX01",
+          "UQ02"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Turns 'move up' into a concrete gap list.",
+          "grounded_in": [
+            "goal",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "S3",
+        "step_type": "research",
+        "description": "Operator researches UQ04 (AI SDR impact on AE roles).",
+        "targets": [
+          "UQ04"
+        ],
+        "depends_on": [],
+        "timebox_days": 10,
+        "owner": "operator",
+        "relevance": {
+          "why_for_this_user": "Checks your manager's warning with evidence.",
+          "grounded_in": [
+            "goal.baseline"
+          ]
+        }
+      },
+      {
+        "id": "S4",
+        "step_type": "explain",
+        "description": "Audio explainer (5 min): what AI SDR tools do vs what you do, plus what your policy allows for email polishing.",
+        "targets": [
+          "UQ05",
+          "CL02",
+          "CL03"
+        ],
+        "depends_on": [
+          "S3"
+        ],
+        "timebox_days": 10,
+        "owner": "engine",
+        "relevance": {
+          "why_for_this_user": "Separates the outbound-tool worry from your actual AE work, and keeps your email habit within policy.",
+          "grounded_in": [
+            "goal.baseline",
+            "T04",
+            "context.employer_ai_policy"
+          ]
+        }
+      },
+      {
+        "id": "S5",
+        "step_type": "decide",
+        "description": "At check-in, follow AX01's branches; then test prep with the approved assistant (UQ03).",
+        "targets": [
+          "AX01",
+          "UQ03"
+        ],
+        "depends_on": [
+          "S2"
+        ],
+        "timebox_days": 10,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Keeps the next step tied to what the postings showed.",
+          "grounded_in": [
+            "T01",
+            "goal"
+          ]
+        }
+      }
+    ],
+    "omissions": [
+      {
+        "id": "O1",
+        "what": "The AI SDR tools debate",
+        "why_omitted": "Outbound prospecting is not in your task map; it doesn't change your next move as an AE.",
+        "revisit_condition": "Your role gains outbound targets, or S3 research shows AE roles shrinking.",
+        "relevance": {
+          "why_for_this_user": "It's your main worry but it attaches to work you don't do.",
+          "grounded_in": [
+            "goal.baseline",
+            "T02"
+          ]
+        }
+      },
+      {
+        "id": "O2",
+        "what": "CRM admin automation",
+        "why_omitted": "Fields and process are set by sales ops; your effort wouldn't change it.",
+        "revisit_condition": "Sales ops rolls out auto-logging.",
+        "relevance": {
+          "why_for_this_user": "CRM admin is 15% of your time but not yours to redesign.",
+          "grounded_in": [
+            "T03"
+          ]
+        }
+      },
+      {
+        "id": "O3",
+        "what": "The 'AI for Sales' certification your manager mentioned",
+        "why_omitted": "Unknown whether it counts toward enterprise promotion.",
+        "revisit_condition": "Your manager's criteria (S1) include it.",
+        "relevance": {
+          "why_for_this_user": "You raised it; this is why it waits.",
+          "grounded_in": [
+            "UQ01",
+            "goal"
+          ]
+        }
+      }
+    ],
+    "exit_criteria": [
+      {
+        "type": "goal_met",
+        "statement": "You're assigned or mentored on an enterprise-sized deal."
+      },
+      {
+        "type": "no_decision_relevant_uncertainty",
+        "statement": "No open question would change your next career move."
+      },
+      {
+        "type": "user_opt_out",
+        "statement": "You ask to stop."
+      },
+      {
+        "type": "risk_detected",
+        "statement": "Any live-deal or policy risk appears."
+      }
+    ],
+    "attention_budget": {
+      "user_minutes_planned_total": 85,
+      "plan_weeks": 2
+    }
+  },
+  "first_experiment": {
+    "id": "AX01",
+    "archetype": "market_probe",
+    "title": "Tally 7 enterprise AE postings against what you do today",
+    "hypothesis": {
+      "statement": "The main gap between this user's current work and enterprise AE roles is multi-stakeholder deal management, not product knowledge or raw quota attainment.",
+      "would_be_wrong_if": "Most postings' recurring requirements are ones you already meet, or the top gap is something else (e.g., industry experience)."
+    },
+    "targets": {
+      "uncertainty_ids": [
+        "UQ02"
+      ],
+      "task_ids": [
+        "T02",
+        "T05"
+      ]
+    },
+    "depends_on": [],
+    "relevance": {
+      "why_for_this_user": "You want to move to enterprise but haven't mapped the gap; this uses public postings and never touches a live deal.",
+      "grounded_in": [
+        "goal",
+        "T02",
+        "T05",
+        "C01"
+      ]
+    },
+    "steps": [
+      {
+        "n": 1,
+        "instruction": "Find 7 current enterprise AE postings in your market, including your own company's if one exists.",
+        "minutes": 10
+      },
+      {
+        "n": 2,
+        "instruction": "List the requirements that recur in at least 3 postings.",
+        "minutes": 15
+      },
+      {
+        "n": 3,
+        "instruction": "Mark each as met, partly met, or missing, based on your last 6 months of deals.",
+        "minutes": 10
+      },
+      {
+        "n": 4,
+        "instruction": "Note the top 2 gaps and anything that surprised you.",
+        "minutes": 5
+      }
+    ],
+    "materials": {
+      "data_class": "public",
+      "description": "Public job postings; nothing from the CRM or live deals."
+    },
+    "effort": {
+      "minutes_total": 40,
+      "sessions": 1,
+      "window_days": 7
+    },
+    "prediction": {
+      "user": "I'll be missing 'bigger deal sizes', and that's about it.",
+      "engine": "Expect gaps in multi-threading across many stakeholders and in executive-level conversations, alongside deal size."
+    },
+    "measures": [
+      {
+        "id": "M1",
+        "what": "Recurring requirements met / partly / missing",
+        "how_recorded": "Counts in the template",
+        "type": "count"
+      },
+      {
+        "id": "M2",
+        "what": "Top 2 gaps",
+        "how_recorded": "Two lines",
+        "type": "text_observation"
+      },
+      {
+        "id": "M3",
+        "what": "Anything surprising in the postings",
+        "how_recorded": "One line",
+        "type": "text_observation"
+      }
+    ],
+    "learning_criteria": {
+      "confirms_if": "Multi-stakeholder deal management is among the top 2 gaps and most other requirements are met or partly met",
+      "disconfirms_if": "The top gaps are elsewhere, or you already meet nearly all recurring requirements",
+      "informative_note": "Postings are indicative local evidence (E2), not a verified market fact."
+    },
+    "branches": [
+      {
+        "id": "B1",
+        "condition_type": "confirms",
+        "condition": "Multi-stakeholder gap confirmed",
+        "next_move": "continue",
+        "next_description": "Talk to one enterprise AE (conversation_probe) about how they run multi-threaded deals."
+      },
+      {
+        "id": "B2",
+        "condition_type": "disconfirms",
+        "condition": "Gap is elsewhere or none",
+        "next_move": "modify",
+        "next_description": "Re-target the next step at the actual top gap (skill_probe)."
+      },
+      {
+        "id": "B3",
+        "condition_type": "mixed",
+        "condition": "Postings disagree, or the internal route differs from the market",
+        "next_move": "investigate_further",
+        "next_description": "Separate the internal promotion path from the external market and test the one that matters more."
+      },
+      {
+        "id": "B4",
+        "condition_type": "null_result",
+        "condition": "Too few relevant postings",
+        "next_move": "change_intervention",
+        "next_description": "Swap to one conversation with an enterprise AE."
+      },
+      {
+        "id": "B5",
+        "condition_type": "not_attempted",
+        "condition": "Didn't get to it",
+        "next_move": "simplify",
+        "next_description": "3 postings, 20 minutes."
+      },
+      {
+        "id": "B6",
+        "condition_type": "harm",
+        "condition": "Anything felt risky (e.g., manager saw it as disloyalty)",
+        "next_move": "escalate",
+        "next_description": "Operator reviews how to frame the promotion conversation."
+      }
+    ],
+    "safety": {
+      "stakeholder_exposure": "none",
+      "reversibility": "reversible",
+      "stop_conditions": [
+        "Don't apply to anything as part of this; it's a mapping exercise."
+      ],
+      "notes": "Public data only; C01 respected."
+    },
+    "alternatives_considered": [
+      {
+        "archetype": "shadow_test",
+        "why_not": "Prep time (F2) matters less to the transition goal than knowing the gap; sequenced after (S5)."
+      },
+      {
+        "archetype": "skill_probe",
+        "why_not": "Trying multi-threading on a live deal breaks C01; and the gap isn't known yet."
+      }
+    ],
+    "status": "accepted",
+    "status_history": [
+      {
+        "status": "proposed",
+        "at": "2026-10-02"
+      },
+      {
+        "status": "accepted",
+        "at": "2026-10-02"
+      }
+    ]
+  },
+  "feedback_plan": {
+    "checkin_at_days": 9,
+    "nudge_at_days": 4,
+    "channel": "operator_message",
+    "question_set": "CQ-v0.1",
+    "mission_triggers": [
+      {
+        "condition": "Any harm or discomfort reported (CQ-8)",
+        "decision": "escalate"
+      },
+      {
+        "condition": "Experiment not attempted or no response at two consecutive check-ins",
+        "decision": "rediagnose"
+      },
+      {
+        "condition": "User asks to stop",
+        "decision": "stop"
+      },
+      {
+        "condition": "End-of-quarter window starts before the check-in",
+        "decision": "simplify"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "CL01",
+      "text": "Discovery and closing are about 40% of your week and they're the skills enterprise roles build on.",
+      "claim_type": "engine_judgment",
+      "evidence_status": "user_local",
+      "shown_as": "judgment"
+    },
+    {
+      "id": "CL02",
+      "text": "AI SDR tools may mainly change top-of-funnel outreach rather than AE work; we're checking the evidence.",
+      "claim_type": "world_fact",
+      "evidence_status": "unverified",
+      "shown_as": "hypothesis",
+      "uncertainty_id": "UQ04"
+    },
+    {
+      "id": "CL03",
+      "text": "Your company policy, as you described it, doesn't allow customer details in personal tools; polishing buyer emails in your personal chatbot may breach it. The approved chat assistant can do the same job.",
+      "claim_type": "engine_judgment",
+      "evidence_status": "user_local",
+      "shown_as": "judgment"
+    }
+  ],
+  "operator_log": [
+    {
+      "at": "2026-10-02",
+      "path": "claims[2]",
+      "change": "added",
+      "reason": "Engine missed that DQ-09 (personal chatbot for buyer emails) conflicts with DQ-10 policy; safety note added (MPR-14)."
+    },
+    {
+      "at": "2026-10-02",
+      "path": "meta.status",
+      "change": "approved",
+      "reason": "Operator review complete."
+    }
+  ],
+  "delivery": {
+    "format": "audio",
+    "estimated_user_minutes": 8
+  }
+}

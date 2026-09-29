@@ -1,0 +1,47 @@
+{
+  "id": "FB01",
+  "packet_id": "MP-SIM-SAL-r1",
+  "experiment_id": "AX01",
+  "collected_at": "2026-10-11",
+  "channel": "call",
+  "attempt_status": "fully",
+  "actions_taken": "Reviewed 7 postings (2 at own company). Asked manager in 1:1.",
+  "observations": [
+    {
+      "measure_id": "M1",
+      "value": "9 recurring: 5 met, 2 partly, 2 missing",
+      "grade": "E2"
+    },
+    {
+      "measure_id": "M2",
+      "value": "Multi-threading across 6+ stakeholders; running exec-level business cases",
+      "grade": "E2"
+    },
+    {
+      "measure_id": "M3",
+      "value": "4 of 7 postings asked for 'AI-assisted prospecting' experience",
+      "grade": "E2"
+    }
+  ],
+  "effort_minutes_actual": 45,
+  "prediction_comparison": "different_dimension",
+  "surprises": "Deal size barely mattered; exec business cases did. And 'AI-assisted prospecting' showed up a lot.",
+  "blockers": [],
+  "harm_report": {
+    "occurred": false,
+    "severity": "none"
+  },
+  "belief_update": {
+    "direction": "changed_view",
+    "note": "The gap isn't deal size, it's running exec-level cases; and the internal route (mentor deal) is different from the market."
+  },
+  "decision_change": {
+    "status": "changed",
+    "description": "Will ask to shadow an enterprise AE on one deal rather than apply externally."
+  },
+  "usefulness_0_10": 7,
+  "goal_confidence_0_10": 6,
+  "evidence_grade": "E2",
+  "result_class": "mixed",
+  "checkin_minutes": 10
+}

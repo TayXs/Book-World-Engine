@@ -74,7 +74,7 @@ In V0 the operator runs these rules as a checklist, with or without LLM drafting
 ### MPR-04 · Leverage candidate [SEL]
 - **Pattern:** the Task Map *leverage view*: large or medium share, predictability ≥ 2, judgment ≤ 2, autonomy ≥ 2.
 - **Question it opens:** under this user's constraints, can assistance or redesign reclaim time or improve quality on this task? *And what would the reclaimed time be used for?*
-- **Pairing rule.** A leverage focus is valid only with a **destination** for the reclaimed time. The destination is either an anchor focus (MPR-05) or a goal-linked use the user has stated. If there is no destination, add a `user_context` uncertainty: "What would you do with the time?" (route ask; impact high). Efficiency with no destination can speed up a user's own devaluation.
+- **Pairing rule.** A leverage focus is valid only with a **destination** for the reclaimed time. The destination is an anchor focus (MPR-05), a transition focus (MPR-06), or a goal-linked use the user has stated. *(The transition option was added in step 7 after the sales simulation; see FM-03.)* If there is no destination, add a `user_context` uncertainty: "What would you do with the time?" (route ask; impact high). Efficiency with no destination can speed up a user's own devaluation.
 
 ### MPR-05 · Anchor-value candidate [SEL]
 - **Pattern:** the *anchor view*: large or medium share, judgment ≥ 2, and relationship ≥ 2 or accountability ≥ 2.

@@ -1,0 +1,672 @@
+{
+  "meta": {
+    "contract_version": "0.1",
+    "packet_id": "MP-SIM-LOW-r1",
+    "user_ref": "SIM-LOW",
+    "mission_type": "stay_valuable_ai_work",
+    "revision": 1,
+    "status": "delivered",
+    "created_at": "2026-10-02",
+    "generated_by": {
+      "method": "llm",
+      "engine_version": "lane02-spec-v0.1-sim"
+    },
+    "simulated": true
+  },
+  "scope_check": {
+    "result": "in_scope"
+  },
+  "goal": {
+    "stated_goal": "My kid says AI will take all the jobs. Should I be worried?",
+    "diagnosed_goal": "Within 3 months, know how much of this person's actual week AI could plausibly touch, so they can stop worrying or act early.",
+    "archetype": "clarify",
+    "horizon_months": 3,
+    "success_signals": [
+      "Can name which of their tasks AI could plausibly change, and which it can't soon"
+    ],
+    "baseline": {
+      "goal_confidence_0_10": 5,
+      "main_concern": "General headlines that AI will take all jobs.",
+      "captured_at": "2026-10-01"
+    }
+  },
+  "context": {
+    "role": {
+      "function": "Commercial electrician (field service)",
+      "seniority_band": "senior",
+      "sector_band": "Building services",
+      "employment_type": "employee",
+      "years_in_role_band": "10+"
+    },
+    "time_budget_minutes_per_week": 20,
+    "employer_ai_policy": {
+      "status": "none_known",
+      "notes": "Never heard anything about AI at work."
+    },
+    "ai_experience": "none",
+    "preferences": {
+      "format": "text"
+    }
+  },
+  "task_map": {
+    "tasks": [
+      {
+        "id": "T01",
+        "name": "Installation and fault-finding on site",
+        "description": "Install, test and fault-find electrical systems in commercial buildings.",
+        "output": "Working, tested installations",
+        "frequency": "daily",
+        "time_share": {
+          "band": "large",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 55
+        },
+        "traits": {
+          "predictability": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "tool_dependency": {
+            "value": 1,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "none",
+        "stakeholders": [
+          "client",
+          "regulator"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T02",
+        "name": "Quoting and materials lists",
+        "description": "Survey jobs, price labour and materials, order parts.",
+        "output": "Quotes and orders",
+        "frequency": "weekly",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 15
+        },
+        "traits": {
+          "predictability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "stakeholders": [
+          "client"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T03",
+        "name": "Compliance paperwork and test certificates",
+        "description": "Write job notes and complete test certificates after each job.",
+        "output": "Completed certificates and job notes",
+        "frequency": "daily",
+        "time_share": {
+          "band": "medium",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 15
+        },
+        "traits": {
+          "predictability": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "judgment_intensity": {
+            "value": 1,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "accountability": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "friction": {
+            "value": 3,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 0,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "autonomy": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "internal",
+        "stakeholders": [
+          "client",
+          "regulator"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      },
+      {
+        "id": "T04",
+        "name": "Supervising an apprentice",
+        "description": "Plan the apprentice's tasks and check their work.",
+        "output": "Checked apprentice work",
+        "frequency": "daily",
+        "time_share": {
+          "band": "small",
+          "source": "user_stated",
+          "confidence": "medium",
+          "pct_estimate": 10
+        },
+        "traits": {
+          "judgment_intensity": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          },
+          "relationship_intensity": {
+            "value": 2,
+            "source": "operator_inferred",
+            "confidence": "medium"
+          },
+          "identity_value": {
+            "value": 2,
+            "source": "user_stated",
+            "confidence": "medium"
+          }
+        },
+        "data_sensitivity": "none",
+        "stakeholders": [
+          "internal_team"
+        ],
+        "ai_current_use": {
+          "level": "none"
+        },
+        "confirmed_by_user": true
+      }
+    ],
+    "coverage_estimate": {
+      "band": "high",
+      "source": "user_stated"
+    },
+    "map_confidence": "high"
+  },
+  "uncertainty_ledger": [
+    {
+      "id": "UQ01",
+      "statement": "How does the 'AI will take all jobs' worry map onto this person's actual week?",
+      "kind": "understanding_gap",
+      "route": "explain",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "S1"
+      ],
+      "task_links": [
+        "T01",
+        "T03"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "The worry is general; your week is mostly hands-on work on site.",
+        "grounded_in": [
+          "goal.baseline",
+          "T01"
+        ]
+      }
+    },
+    {
+      "id": "UQ02",
+      "statement": "Could a phone assistant turn a spoken job summary into usable job notes faster than writing them?",
+      "kind": "personal_empirical",
+      "route": "experiment",
+      "impact": "high",
+      "blocking": false,
+      "decision_links": [
+        "F1",
+        "AX01"
+      ],
+      "task_links": [
+        "T03"
+      ],
+      "status": "open",
+      "relevance": {
+        "why_for_this_user": "Paperwork is your most repeatable task and the one you'd be glad to lose.",
+        "grounded_in": [
+          "T03"
+        ]
+      }
+    },
+    {
+      "id": "UQ03",
+      "statement": "What does current evidence say about AI's effect on demand for electricians and on trade paperwork?",
+      "kind": "world_fact",
+      "route": "research",
+      "impact": "medium",
+      "blocking": false,
+      "decision_links": [
+        "CL02",
+        "S3"
+      ],
+      "task_links": [
+        "T01",
+        "T03"
+      ],
+      "status": "open",
+      "research": {
+        "question": "What do labour-market statistics and studies (≤18 months) show about demand for electricians and about AI use in trade documentation?",
+        "required_strength": "moderate",
+        "freshness": "≤18 months",
+        "preferred_source_types": [
+          "official_statistics",
+          "primary_study"
+        ],
+        "answer_changes": [
+          {
+            "if": "Demand stable or rising; AI mainly in paperwork",
+            "then": "Close mission after check-in with a watch trigger"
+          },
+          {
+            "if": "Signs of change in hands-on demand",
+            "then": "Open a fuller mission"
+          }
+        ],
+        "status": "queued"
+      },
+      "relevance": {
+        "why_for_this_user": "Replaces your kid's headline with evidence for your trade.",
+        "grounded_in": [
+          "goal.baseline"
+        ]
+      }
+    }
+  ],
+  "mission": {
+    "focus_areas": [
+      {
+        "id": "F1",
+        "title": "Test whether a phone assistant can take your certificate paperwork",
+        "candidate_type": "light_touch",
+        "task_ids": [
+          "T03"
+        ],
+        "uncertainty_ids": [
+          "UQ02"
+        ],
+        "rationale": "Light-touch: the most repeatable medium-share task is where near-term change is most plausible and cheapest to test; hands-on work is identity-valued and low-predictability.",
+        "planner_rule_refs": [
+          "MPR-07",
+          "MPR-17",
+          "MPR-20"
+        ],
+        "priority": 1,
+        "relevance": {
+          "why_for_this_user": "Paperwork is 15% of your week and the part you'd happily hand off.",
+          "grounded_in": [
+            "T03"
+          ]
+        }
+      }
+    ],
+    "sequence": [
+      {
+        "id": "S1",
+        "step_type": "explain",
+        "description": "Half-page: your week by task, and which kinds of task AI tools are aimed at (no forecasts until S3).",
+        "targets": [
+          "UQ01"
+        ],
+        "depends_on": [],
+        "timebox_days": 2,
+        "owner": "engine",
+        "relevance": {
+          "why_for_this_user": "Starts from your own week, not headlines.",
+          "grounded_in": [
+            "T01",
+            "T03"
+          ]
+        }
+      },
+      {
+        "id": "S2",
+        "step_type": "experiment",
+        "description": "Run AX01 on a made-up job.",
+        "targets": [
+          "AX01",
+          "UQ02"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "Gives you your own evidence in 20 minutes.",
+          "grounded_in": [
+            "T03"
+          ]
+        }
+      },
+      {
+        "id": "S3",
+        "step_type": "research",
+        "description": "Operator checks UQ03.",
+        "targets": [
+          "UQ03"
+        ],
+        "depends_on": [],
+        "timebox_days": 7,
+        "owner": "operator",
+        "relevance": {
+          "why_for_this_user": "Checks the headline for your trade.",
+          "grounded_in": [
+            "goal.baseline"
+          ]
+        }
+      },
+      {
+        "id": "S4",
+        "step_type": "decide",
+        "description": "At check-in: close with a watch trigger, or open a fuller mission.",
+        "targets": [
+          "AX01"
+        ],
+        "depends_on": [
+          "S2",
+          "S3"
+        ],
+        "timebox_days": 9,
+        "owner": "user",
+        "relevance": {
+          "why_for_this_user": "You only spend more time on this if the evidence says so.",
+          "grounded_in": [
+            "goal"
+          ]
+        }
+      }
+    ],
+    "omissions": [
+      {
+        "id": "O1",
+        "what": "Worrying about AI replacing hands-on electrical work",
+        "why_omitted": "More than half your week is on-site judgment work that current AI tools are not aimed at; we're checking this against evidence (S3).",
+        "revisit_condition": "Your employer introduces AI job-reporting or diagnostic tools, or S3 finds changing demand.",
+        "relevance": {
+          "why_for_this_user": "That's 55% of your week and the part you'd miss.",
+          "grounded_in": [
+            "T01"
+          ]
+        }
+      }
+    ],
+    "exit_criteria": [
+      {
+        "type": "no_decision_relevant_uncertainty",
+        "statement": "Once test and research are in, nothing open would change what you do: close with watch triggers."
+      },
+      {
+        "type": "user_opt_out",
+        "statement": "You ask to stop."
+      },
+      {
+        "type": "risk_detected",
+        "statement": "Any risk appears."
+      }
+    ],
+    "attention_budget": {
+      "user_minutes_planned_total": 35,
+      "plan_weeks": 2
+    }
+  },
+  "first_experiment": {
+    "id": "AX01",
+    "archetype": "shadow_test",
+    "title": "Job notes by voice vs by hand, for a made-up job",
+    "hypothesis": {
+      "statement": "Speaking a job summary into a phone assistant produces certificate job notes you'd accept in less time than writing them.",
+      "would_be_wrong_if": "It takes as long, or the notes need so much fixing you'd rather write them."
+    },
+    "targets": {
+      "uncertainty_ids": [
+        "UQ02"
+      ],
+      "task_ids": [
+        "T03"
+      ]
+    },
+    "depends_on": [],
+    "relevance": {
+      "why_for_this_user": "Paperwork is the repeatable 15% of your week; a made-up job keeps client details out of any app.",
+      "grounded_in": [
+        "T03",
+        "context.employer_ai_policy"
+      ]
+    },
+    "steps": [
+      {
+        "n": 1,
+        "instruction": "Invent a typical job (no real address or client). Write its job notes by hand; time it.",
+        "minutes": 8
+      },
+      {
+        "n": 2,
+        "instruction": "Speak the same job into your phone's assistant and ask for job notes in your usual format; fix them; time it.",
+        "minutes": 8
+      },
+      {
+        "n": 3,
+        "instruction": "Note both times and whether you'd accept the result.",
+        "minutes": 4
+      }
+    ],
+    "materials": {
+      "data_class": "synthetic",
+      "description": "A made-up job with no real client or address.",
+      "tool": {
+        "name": "Phone's built-in assistant",
+        "employer_approved": "not_applicable"
+      }
+    },
+    "effort": {
+      "minutes_total": 20,
+      "sessions": 1,
+      "window_days": 7
+    },
+    "prediction": {
+      "user": "It'll get the technical terms wrong.",
+      "engine": "Faster on prose; errors in technical terms and test values likely."
+    },
+    "measures": [
+      {
+        "id": "M1",
+        "what": "Minutes by hand",
+        "how_recorded": "Timer",
+        "type": "time_minutes"
+      },
+      {
+        "id": "M2",
+        "what": "Minutes by voice incl. fixes",
+        "how_recorded": "Timer",
+        "type": "time_minutes"
+      },
+      {
+        "id": "M3",
+        "what": "Would you accept the voice version?",
+        "how_recorded": "Yes/no",
+        "type": "yes_no"
+      }
+    ],
+    "learning_criteria": {
+      "confirms_if": "M2 < M1 and M3 = yes",
+      "disconfirms_if": "M2 ≥ M1 or M3 = no"
+    },
+    "branches": [
+      {
+        "id": "B1",
+        "condition_type": "confirms",
+        "condition": "Faster and acceptable",
+        "next_move": "continue",
+        "next_description": "Ask your employer whether there's an approved way to use this on real jobs."
+      },
+      {
+        "id": "B2",
+        "condition_type": "disconfirms",
+        "condition": "Slower or unacceptable",
+        "next_move": "stop",
+        "next_description": "Close with a watch trigger; nothing to change now."
+      },
+      {
+        "id": "B3",
+        "condition_type": "null_result",
+        "condition": "About the same",
+        "next_move": "stop",
+        "next_description": "Close with a watch trigger."
+      },
+      {
+        "id": "B4",
+        "condition_type": "not_attempted",
+        "condition": "Didn't get to it",
+        "next_move": "simplify",
+        "next_description": "Voice-only version, 10 minutes."
+      },
+      {
+        "id": "B5",
+        "condition_type": "harm",
+        "condition": "Real client details entered by mistake",
+        "next_move": "escalate",
+        "next_description": "Operator helps delete and report if needed."
+      }
+    ],
+    "safety": {
+      "stakeholder_exposure": "none",
+      "reversibility": "reversible",
+      "stop_conditions": [
+        "No real addresses, names or test results."
+      ]
+    },
+    "alternatives_considered": [
+      {
+        "archetype": "retro_audit",
+        "why_not": "Time split is already high-confidence."
+      }
+    ],
+    "status": "accepted",
+    "status_history": [
+      {
+        "status": "accepted",
+        "at": "2026-10-02"
+      }
+    ]
+  },
+  "feedback_plan": {
+    "checkin_at_days": 9,
+    "channel": "operator_message",
+    "question_set": "CQ-v0.1",
+    "mission_triggers": [
+      {
+        "condition": "Any harm or discomfort reported (CQ-8)",
+        "decision": "escalate"
+      },
+      {
+        "condition": "Experiment not attempted or no response at two consecutive check-ins",
+        "decision": "rediagnose"
+      },
+      {
+        "condition": "User asks to stop",
+        "decision": "stop"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "CL01",
+      "text": "About 55% of your week is hands-on installation and fault-finding.",
+      "claim_type": "engine_judgment",
+      "evidence_status": "user_local",
+      "shown_as": "judgment"
+    },
+    {
+      "id": "CL02",
+      "text": "Current AI tools in trades seem aimed mostly at paperwork and planning rather than hands-on work; we're checking this.",
+      "claim_type": "world_fact",
+      "evidence_status": "unverified",
+      "shown_as": "hypothesis",
+      "uncertainty_id": "UQ03"
+    }
+  ],
+  "operator_log": [
+    {
+      "at": "2026-10-02",
+      "path": "meta.status",
+      "change": "approved",
+      "reason": "Operator review complete; light-touch (MPR-20) and micro mode (MPR-17)."
+    }
+  ],
+  "delivery": {
+    "format": "text",
+    "estimated_user_minutes": 4
+  }
+}
