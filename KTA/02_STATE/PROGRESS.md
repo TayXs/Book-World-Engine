@@ -26,3 +26,4 @@ Next:
 - Material proposals batched in `02_STATE/OWNER_DECISIONS_PENDING.md` (none block Lane 02).
 - Next: Mission Generation Output Contract v0.1.
 - Step 1 done: `03_CURRENT_WORK/MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md` + `schemas/{mission_packet,uncertainty_item,common}.schema.json`. Key design: Uncertainty Ledger typed by resolver; 14 machine invariants; 4 differentiation acceptance tests.
+- Step 2 done: `03_CURRENT_WORK/DIAGNOSTIC_ARCHITECTURE_v0.1.md` + `diagnostic_question_registry_v0.1.json`. 11 core cards + 3 conditional, ≤15 min core; every card has feeds + change test; D0 scope triage; D6 value-of-information gate.
