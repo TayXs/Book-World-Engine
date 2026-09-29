@@ -1,0 +1,9 @@
+# KTA project
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.cache/
+__pycache__/
+.env
+.env.*

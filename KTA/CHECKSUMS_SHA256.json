@@ -1,0 +1,92 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 79,
+    "sha256": "67361dd057bd3be93206d063b18efc068a0e97758bef4f328948e4a9bac49934"
+  },
+  {
+    "path": "00_START/FIRST_MESSAGE_TO_CLAUDE_CODE.md",
+    "bytes": 928,
+    "sha256": "9744138199b5847dd229b307f932ab579490844569eeef2caa4ecab61ffdf23e"
+  },
+  {
+    "path": "00_START/MOBILE_START_HERE.md",
+    "bytes": 2094,
+    "sha256": "9cde01ac7b5ef1385903ba5663b6acedae2f86a1e6e7042f3d8fcbe7c6b131c3"
+  },
+  {
+    "path": "00_START/OWNER_DECISION_BATCH_PROMPT.md",
+    "bytes": 388,
+    "sha256": "281158ed0e7f9326d9dd7e6d197eee9985ed06bf0823606c113bd0970e90b7b9"
+  },
+  {
+    "path": "00_START/PHONE_FRIENDLY_COMMANDS.md",
+    "bytes": 929,
+    "sha256": "01b86555c1fe0c2ddb40b1bd031d18a92778f68fa607f55b8c44036439be5436"
+  },
+  {
+    "path": "01_AUTHORITY/KTA_MASTER_BLUEPRINT_v0.1.md",
+    "bytes": 4888,
+    "sha256": "f9fe2e221b470042ca04f34fbcc52f735229b4e638382dbada6a27a30faafe5e"
+  },
+  {
+    "path": "01_AUTHORITY/KTA_PROJECT_CONSTITUTION_v0.1.md",
+    "bytes": 3347,
+    "sha256": "a99745935f5e886baba30758578befe62fb583e9fe9f2f05c591d2ee309f832c"
+  },
+  {
+    "path": "01_AUTHORITY/KTA_PROJECT_LANE_MAP_v0.1.md",
+    "bytes": 1325,
+    "sha256": "f7bad836d9a31ce576e7bbb33eeef6fb973a332251362c07acee9dd91cf52f22"
+  },
+  {
+    "path": "01_AUTHORITY/SOURCE_MANIFEST_v0.1.md",
+    "bytes": 637,
+    "sha256": "0592e5cd2aadbd422b01af03d405e76ea546ba0c56cf5cc3bb7803be8e0b1668"
+  },
+  {
+    "path": "02_STATE/KTA_CURRENT_STATE.md",
+    "bytes": 1296,
+    "sha256": "e554c91c335d5c154fcb6453ff592c76a3a13fd7f87895b41b3911b119e71509"
+  },
+  {
+    "path": "02_STATE/NEXT_ACTION.md",
+    "bytes": 384,
+    "sha256": "36ea955bcae31b0d7ca893f391d219d216113f16c3849f57415ad87984a9a088"
+  },
+  {
+    "path": "02_STATE/PROGRESS.md",
+    "bytes": 811,
+    "sha256": "7c24ed7941bf81b95017a92a8be671d22498f3f3e7b2c2aafa9745987272c919"
+  },
+  {
+    "path": "02_STATE/PROJECT_STATE.json",
+    "bytes": 985,
+    "sha256": "4b04176ba6bf656fc00511cddc3d0c5cc1eeab1e1a0868f0c3352809e72a84e9"
+  },
+  {
+    "path": "03_CURRENT_WORK/KTA_LANE_02_MISSION_GENERATION_ENGINE_CONTINUATION_v0.1.md",
+    "bytes": 5411,
+    "sha256": "4086ae9c17a1d62eebefe47ff807328d210bd0940c213f87cc2c41e42bf16bb4"
+  },
+  {
+    "path": "04_REGISTRIES/KTA_REGISTRIES_v0.1.xlsx",
+    "bytes": 105070,
+    "sha256": "9389e004423b83edfed5aa6db2896cdaee682e7cfa931dcf8dffc16196902072"
+  },
+  {
+    "path": "05_HANDOFFS/RESUME_PROMPT.md",
+    "bytes": 280,
+    "sha256": "8b942586eca668e64cf342df539777aac60332a686feea8098efc3738d43006e"
+  },
+  {
+    "path": "CLAUDE.md",
+    "bytes": 7037,
+    "sha256": "0eb7c424d088930014a6e6551121f2c3ae5325e20185128ce12d9c2582fdaaa4"
+  },
+  {
+    "path": "README.md",
+    "bytes": 631,
+    "sha256": "9677780aa50c3c73d589f292dd0527691937e7bd85d72cd50ed94b6af9720a57"
+  }
+]

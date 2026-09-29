@@ -1,0 +1,1 @@
+Read `CLAUDE.md`, `02_STATE/PROJECT_STATE.json`, `02_STATE/PROGRESS.md`, and `02_STATE/NEXT_ACTION.md`. Inspect the latest applicable handoff and recent git history if available. Resume the exact current Knowledge → Action task. Do not restart discovery or rely on chat memory.
