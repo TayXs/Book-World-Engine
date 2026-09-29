@@ -217,7 +217,7 @@ def check_packet(p, rep, where):
         for d in s.get("depends_on", []):
             need(d, "step", f"step {s['id']}")
     for u in p["uncertainty_ledger"]:
-        # Resolved/dropped items keep links to elements of earlier revisions as history (FM-02).
+        # Resolved/dropped items keep links to elements of earlier revisions as history (FM-01).
         if u["status"] in {"resolved", "dropped"}:
             continue
         for d in u["decision_links"]:
