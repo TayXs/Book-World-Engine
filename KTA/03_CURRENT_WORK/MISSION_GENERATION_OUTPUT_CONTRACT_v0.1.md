@@ -104,7 +104,7 @@ If `result = out_of_scope`, the packet **must not** contain `task_map`, `mission
 |---|---|---|
 | `role` **R** | `{function, seniority_band, sector_band, employment_type}` | Generic labels only. **No employer, client or colleague names.** |
 | `time_budget_minutes_per_week` **R** | integer | What the user can realistically spend on the mission. Caps every plan. |
-| `employer_ai_policy` **R** | `{status, approved_tools[], notes}` | `status` is one of `allows_listed_tools`, `restricts`, `prohibits`, `none_known`, `unknown` or `not_applicable`. |
+| `employer_ai_policy` **R** | `{status, approved_tools[], notes}` | `status` is one of `allows_listed_tools`, `restricts`, `prohibits`, `none_known`, `unknown` or `not_applicable`. This field covers **whichever party's rules govern the work material**: employer policy for employees, client contracts for freelancers and contractors (FM-10; rename to `work_material_rules` in v0.2). If tools are approved but the permitted **data scope** is not confirmed, use `unknown` with `approved_tools` listed, and switch to `allows_listed_tools` only once the scope is confirmed (FM-09). |
 | `ai_experience` **R** | `none` \| `tried` \| `occasional` \| `regular` | |
 | `constraints` | list of `{id C.., type, statement, source}` | `type` is one of `time`, `budget`, `policy`, `access`, `skill`, `personal` or `other`. |
 | `capabilities` | list of `{id CAP.., statement, source}` | Existing strengths that are relevant to the mission. |
@@ -173,6 +173,7 @@ An `ActionExperiment` (step 5). The contract requires:
 - It passes the safety rules (INV-08).
 - It has a user prediction recorded *before* acting.
 - It has branches that cover the `not_attempted` and `null_result` cases.
+- The user may **decline** it (status `declined`, FM-22). The packet then still delivers its explain and research steps. The check-in uses CQ-9, CQ-10 and CQ-12, and a smaller experiment is offered **once**, never pushed.
 
 ### 5.9 `feedback_plan` (R unless out of scope)
 | Field | Notes |
@@ -215,7 +216,7 @@ Put together, these relevance objects form the **Personal Relevance Map**.
 Each entry is `{at, path, change: added|edited|removed|approved, reason}`. This lets pilot analysis tell engine output apart from human improvement (AR-14).
 
 ### 5.13 `delivery`
-`{format, estimated_user_minutes}`. The user should be able to read a delivered packet in **≤10 minutes** (Minimum Necessary Attention).
+`{format, estimated_user_minutes}`. The user should be able to read a delivered packet in **≤10 minutes** (Minimum Necessary Attention). The delivered packet **must show the omissions** ("what you can set aside for now, and why"), next to the focus areas. Omission is a large part of KTA's value over a generic answer, which usually *adds* items (FM-12).
 
 ## 6. Invariants (machine-checked by `kta_check.py`)
 
@@ -234,7 +235,8 @@ Each entry is `{at, path, change: added|edited|removed|approved, reason}`. This 
 | INV-11 | **Revision chain.** `revision > 1` requires `parent_packet_id` and `decision_ref`. |
 | INV-12 | **Branch coverage.** The experiment's branches include `not_attempted` and `null_result`. |
 | INV-13 | **Check-in timing.** `checkin_at_days` ≤ experiment `window_days` + 3. The mission triggers include `escalate` and `rediagnose`. |
-| INV-14 | **Pre-registration.** The experiment has a `prediction.user` field. Its value is filled in before the status moves past `accepted`. |
+| INV-14 | **Pre-registration.** The experiment has a `prediction.user` field. Its value is filled in before the status moves past `accepted`. A `declined` experiment is exempt. |
+| INV-15 | **Thin task map** *(FM-18)*. With fewer than 3 tasks, the first experiment must be a `retro_audit` or `time_audit` that targets map coverage, and `map_confidence` must be `low`. |
 
 ## 7. Differentiation acceptance tests (human- or LLM-judged; see the simulation)
 
@@ -265,3 +267,4 @@ Complete, validated packets for three simulated users are in `simulation/` (step
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Implements review items AR-03, 04, 09, 11, 13, 14, 16, 17, 18 and 20 in the contract. |
+| 0.1-rev1 | 2026-09-29 | Step 7–8 fixes: INV-02 history exception (FM-01); `candidate_type`; policy scope and freelancer wording (FM-09, 10); omissions shown on delivery (FM-12); `declined` experiments (FM-22); INV-15 thin task map (FM-18). |

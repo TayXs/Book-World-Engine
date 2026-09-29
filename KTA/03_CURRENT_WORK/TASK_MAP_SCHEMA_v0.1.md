@@ -89,7 +89,7 @@ The brief's "time burden" is covered by `time_share`, "perceived pain" by `frict
 ## 6. Map-level fields
 | Field | Notes |
 |---|---|
-| `tasks` | 3 to 10 tasks. Fewer than 3 means the intake needs another pass. More than 10 means tasks should be merged by output. |
+| `tasks` | 3 to 10 tasks is normal. More than 10 means tasks should be merged by output. **Fewer than 3** *(FM-18)*: try one more intake pass. If the user still can't list more, accept 1 or 2 tasks with `map_confidence: low`. The first experiment must then be a map-building `retro_audit` or `time_audit` (INV-15). |
 | `coverage_estimate` | `{band: high\|medium\|low, source}`: how much of the user's work time the listed tasks cover. `low` (under about 50%) creates an uncertainty item and a candidate `time_audit`. |
 | `unlisted_work_note` | Optional. What is known to be missing. |
 | `map_confidence` | `low`, `medium` or `high`. Set to `low` if the time shares are guesses *and* coverage is not high. |
@@ -137,3 +137,4 @@ Full maps are in `simulation/`.
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Adds the `autonomy` and `identity_value` traits. `future_value` is a belief or hypothesis, never a score. |
+| 0.1-rev1 | 2026-09-29 | Thin-map path (FM-18). |

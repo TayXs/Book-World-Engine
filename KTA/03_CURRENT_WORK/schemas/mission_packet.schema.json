@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://kta.invalid/schemas/mission_packet.schema.json",
   "title": "Mission Packet v0.1",
-  "description": "Structural contract for the Mission Generation Engine output. Cross-field invariants (INV-01..14) are enforced by tools/kta_check.py, not by this schema alone. See MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md.",
+  "description": "Structural contract for the Mission Generation Engine output. Cross-field invariants (INV-01..15) are enforced by tools/kta_check.py, not by this schema alone. See MISSION_GENERATION_OUTPUT_CONTRACT_v0.1.md.",
   "type": "object",
   "required": [
     "meta",

@@ -4,11 +4,11 @@
   "current_stage": "Pre-V0 product definition; Lane 02 specification",
   "current_lane": "02 — Mission & Diagnostic Engine",
   "current_objective": "Build Mission Generation Engine v0.1",
-  "current_artifact": "Failure-Mode Review & Revision v0.1",
-  "last_completed": "Lane 02 step 7: Three-User Simulation v0.1 (PASS) + tools/kta_check.py + 24 mutation tests + 5 simulated users (7 packets)",
+  "current_artifact": "V0 Human-Assisted Pilot Preparation v0.1",
+  "last_completed": "Lane 02 step 8: Failure-Mode Review v0.1: 22 findings, 5 stress traces, 15 fixes applied (specs at 0.1-rev1), 0 material changes; checker 0/0, 27 tests OK",
   "active_questions": [
-    "Failure-mode review",
-    "V0 human-assisted pilot preparation"
+    "V0 human-assisted pilot preparation",
+    "Owner decisions batch 1 (MCP-1..4)"
   ],
   "proposed_material_changes": [
     "MCP-1 (AR-01) Repo canonical source of truth; Drive mirror",
@@ -17,8 +17,8 @@
     "MCP-4 (AR-15) Operational Meaningful Action Rate definition + pilot diagnostics"
   ],
   "blockers": [],
-  "next_action": "Write 03_CURRENT_WORK/FAILURE_MODE_REVIEW_v0.1.md: stress traces ST-1..5, then apply fixes FM-04,05,07,08,09,10,11,13 to the specs (step 8)",
+  "next_action": "Draft 03_CURRENT_WORK/V0_PILOT_PREPARATION_v0.1.md, 04_REGISTRIES/PROPOSED_REGISTRY_UPDATES_v0.1.md, 05_HANDOFFS/LANE_02_HANDOFF_v0.1.md (step 9)",
   "workspace": "git repo TayXs/Book-World-Engine, folder KTA/, branch ccr-0bee19c7-psyma2",
   "owner_decisions_file": "02_STATE/OWNER_DECISIONS_PENDING.md",
-  "last_updated": "2026-09-29T22:28Z"
+  "last_updated": "2026-09-29T22:31Z"
 }

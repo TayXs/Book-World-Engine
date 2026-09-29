@@ -88,6 +88,16 @@ Then apply the first matching rule, in precedence order.
 | **A15** | Completed, `mixed` | `investigate_further` | Split the hypothesis and design a narrower follow-up. If the mixed result points to a world fact, add a research item. |
 | **A16** | Completed, `null_result`, **or** only E1 evidence | `modify` | Fix the measurement (add an observable) or simplify. **Never treat this as confirmation.** |
 | **A17** | *(runs alongside any rule above)* The feedback raised a new world-fact question | + `investigate_further` on that line | Add a research item. It doesn't block other lines. |
+| **A18** | The experiment was **declined** at delivery (FM-22) | `continue` on the explain and research steps | The check-in uses CQ-9, CQ-10 and CQ-12. Offer one smaller experiment. This is an informed choice, **not** a non-attempt, so it doesn't count toward A5. |
+
+**Rediagnose mini-protocol** *(FM-20, used by A5 and A10)*. This is a short conversation of ≤10 min, not a new intake. Three questions:
+1. "Is this still the thing you want to change?"
+2. "What makes it hard to start?"
+3. "Would a different kind of step suit you better: smaller, different, or none for now?"
+
+Then re-run MPR-01 (goal and archetype) and MPR-09 (focus). "None for now" closes the mission with a watch trigger, under the `user_opt_out` exit.
+
+**Escalation** (A1, A2) follows the operator escalation playbook in `V0_PILOT_PREPARATION_v0.1.md` (FM-21).
 
 **How the table relates to the pre-agreed branches.** The branch that matches the result is the default next move. The table *overrides* it only for rules A1 to A5: harm, scope, opt-out, exit, and repeated non-attempt. Any other deviation from the branch is allowed but must be recorded in the AdaptationDecision's `deviation_reason`.
 
@@ -136,3 +146,4 @@ Rename `first_experiment` to `current_experiment` when the contract is next revi
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. Implements AR-13, AR-15 (capture only) and AR-19. |
+| 0.1-rev1 | 2026-09-29 | A18 declined (FM-22); rediagnose mini-protocol (FM-20); escalation playbook pointer (FM-21). |

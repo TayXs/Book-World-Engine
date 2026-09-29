@@ -90,6 +90,7 @@ In V0 the operator runs these rules as a checklist, with or without LLM drafting
 ### MPR-07 · Clarify candidate [SEL][SEQ]
 - **Pattern:** archetype `clarify`.
 - An **explain** step (understanding gap) comes *before* the experiment. The specific world fact behind the worry gets a research question.
+- *(FM-05)* The explain-first step uses **user-local facts only**, such as "55% of your week is on-site work". Research isn't back yet, so the evidence-based part of the explanation is delivered at check-in (MPR-12).
 - The first experiment is small and **diagnostic**, on the task the worry attaches to, usually a `shadow_test` or `retro_audit`. The user gets personal evidence rather than headlines.
 
 ### MPR-08 · Identity protection [SEL][OMI]
@@ -178,6 +179,7 @@ Omissions are honest: they say *for now*, never *never*.
 | Not generic | Not a course, and not "read about X". |
 | Evidence-independent | Its rationale does not need an unverified world fact (MPR-12). |
 | Respectful | Honors MPR-08 and the `constraints`. |
+| Timing-feasible *(FM-07)* | The window doesn't collide with a time constraint. If the task only happens inside a blocked window (for example, close week), use a **retrospective variant** on the last instance of the task. |
 
 **Choose** among the survivors in this order:
 1. The one that targets the highest-impact uncertainty.
@@ -198,6 +200,9 @@ Two overrides based on the baseline:
 - **No material exposure:** nothing that risks employment terms, legal exposure or financial loss. Every experiment is reversible or low-stakes and has stop conditions.
 - **No paid tools in V0** unless the user states a budget for them. Prefer tools the user already has or that are approved.
 - **Operator-attention users:** no stakeholder-facing experiments (MPR-02).
+- **Policy `prohibits` *(FM-19)*:** AI-tool experiments are allowed only as off-work practice on public or synthetic material, and must never produce work deliverables. Non-tool archetypes are preferred (`retro_audit`, `value_probe`, `visibility_move`, `market_probe`). A prohibition also matters for the decision itself: for a `leverage` goal, re-check the archetype with MPR-01.
+- **Approved tool, unconfirmed data scope *(FM-09)*:** treat the policy as `unknown` until the scope is confirmed.
+- **Current-habit cross-check *(FM-11)*:** compare current AI use (DQ-09) with the stated rules (DQ-10). If a current habit appears to breach the user's *own* described rules, add a user-local `engine_judgment` claim and an explain step. Keep it matter-of-fact: no blame, and no suggestion of any reporting duty.
 
 ### MPR-15 · Omissions [OMI]
 - **Minimum:** 1. **Sources:** candidates that were not selected, fear–size mismatches, and things *this user* raised or is clearly considering (such as "should I learn to code?").
@@ -237,7 +242,7 @@ On failure, re-ground the packet in the user's specific tasks and uncertainties.
 
 ### MPR-20 · Light-touch mission [SEL][OMI]
 Use this when no candidate passes MPR-09 criteria 1–2, or when the user's own evidence shows little near-term pressure. The packet then has:
-- one focus area (the largest task);
+- one focus area: the medium-or-larger task with the **highest predictability that isn't identity-protected**, because that is where near-term change is most plausible and cheapest to test. Fall back to the largest task if none qualifies. *(Changed from "the largest task" by FM-04. For the electrician, the largest task is identity-valued, low-predictability site work.)*
 - an explain step;
 - a minimal diagnostic experiment of ≤ 30 min;
 - an omission that works as a **watch trigger**, for example "revisit if your team adopts tool X or your review criteria change".
@@ -245,13 +250,15 @@ Use this when no candidate passes MPR-09 criteria 1–2, or when the user's own 
 It is correct and useful for KTA to say "not much to do right now, and here's how you'll know if that changes". That respects Minimum Necessary Attention.
 
 ## 5. Planner output checklist (the operator ticks it before `operator_reviewed`)
-- [ ] INV-01 to INV-14 pass (`kta_check.py`)
+- [ ] INV-01 to INV-15 pass (`kta_check.py`)
 - [ ] Every focus area, step and omission can be traced to a named task or user fact
 - [ ] A leverage focus has a destination (MPR-04)
-- [ ] The experiment passes all 8 filters (MPR-13)
+- [ ] The experiment passes all 9 filters (MPR-13), including timing feasibility
 - [ ] No unverified world fact is shown as fact (MPR-12)
 - [ ] The swap test and the lint pass (MPR-18)
 - [ ] Reading time ≤ 10 min · planned minutes within budget (MPR-17)
+- [ ] Every tool, course, plan or worry the user raised appears as a focus, step, omission or claim *(FM-13)*
+- [ ] Current AI habits are cross-checked against the stated rules (MPR-14, FM-11)
 - [ ] `operator_log` explains every deviation from these rules
 
 ## 6. Known limits of v0.1 (tested in steps 7–8)
@@ -263,3 +270,4 @@ It is correct and useful for KTA to say "not much to do right now, and here's ho
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft. MPR-01 to MPR-20. |
+| 0.1-rev1 | 2026-09-29 | Step 7–8 fixes: MPR-04 destination (FM-03); MPR-07 user-local explain (FM-05); MPR-13 timing filter (FM-07); MPR-14 prohibits, data scope and habit cross-check (FM-19, 09, 11); MPR-20 focus choice (FM-04); checklist (FM-13). |

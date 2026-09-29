@@ -137,6 +137,18 @@ class InvariantMutationTest(unittest.TestCase):
         p["first_experiment"]["prediction"]["user"] = None
         self.assertFlags(p, "INV-14")
 
+    def test_inv14_declined_experiment_exempt(self):
+        p = copy.deepcopy(self.acc)
+        p["first_experiment"]["status"] = "declined"
+        p["first_experiment"]["prediction"]["user"] = None
+        rep, out = run_packet(p)
+        self.assertNotIn("INV-14", out)
+
+    def test_inv15_thin_map_needs_audit(self):
+        p = copy.deepcopy(self.acc)
+        p["task_map"]["tasks"] = p["task_map"]["tasks"][:1]
+        self.assertFlags(p, "INV-15")
+
     def test_inferred_trait_high_confidence(self):
         p = copy.deepcopy(self.acc)
         p["task_map"]["tasks"][0]["traits"]["analysis_intensity"]["confidence"] = "high"
@@ -157,6 +169,11 @@ class DecisionTableTest(unittest.TestCase):
     def test_second_non_attempt_requires_rediagnose(self):
         fb = load("SIM-DES", "feedback_FB01.json")
         self.assertEqual(kc.expected_rules(fb, prior_non_attempt=True), ("A5", "rediagnose"))
+
+    def test_declined_is_not_a_non_attempt(self):
+        fb = load("SIM-DES", "feedback_FB01.json")
+        fb["attempt_status"], fb["blockers"] = "declined", []
+        self.assertEqual(kc.expected_rules(fb, prior_non_attempt=True), ("A18", "continue"))
 
     def test_harm_overrides_everything(self):
         fb = load("SIM-ACC", "feedback_FB01.json")

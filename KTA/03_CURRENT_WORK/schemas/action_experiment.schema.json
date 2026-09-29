@@ -392,7 +392,8 @@
         "partial",
         "not_attempted",
         "abandoned",
-        "superseded"
+        "superseded",
+        "declined"
       ]
     },
     "status_history": {

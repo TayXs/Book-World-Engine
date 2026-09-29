@@ -31,7 +31,7 @@ Why this matters for defensibility (AR-11): a general LLM can suggest an experim
 | `depends_on` | — | The ledger items this experiment *assumes*. None of them may be an open `world_fact` (INV-06). |
 | `relevance` | R | Why *this* experiment for *this* user, grounded in the user's facts. |
 | `steps` | R | 1–5 × `{n, instruction, minutes}`. Concrete enough to do without asking. |
-| `materials` | R | `{data_class, description, tool?}`. `data_class` is one of `none`, `public`, `synthetic`, `redacted_nonconfidential`, `internal`, `confidential` or `regulated`. `tool` is `{name, employer_approved: yes\|no\|not_applicable}`. |
+| `materials` | R | `{data_class, description, tool?}`. `data_class` is one of `none`, `public`, `synthetic`, `redacted_nonconfidential`, `internal`, `confidential` or `regulated`. It means **the most sensitive material that will be put into any tool or shared beyond the user's own control**. When the user only reviews their own records locally and no tool is involved, it is `none` (FM-08). `tool` is `{name, employer_approved: yes\|no\|not_applicable}`. |
 | `effort` | R | `{minutes_total, sessions, window_days ≤ 14}`. The sum of step minutes must equal `minutes_total` ± 10%. |
 | `prediction` | R | `{user, engine}`. `user` is the user's own prediction, written **before** starting. It may be `null` only while the status is `proposed` (INV-14). `engine` is the expected observation and why. |
 | `measures` | R | ≥1 × `{id, what, how_recorded, type}`. `type` is one of `time_minutes`, `count`, `yes_no`, `rating_0_10`, `text_observation` or `artifact_comparison`. **At least one measure must be something other than `rating_0_10`.** |
@@ -39,7 +39,7 @@ Why this matters for defensibility (AR-11): a general LLM can suggest an experim
 | `branches` | R | ≥3 × `{id, condition_type, condition, next_move, next_description}`. See §3. |
 | `safety` | R | `{stakeholder_exposure, reversibility, stop_conditions ≥1, notes}`. `stakeholder_exposure` is one of `none`, `informed_stakeholder` or `public`. `reversibility` is `reversible` or `low_stakes`. |
 | `alternatives_considered` | R | ≥1 × `{archetype, why_not}`: the evidence that MPR-13 selection actually ran. |
-| `status` | R | `proposed` → `accepted` → `scheduled` → `in_progress` → `completed` \| `partial` \| `not_attempted` \| `abandoned`. The status can also be `superseded`. |
+| `status` | R | `proposed` → `accepted` → `scheduled` → `in_progress` → `completed` \| `partial` \| `not_attempted` \| `abandoned`. The status can also be `superseded`, or `declined` when the user chooses not to do it (FM-22). |
 | `status_history` | — | `[{status, at}]` |
 
 ## 3. Branches: the pre-agreed next moves
@@ -177,3 +177,4 @@ Everything else stays internal.
 | Version | Date | Change |
 |---|---|---|
 | 0.1-draft | 2026-09-29 | First draft, with a 9-archetype library. |
+| 0.1-rev1 | 2026-09-29 | `data_class` meaning (FM-08); `declined` status (FM-22); retrospective variant for blocked windows (FM-07, see MPR-13). |

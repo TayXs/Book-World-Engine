@@ -45,7 +45,8 @@
         "fully",
         "partly",
         "not_attempted",
-        "no_response"
+        "no_response",
+        "declined"
       ]
     },
     "actions_taken": {

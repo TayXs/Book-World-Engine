@@ -2,7 +2,7 @@
 
 It checks:
   * JSON Schema structure (03_CURRENT_WORK/schemas/*.schema.json)
-  * the cross-field invariants INV-01..INV-14 from MISSION_GENERATION_OUTPUT_CONTRACT_v0.1
+  * the cross-field invariants INV-01..INV-15 from MISSION_GENERATION_OUTPUT_CONTRACT_v0.1
   * planner-rule warnings (MPR-*) that need human judgment
   * feedback / adaptation-decision consistency (FEEDBACK_ADAPTATION_LOGIC_v0.1)
   * diagnostic-registry traceability (DIAGNOSTIC_ARCHITECTURE_v0.1)
@@ -344,9 +344,16 @@ def check_packet(p, rep, where):
         if needed not in decisions:
             rep.err(where, f"INV-13 mission_triggers missing '{needed}'")
 
-    # INV-14 pre-registration
-    if (ax["status"] != "proposed" or meta["status"] in {"active"}) and not (ax["prediction"].get("user") or "").strip():
+    # INV-14 pre-registration (declined experiments are exempt)
+    if ax["status"] != "declined" and (ax["status"] != "proposed" or meta["status"] in {"active"}) and not (ax["prediction"].get("user") or "").strip():
         rep.err(where, f"INV-14 experiment status={ax['status']} requires prediction.user")
+
+    # INV-15 thin task map (FM-18)
+    if len(tasks) < 3:
+        if ax["archetype"] not in {"retro_audit", "time_audit"}:
+            rep.err(where, "INV-15 fewer than 3 tasks requires a map-building retro_audit/time_audit first experiment")
+        if p["task_map"]["map_confidence"] != "low":
+            rep.err(where, "INV-15 fewer than 3 tasks requires map_confidence=low")
 
     # ---------------- planner warnings (human judgment)
     archetype = p["goal"]["archetype"]
@@ -406,7 +413,7 @@ def check_feedback(fb, packet, rep, where):
     grades = [o["grade"] for o in fb["observations"]] or ["E0"]
     if fb["evidence_grade"] != max(grades):
         rep.warn(where, f"record evidence_grade {fb['evidence_grade']} != max observation grade {max(grades)}")
-    if fb["attempt_status"] in {"not_attempted", "no_response"}:
+    if fb["attempt_status"] in {"not_attempted", "no_response", "declined"}:
         if fb["result_class"] != "not_applicable":
             rep.err(where, "not attempted -> result_class must be not_applicable")
         if fb["attempt_status"] == "not_attempted" and not fb.get("blockers"):
@@ -420,6 +427,8 @@ def expected_rules(fb, prior_non_attempt):
     if fb["harm_report"]["occurred"]:
         return "A1", "escalate"
     status, blockers = fb["attempt_status"], set(fb.get("blockers", []))
+    if status == "declined":
+        return "A18", "continue"
     if status in {"not_attempted", "no_response"} and prior_non_attempt:
         return "A5", "rediagnose"
     if status == "no_response":
